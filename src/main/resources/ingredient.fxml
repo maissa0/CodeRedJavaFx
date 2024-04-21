@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="main_form" prefHeight="645.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.IngredientController">
+
+    <children>
+        <BorderPane layoutY="-62.0" prefHeight="602.0" prefWidth="300.0">
+            <left>
+                <fx:include source="adminSidebar.fxml" />
+            </left>
+        </BorderPane>
+        <AnchorPane layoutX="296.0" layoutY="380.0" prefHeight="243.0" prefWidth="990.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0">
+            <styleClass>
+                <String fx:value="white-bg" />
+                <String fx:value="radius" />
+                <String fx:value="shadow" />
+            </styleClass>
+            <children>
+                <Label layoutX="176.0" layoutY="46.0" text="Nom :" wrapText="true">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="categorie" layoutX="145.0" layoutY="107.0" text="Categorie :">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="510.0" layoutY="41.0" text="Image :">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="nomIng" layoutX="288.0" layoutY="44.0" />
+                <ComboBox fx:id="categorieIng" layoutX="288.0" layoutY="105.0" prefWidth="150.0" promptText="Choisir Categorie ..." />
+                <Button fx:id="importerIng" layoutX="730.0" layoutY="37.0" mnemonicParsing="false" onAction="#upload" prefHeight="29.0" prefWidth="81.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Importer" />
+                <Button fx:id="ajouterIng" layoutX="486.0" layoutY="174.0" mnemonicParsing="false" onAction="#AjouterIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Ajouter" />
+                <Button layoutX="617.0" layoutY="174.0" mnemonicParsing="false" onAction="#modifierIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Modifier" />
+                <Button fx:id="viderIng" layoutX="745.0" layoutY="174.0" mnemonicParsing="false" onAction="#viderIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Vider" />
+                <TextField fx:id="imageIng" layoutX="568.0" layoutY="39.0" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="196.0" layoutY="30.0" prefHeight="343.0" prefWidth="990.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0">
+            <styleClass>
+                <String fx:value="white-bg" />
+                <String fx:value="radius" />
+                <String fx:value="shadow" />
+            </styleClass>
+            <children>
+                <TableView fx:id="listing" layoutX="148.0" layoutY="56.0" prefHeight="278.0" prefWidth="796.0">
+                    <columns>
+                        <TableColumn fx:id="ingredientNom" prefWidth="175.99996948242188" text="Nom" />
+                        <TableColumn fx:id="IngredientCategorie" prefWidth="196.0" text="Categorie" />
+                        <TableColumn fx:id="IngredientImage" prefWidth="224.00002034505212" text="Image" />
+                        <TableColumn fx:id="actions" prefWidth="196.0" text="Actions" />
+                    </columns>
+                </TableView>
+            <Button fx:id="rafraichiring" layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#rafraichirIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Rafraichir" />
+            <TextField fx:id="searchbar_id" layoutX="650.0" layoutY="17.0" prefHeight="25.0" prefWidth="262.0" style="-fx-background-color: transparent; -fx-border-color: black;" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css">
+               <styleClass>
+                  <String fx:value="radius" />
+                  <String fx:value="column-header" />
+                  <String fx:value="filter" />
+               </styleClass>
+            </TextField>
+            <Text layoutX="597.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search:">
+               <font>
+                  <Font name="Dubai Regular" size="15.0" />
+               </font>
+            </Text>
+            </children>
+        </AnchorPane>
+    </children>
+
+</AnchorPane>
