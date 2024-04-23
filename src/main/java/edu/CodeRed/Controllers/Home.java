@@ -18,7 +18,7 @@ public class Home extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/ingredient.fxml"));
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/AddRecette.fxml"));
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);

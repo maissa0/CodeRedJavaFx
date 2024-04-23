@@ -1,12 +1,18 @@
 package edu.CodeRed.tests;
 
 import edu.CodeRed.entities.Ingredient;
+import edu.CodeRed.entities.Journal;
 import edu.CodeRed.entities.Recette;
 import edu.CodeRed.services.IngredientService;
+import edu.CodeRed.services.JournalService;
 import edu.CodeRed.services.RecetteService;
 import edu.CodeRed.tools.MyConnexion;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -47,33 +53,67 @@ public class MainClass {
 
 
         // Create a new instance of RecetteService
-        RecetteService recetteService = new RecetteService();
+        //RecetteService recetteService = new RecetteService();
 
         // Create a sample recipe
-        Recette recette = new Recette();
-        recette.setNom("Test Recipe123");
+        /*Recette recette = new Recette();
+        recette.setNom("Test Recipe");
         recette.setCategorie("Test Category");
-        recette.setImage("test.jpg");
-        recette.setDescription("This is a test recipe description");
-        recette.setCalorieRecette(500); // Example calorie count
+        recette.setImage("maissa.jpg");
+        recette.setDescription("This is a recipe description");
+        recette.setCalorieRecette(555); // Example calorie count
 
         // Create a list of sample ingredients
         List<Ingredient> ingredients = new ArrayList<>();
         Ingredient ingredient1 = new Ingredient();
-        ingredient1.setNom("Flour");
-        ingredient1.setImage("flour.jpg");
-        ingredient1.setCategorieing("Grain");
+        ingredient1.setNom("tarrot");
+        ingredient1.setImage("carrot.jpg");
+        ingredient1.setCategorieing("Vegetable");
         ingredients.add(ingredient1);
 
         Ingredient ingredient2 = new Ingredient();
         ingredient2.setNom("Sugar");
         ingredient2.setImage("sugar.jpg");
         ingredient2.setCategorieing("Sweetener");
-        ingredients.add(ingredient2);
+        ingredients.add(ingredient2);*/
 
         // Test the addEntity method
-        recetteService.addEntitylist(recette, ingredients);
+        //System.out.println(recetteService.readRecette("Test Recipe"));
+
+
+        //RecetteService recetteService = new RecetteService();
+        JournalService journalService = new JournalService();
+
+// Fetch a list of recettes
+       /* List<Recette> recettes = recetteService.getAllDataRecette();
+
+// Creating a Journal
+        Journal journal = new Journal();
+        journal.setUserId(1);
+// Change the date
+        Calendar cal = Calendar.getInstance();
+        cal.set(2024, Calendar.JUNE, 23); // Set the desired date
+        Date date = cal.getTime();
+        journal.setDate(date);
+
+// Adding recettes to the journal
+        List<Recette> recettesToJournal = new ArrayList<>();
+        recettesToJournal.add(recettes.get(0)); // Adding the first recette from the list
+        recettesToJournal.add(recettes.get(6)); // Adding the second recette from the list*/
+
+// Adding the Journal
+
+
+
+        // Call the deleteJournal method
+        System.out.println(journalService.getAllDataJournal());
+
+
+
+
     }
+
+
 
 }
 

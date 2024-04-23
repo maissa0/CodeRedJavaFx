@@ -20,6 +20,12 @@ public class Ingredient {
         this.categorieing = categorieing;
     }
 
+    public Ingredient(String nom, String image) {
+        this.nom = nom;
+        this.image = image;
+
+    }
+
     public int getId() {
         return id;
     }

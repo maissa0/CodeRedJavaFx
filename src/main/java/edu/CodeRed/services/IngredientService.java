@@ -36,10 +36,6 @@ public class IngredientService implements IService<Ingredient,Recette> {
         }
     }
 
-    @Override
-    public void addEntitylist(Ingredient ingredient, List<Recette> q) {
-
-    }
 
     @Override
     public void updateEntity(Ingredient ingredient) {
