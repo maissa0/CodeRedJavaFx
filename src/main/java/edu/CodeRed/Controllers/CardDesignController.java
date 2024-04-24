@@ -10,13 +10,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
+
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class CardDesignController implements Initializable {
+public class CardDesignController {
 
     @FXML
-    private Label Ingredient_name;
+    private Label nameIng;
 
     @FXML
     private Button _addBtn;
@@ -37,14 +40,25 @@ public class CardDesignController implements Initializable {
 
     public void setIngredientData(Ingredient ingredient){
         this.ingredient = ingredient;
-        Ingredient_name.setText(ingredient.getNom());
-        String path = "File:"+ ingredient.getImage();
-        image = new Image(path,190,94 ,false,true);
+        System.out.println(ingredient.getId());
+        nameIng.setText(ingredient.getNom());
+        image = new Image("C:\\tools\\optihealth\\src\\main\\resources\\images\\IngredientsImages\\"+ingredient.getImage());
         prod_imageView.setImage(image);
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    private static List<Ingredient> listIngToRecette = new ArrayList<>();
+
+    List<Ingredient> getListIngToRecette() {
+        return this.listIngToRecette;
     }
+
+    @FXML
+    void ajouterIngToRecette(ActionEvent event) {
+        listIngToRecette.add(ingredient);
+    }
+
+
+
+
 }

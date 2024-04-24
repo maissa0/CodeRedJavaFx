@@ -15,6 +15,14 @@ public class Recette {
     public Recette() {
     }
 
+    public Recette(String nom, String categorie, String image, String description, int calorieRecette) {
+        this.nom = nom;
+        this.categorie = categorie;
+        this.image = image;
+        this.description = description;
+        this.calorieRecette = calorieRecette;
+    }
+
     public Recette(String nom, String categorie, String image, String description, int calorieRecette, List<Ingredient> ingredients) {
         this.nom = nom;
         this.categorie = categorie;

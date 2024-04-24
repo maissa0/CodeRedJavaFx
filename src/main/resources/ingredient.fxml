@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
@@ -49,6 +50,7 @@
                 <Button layoutX="617.0" layoutY="174.0" mnemonicParsing="false" onAction="#modifierIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Modifier" />
                 <Button fx:id="viderIng" layoutX="745.0" layoutY="174.0" mnemonicParsing="false" onAction="#viderIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Vider" />
                 <TextField fx:id="imageIng" layoutX="568.0" layoutY="39.0" />
+            <ImageView fx:id="imgIngredientInput" fitHeight="72.0" fitWidth="149.0" layoutX="569.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="196.0" layoutY="30.0" prefHeight="343.0" prefWidth="990.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0">

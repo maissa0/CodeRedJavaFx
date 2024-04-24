@@ -15,6 +15,19 @@ public class Journal {
     public Journal() {
     }
 
+    public Journal(int id, int userId, Date date) {
+        this.id = id;
+        this.userId = userId;
+        this.date = date;
+    }
+
+    public Journal(int userId, int caloriesJournal, Date date, List<Recette> recettes) {
+        this.userId = userId;
+        this.caloriesJournal = caloriesJournal;
+        this.date = date;
+        this.recettes = recettes;
+    }
+
     public Journal(int userId, Date date) {
         this.userId = userId;
         this.date = date;
@@ -38,7 +51,7 @@ public class Journal {
     }
 
     public int getCaloriesJournal() {
-        return calculateTotalCalories();
+        return this.caloriesJournal;
     }
 
     public void setCaloriesJournal(int caloriesJournal) {
@@ -59,35 +72,9 @@ public class Journal {
 
     public void setRecettes(List<Recette> recettes) {
         this.recettes = recettes;
-        // Recalculate caloriesJournal
-        setCaloriesJournal();
+
     }
 
-    private void setCaloriesJournal() {
-        if (recettes != null) {
-            int totalCalories = 0;
-
-            // Loop through all the Recettes associated with this Journal and sum their calorieRecette
-            for (Recette recette : recettes) {
-                totalCalories += recette.getCalorieRecette();
-            }
-
-            this.caloriesJournal = totalCalories;
-        }
-    }
-
-    public int calculateTotalCalories() {
-        int totalCalories = 0;
-
-        if (recettes != null) {
-            // Loop through all the Recettes associated with this Journal and sum their calorieRecette
-            for (Recette recette : recettes) {
-                totalCalories += recette.getCalorieRecette();
-            }
-        }
-
-        return totalCalories;
-    }
 
     @Override
     public String toString() {
@@ -98,4 +85,6 @@ public class Journal {
                 ", date=" + date +
                 '}';
     }
+
+
 }

@@ -24,11 +24,9 @@ public class JournalService implements JService<Journal, Recette> {
         try {
             try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setInt(1, journal.getUserId());
-                ps.setInt(2, journal.getCaloriesJournal());
+                ps.setInt(2, calculerCalories(recettes));
                 ps.setDate(3, new java.sql.Date(journal.getDate().getTime()));
                 ps.executeUpdate();
-                System.out.println(journal.getCaloriesJournal());
-                System.out.println(journal.calculateTotalCalories());
 
                 // Get the auto-generated ID of the newly inserted journal
                 int journalId;
@@ -62,6 +60,14 @@ public class JournalService implements JService<Journal, Recette> {
         }
     }
 
+    public int calculerCalories(List<Recette> list){
+        int total=0;
+        for(int i=0;i<list.size();i++){
+            total+=list.get(i).getCalorieRecette();
+        }
+        return total;
+    }
+
 
     @Override
     public void updateJournal(Journal journal, List<Recette> recettes) {
@@ -70,7 +76,7 @@ public class JournalService implements JService<Journal, Recette> {
         try {
             try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(updateJournalQuery)) {
                 ps.setInt(1, journal.getUserId());
-                ps.setInt(2, journal.getCaloriesJournal());
+                ps.setInt(2, calculerCalories(recettes));
                 ps.setDate(3, new java.sql.Date(journal.getDate().getTime()));
                 ps.setInt(4, journal.getId());
                 ps.executeUpdate();
@@ -126,7 +132,7 @@ public class JournalService implements JService<Journal, Recette> {
         return journals;
     }
 
-    private List<Recette> getRecettesForJournal(int journalId) {
+    public List<Recette> getRecettesForJournal(int journalId) {
         List<Recette> recettes = new ArrayList<>();
         String query = "SELECT r.* FROM recette r " +
                 "INNER JOIN journal_recette jr ON r.id = jr.recette_id " +
@@ -168,6 +174,38 @@ public class JournalService implements JService<Journal, Recette> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void deleteJournal(int id) {
+        String deleteJournalQuery = "DELETE FROM journal WHERE id = ?";
+        try {
+            try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(deleteJournalQuery)) {
+                ps.setInt(1, id);
+                ps.executeUpdate();
+                System.out.println("Journal deleted successfully!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Journal findById(int id) throws SQLException {
+        Journal act = new Journal();
+
+        try {
+            String req = "SELECT * from journal where id='"+id+"'";
+            Statement st = MyConnexion.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                act.setId(rs.getInt("id"));
+                act.setUserId(rs.getInt("id_user_id"));
+                act.setCaloriesJournal(rs.getInt("calories_journal"));
+                act.setDate(rs.getDate("date"));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return act;
     }
 
 

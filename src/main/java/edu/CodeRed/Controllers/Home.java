@@ -5,8 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+
 
 public class Home extends Application {
     private static Stage primaryStage;
@@ -15,10 +15,9 @@ public class Home extends Application {
     }
 
 
-
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/AddRecette.fxml"));
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/viewJournal.fxml"));
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -26,11 +25,9 @@ public class Home extends Application {
             primaryStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
-
-
-
         }
     }
+
     public static FXMLLoader loadFXML(String fxmlFileName) throws IOException {
         FXMLLoader loader = new FXMLLoader(Home.class.getResource(fxmlFileName));
         Parent root = loader.load();

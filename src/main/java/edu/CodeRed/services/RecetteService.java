@@ -81,11 +81,6 @@ public class RecetteService implements RService<Recette,Ingredient> {
 
     @Override
     public void updateRecette(Recette recette, List<Ingredient> ingredients) {
-        int recetteId = getRecetteId(recette); // Retrieve the recipe ID
-
-        if (recetteId <= 0) {
-            throw new IllegalArgumentException("Recipe ID is not valid. Make sure the recipe has a valid ID.");
-        }
 
         String updateRecipeQuery = "UPDATE recette SET nom = ?, categorie = ?, image = ?, description = ?, calorie_recette = ? WHERE id = ?";
         String deleteRecipeIngredientsQuery = "DELETE FROM recette_ingredient WHERE recette_id = ?";
@@ -96,11 +91,11 @@ public class RecetteService implements RService<Recette,Ingredient> {
                 ps.setString(3, recette.getImage());
                 ps.setString(4, recette.getDescription());
                 ps.setInt(5, recette.getCalorieRecette());
-                ps.setInt(6, recetteId);
+                ps.setInt(6, recette.getId());
                 ps.executeUpdate();
 
                 try (PreparedStatement psDelete = MyConnexion.getInstance().getCnx().prepareStatement(deleteRecipeIngredientsQuery)) {
-                    psDelete.setInt(1, recetteId);
+                    psDelete.setInt(1, recette.getId());
                     psDelete.executeUpdate();
                 }
 
@@ -111,7 +106,7 @@ public class RecetteService implements RService<Recette,Ingredient> {
                         // Retrieve the ingredient ID from the database
                         int ingredientId = getIngredientId(ingredient);
                         // Insert the relationship
-                        ps1.setInt(1, recetteId);
+                        ps1.setInt(1, recette.getId());
                         ps1.setInt(2, ingredientId);
                         ps1.executeUpdate();
                     }
@@ -140,6 +135,27 @@ public class RecetteService implements RService<Recette,Ingredient> {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public Recette findById(int id) throws SQLException {
+        Recette act = new Recette();
+
+        try {
+            String req = "SELECT * from recette where id='"+id+"'";
+            Statement st = MyConnexion.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                act.setId(rs.getInt("id"));
+                act.setNom(rs.getString("nom"));
+                act.setCategorie(rs.getString("categorie"));
+                act.setImage(rs.getString("image"));
+                act.setDescription(rs.getString("description"));
+                act.setCalorieRecette(rs.getInt("calorie_recette"));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return act;
     }
 
 
@@ -172,9 +188,9 @@ public class RecetteService implements RService<Recette,Ingredient> {
     }
 
     // Method to retrieve ingredients for a specific recipe
-    private List<Ingredient> getIngredientsForRecette(int recetteId) {
+    public List<Ingredient> getIngredientsForRecette(int recetteId) {
         List<Ingredient> ingredients = new ArrayList<>();
-        String query = "SELECT i.id, i.nom FROM ingredient i " +
+        String query = "SELECT * FROM ingredient i " +
                 "JOIN recette_ingredient ri ON i.id = ri.ingredient_id " +
                 "WHERE ri.recette_id = ?";
         try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
@@ -184,6 +200,8 @@ public class RecetteService implements RService<Recette,Ingredient> {
                     Ingredient ingredient = new Ingredient();
                     ingredient.setId(rs.getInt("id"));
                     ingredient.setNom(rs.getString("nom"));
+                    ingredient.setImage(rs.getString("image"));
+                    ingredient.setCategorieing(rs.getString("categorieing"));
                     ingredients.add(ingredient);
                 }
             }

@@ -1,7 +1,9 @@
 package edu.CodeRed.Controllers;
 
 import edu.CodeRed.entities.Ingredient;
+import edu.CodeRed.entities.Recette;
 import edu.CodeRed.services.IngredientService;
+import edu.CodeRed.services.RecetteService;
 import edu.CodeRed.tools.MyConnexion;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
@@ -9,23 +11,31 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.*;
 
-public class AddRecetteController {
+public class AddRecetteController implements Initializable {
 
     @FXML
     private ScrollPane Ingredient_ScrollPane;
@@ -43,80 +53,181 @@ public class AddRecetteController {
     private TextField imgRec;
 
     @FXML
+    private GridPane ingredient_gridPane;
+
+    @FXML
     private TableView<Ingredient> listIngr;
+    @FXML
+    private TableColumn<Ingredient, String> categIngCol;
+
+    @FXML
+    private TableColumn<Ingredient, String> nomIngCol;
 
     @FXML
     private TextField nomRec;
 
     @FXML
-    private Button rafraichiring;
+    private ImageView imgRecetteInput;
 
     @FXML
-    private GridPane ingredient_gridPane;
+    private Button rafraichiring;
+
+
+
+    IngredientService is = new IngredientService();
+    List<Ingredient> ingredients = is.getAllData();;
+
 
     public ObservableList<Ingredient> CardListData = FXCollections.observableArrayList();
 
     @FXML
     void rafraichirRec(ActionEvent event) {
+
+    }
+
+    private File selectedImageFile;
+    private String imageName = null ;
+
+    @FXML
+    void uploadRec(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choisir une image");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+        selectedImageFile = fileChooser.showOpenDialog(imgRecetteInput.getScene().getWindow());
+        if (selectedImageFile != null) {
+            Image image = new Image(selectedImageFile.toURI().toString());
+            imgRecetteInput.setImage(image);
+
+            // Générer un nom de fichier unique pour l'image
+            String uniqueID = UUID.randomUUID().toString();
+            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
+            imageName = uniqueID + extension;
+
+            Path destination = Paths.get(System.getProperty("user.dir"), "src","main","java","edu","CodeRed", "uploads", imageName);
+            Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+
+        }
     }
 
     @FXML
-    void uploadRec(ActionEvent event) {
+    void addRecette(ActionEvent event) {
+        if (nomRec.getText().isEmpty() || catRec.getItems().isEmpty() || descRec.getText().isEmpty() || calRec.getText().isEmpty())
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Information manquante");
+            alert.setHeaderText(null);
+            alert.setContentText("Vous devez remplir tous les détails concernant votre recette.");
+            Optional<ButtonType> option = alert.showAndWait();
+        } else {
+            ajouterRecette();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Ajouté avec succès");
+            alert.setHeaderText(null);
+            alert.setContentText("Votre recette a été ajoutée avec succès.");
+            Optional<ButtonType> option = alert.showAndWait();
+
+        }
     }
 
-    public ObservableList<Ingredient> ingredientGetData() {
+    void ajouterRecette(){
 
-        String requette = "SELECT * FROM ingredient";
-        ObservableList<Ingredient> listData = FXCollections.observableArrayList();
-
+        List<Ingredient> ingredientList;
         try {
-            Statement st = MyConnexion.getInstance().getCnx().createStatement();
-            ResultSet rs = st.executeQuery(requette);
-            while (rs.next()) {
-                Ingredient ingredient = new Ingredient();
-                ingredient.setNom(rs.getString("nom"));
-                ingredient.setImage(rs.getString("image"));
-
-                listData.add(ingredient);
+            FXMLLoader load = new FXMLLoader();
+            load.setLocation(getClass().getResource("/CardDesign.fxml"));
+            AnchorPane pane = load.load();
+            CardDesignController item = load.getController();
+            ingredientList = item.getListIngToRecette();
+            if(ingredientList.isEmpty()){
+                System.out.println("erreur");
             }
-        } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-        return listData;
+        if(!ingredientList.isEmpty()){
+            for(int i=0;i<ingredientList.size();i++){
+                CardListData.add(ingredientList.get(i));
+            }
+            nomIngCol.setCellValueFactory(new PropertyValueFactory<>("nom"));
+            categIngCol.setCellValueFactory(new PropertyValueFactory<>("categorieing"));
+            listIngr.setItems(CardListData);
+        }
+
+        String nom=nomRec.getText();
+        String description=descRec.getText();
+        String categ=catRec.getValue();
+        String image=imageName;
+        int cal = Integer.parseInt(calRec.getText());
+
+        RecetteService rs = new RecetteService();
+        Recette r = new Recette(nom,categ,image,description,cal);
+        rs.addRecette(r,ingredientList);
     }
 
-    public void ingDisplayCard() {
-        CardListData.clear();
-        CardListData.addAll(ingredientGetData());
-        int row = 0;
-        int column = 0;
-
-        for (int q = 0; q < CardListData.size(); q++) {
-            try {
-                FXMLLoader load = new FXMLLoader();
-                load.setLocation(getClass().getResource("CardDesign.fxml"));
-                AnchorPane pane = load.load();
-                CardDesignController cardC = load.getController();
-                cardC.setIngredientData(CardListData.get(q));
-
-                if (column == 3) {
-                    column = 0;
-                    row += 1;
+    public List<Ingredient> ingredientGetData() {
+        List<Ingredient> ingredients = new ArrayList<>();
+        String query = "SELECT * FROM ingredient";
+        try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Ingredient ingredient = new Ingredient();
+                    ingredient.setNom(rs.getString("nom"));
+                    ingredient.setImage(rs.getString("image"));
+                    ingredients.add(ingredient);
                 }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ingredients;
+    }
 
-                ingredient_gridPane.add(pane, column++, row);
 
-                GridPane.setMargin(pane, new Insets(10));
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ObservableList<String> options = FXCollections.observableArrayList(
+                "Facile","Moyenne","Difficile");
+        catRec.setItems(options);
+        int column = 0;
+        int row = 1;
+        for (int i = 0; i < ingredients.size(); i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/CardDesign.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            CardDesignController itemController = fxmlLoader.getController();
+            itemController.setIngredientData(ingredients.get(i));
+
+
+            if (column == 3) {
+                column = 0;
+                row++;
+            }
+
+            ingredient_gridPane.add(anchorPane, column++, row); //(child,column,row)
+            //set grid width
+            ingredient_gridPane.setMinWidth(Region.USE_COMPUTED_SIZE);
+            ingredient_gridPane.setPrefWidth(Region.USE_COMPUTED_SIZE);
+            ingredient_gridPane.setMaxWidth(Region.USE_PREF_SIZE);
+
+            //set grid height
+            ingredient_gridPane.setMinHeight(Region.USE_COMPUTED_SIZE);
+            ingredient_gridPane.setPrefHeight(Region.USE_COMPUTED_SIZE);
+            ingredient_gridPane.setMaxHeight(Region.USE_PREF_SIZE);
+
+            GridPane.setMargin(anchorPane, new Insets(10));
         }
     }
-
-    @FXML
-    void initialize() {
-        ingDisplayCard();
-    }
 }
+
+
+    
+

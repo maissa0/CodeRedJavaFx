@@ -81,11 +81,11 @@ public class MainClass {
         //System.out.println(recetteService.readRecette("Test Recipe"));
 
 
-        //RecetteService recetteService = new RecetteService();
+        RecetteService recetteService = new RecetteService();
         JournalService journalService = new JournalService();
 
 // Fetch a list of recettes
-       /* List<Recette> recettes = recetteService.getAllDataRecette();
+        List<Recette> recettes = recetteService.getAllDataRecette();
 
 // Creating a Journal
         Journal journal = new Journal();
@@ -99,9 +99,13 @@ public class MainClass {
 // Adding recettes to the journal
         List<Recette> recettesToJournal = new ArrayList<>();
         recettesToJournal.add(recettes.get(0)); // Adding the first recette from the list
-        recettesToJournal.add(recettes.get(6)); // Adding the second recette from the list*/
+        recettesToJournal.add(recettes.get(1)); // Adding the second recette from the list
 
 // Adding the Journal
+
+
+        //journalService.addJournal(journal,recettesToJournal);
+
 
 
 

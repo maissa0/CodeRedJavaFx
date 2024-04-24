@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<AnchorPane prefHeight="641.0" prefWidth="1145.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.viewRecetteController">
+
+    <BorderPane layoutY="-62.0" prefHeight="602.0" prefWidth="300.0">
+        <left>
+            <fx:include source="adminSidebar.fxml" />
+        </left>
+    </BorderPane>
+    <AnchorPane prefHeight="622.0" prefWidth="1145.0">
+        <children>
+
+            <AnchorPane prefHeight="641.0" prefWidth="1145.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <AnchorPane layoutX="292.0" layoutY="14.0" prefHeight="608.0" prefWidth="849.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css">
+                        <styleClass>
+                            <String fx:value="white-bg" />
+                            <String fx:value="shadow" />
+                            <String fx:value="radius" />
+                        </styleClass>
+                  <children>
+                     <TableView fx:id="tabRecette" editable="true" layoutX="54.0" layoutY="40.0" prefHeight="521.0" prefWidth="732.0">
+                       <columns>
+                         <TableColumn fx:id="nomColumn" prefWidth="103.33334350585938" text="Nom" />
+                         <TableColumn fx:id="categColumn" prefWidth="88.00006103515625" text="Categorie" />
+                           <TableColumn fx:id="imgColumn" prefWidth="88.0" text="Image" />
+                           <TableColumn fx:id="descriptionColumn" prefWidth="153.3333740234375" text="Description" />
+                           <TableColumn fx:id="calorieColumn" prefWidth="91.99993896484375" text="Calorie" />
+                           <TableColumn fx:id="actionsColumn" prefWidth="207.33343505859375" text="Actions" />
+                       </columns>
+                     </TableView>
+                  </children>
+                    </AnchorPane>
+                </children>
+            </AnchorPane>
+        </children>
+    </AnchorPane>
+
+</AnchorPane>

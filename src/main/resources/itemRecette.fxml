@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="26.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.itemRecetteController">
+    <children>
+        <HBox prefHeight="38.0" prefWidth="600.0">
+            <children>
+                <Pane prefHeight="38.0" prefWidth="23.0" />
+                <Label fx:id="nomRec" text="Nom" />
+                <Pane prefHeight="39.0" prefWidth="142.0" />
+                <Label fx:id="categRec" text="Categorie" />
+                <Pane prefHeight="39.0" prefWidth="129.0" />
+                <ImageView fx:id="imgRec" fitHeight="39.0" fitWidth="61.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

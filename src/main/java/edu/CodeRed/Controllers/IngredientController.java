@@ -5,6 +5,8 @@ import edu.CodeRed.entities.Ingredient;
 import edu.CodeRed.services.IngredientService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.util.Callback;
 import javafx.scene.control.Button;
@@ -33,6 +35,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+import java.util.UUID;
 
 import javafx.scene.control.*;
 
@@ -90,6 +93,9 @@ public class IngredientController {
 
     @FXML
     private Button viderIng;
+
+    @FXML
+    private ImageView imgIngredientInput;
 
 
     @FXML
@@ -161,27 +167,26 @@ public class IngredientController {
         }
     }
 
+    private File selectedImageFile;
+    private String imageName = null;
     @FXML
-    public void upload(ActionEvent actionEvent) {
+    void upload(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Upload your profile picture");
+        fileChooser.setTitle("Choisir une image");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+        selectedImageFile = fileChooser.showOpenDialog(imgIngredientInput.getScene().getWindow());
+        if (selectedImageFile != null) {
+            Image image = new Image(selectedImageFile.toURI().toString());
+            imgIngredientInput.setImage(image);
 
-        File selectedFile = fileChooser.showOpenDialog(null);
+            // Générer un nom de fichier unique pour l'image
+            String uniqueID = UUID.randomUUID().toString();
+            String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
+            imageName = uniqueID + extension;
 
-        if (selectedFile != null) {
-            // Check if the selected file has a valid extension (PNG or JPG)
-            String fileName = selectedFile.getName().toLowerCase();
-            if (fileName.endsWith(".png") || fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
-                imageIng.setText(selectedFile.getPath());
-            } else {
-                // Handle the case where an invalid file is selected
-                System.out.println("Invalid file format. Please select a PNG or JPG file.");
-            }
-        } else {
-            // Handle the case where no file is selected
-            System.out.println("No file selected");
+            Path destination = Paths.get(System.getProperty("user.dir"), "src","main","java","edu","CodeRed", "uploads", imageName);
+            Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
-
     }
 
 
