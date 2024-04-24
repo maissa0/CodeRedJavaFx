@@ -6,15 +6,14 @@ import edu.CodeRed.services.userservice;
 
 
 
-
- class mainClass {
+ /*class mainClass {
             public static void main(String[] args) {
 
-                user u = new user("mlik", "ons", "2024-04-13 15:30:00", "femme", "Sousse", "sdfghj", "hbjnben@", "ben.ons@esprit.tn");
+                user u = new user(245, "israaaaaaa@espriiitt.tnn", "lalalalaL3", "Boulaareess", "Israa", "23-04-2002", "femme", "Gafsa","53721027","Enabled");
 
                 userservice us = new userservice();
 
                 us.addUser(u);
 //us.DeleteUser(20);
 //us.UpdatUser(user);
-            }}
+            }}*/

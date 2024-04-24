@@ -3,6 +3,9 @@ package edu.CodeRed.services;
 import edu.CodeRed.entities.user;
 import edu.CodeRed.interfaces.IService;
 import edu.CodeRed.tools.MyConnexion;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+
 import java.security.MessageDigest;
 
 import java.security.NoSuchAlgorithmException;
@@ -10,64 +13,83 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Optional;
 
 public class userservice implements IService<user>{
     //Add user
+    private Connection cnx;
+    public userservice(){ cnx= MyConnexion.getInstance().getCnx();
+    }
     @Override
     public void addUser(user user) {
-        String passwordencrypted = encrypt(user.getPassword());
-
         // 1. Prepare the SQL statement using a placeholder for each value
-        String query = "INSERT INTO user (email, password,`nom`, prenom, date_de_naissance, genre, adresse, num_de_telephone) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO `user` (`email`, `password`,`nom`, `prenom`, `date_de_naissance`, `role`,`genre`, `adresse`, `num_de_telephone`) VALUES (?,  ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);) {
+        try (PreparedStatement pstm = cnx.prepareStatement(sql)) {
             // 2. Set parameter values using appropriate user getters
-            preparedStatement.setString(1, user.getEmail());
+            pstm.setString(1, user.getEmail());
 
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getNom());
-            preparedStatement.setString(4, user.getPrenom());
-            preparedStatement.setString(5, user.getDate_de_naissance());
-            preparedStatement.setString(6, user.getGenre());
-            preparedStatement.setString(7, user.getAdresse());
-            preparedStatement.setString(8, user.getNum_de_telephone());
+            pstm.setString(2, user.getPassword());
+            pstm.setString(3, user.getNom());
+            pstm.setString(4, user.getPrenom());
+            pstm.setString(5, user.getDate_de_naissance());
+            pstm.setString(6, user.getrole());
+            pstm.setString(7, user.getGenre());
+            pstm.setString(8, user.getAdresse());
+            pstm.setString(9, user.getNum_de_telephone());
 
 
             // 3. Execute the update
-            preparedStatement.executeUpdate();
+            pstm.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error adding user: " + e.getMessage());
         }
     }
-    //Update User methode
+
     @Override
-    public void UpdatUser(user user, int id) {
+    public void UpdatUser(user user) {
+        String query = "UPDATE user SET email=?, password=?, nom=?, prenom=?, date_de_naissance=?,genre=?,Adresse=?,num_de_telephone=?,role=? WHERE id=?";
 
-
-        String query = "UPDATE user " +
-                "SET user_nom = ?, user_prenom = ?, user_date_de_naissance= ?, user_genre = ?, user_adresse = ?, user_num_de_telephone = ?, " +
-                "user_roles = ?, user_email = ? , user_password = ?" +
-                "WHERE user_id = ?";
         try {
-            PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query);
-            preparedStatement.setString(1, user.getNom());
-            preparedStatement.setString(2, user.getPrenom());
-            preparedStatement.setString(4, user.getDate_de_naissance());
-            preparedStatement.setString(5, user.getGenre());
-            preparedStatement.setString(6, user.getAdresse());
-            preparedStatement.setString(7, user.getNum_de_telephone());
+            // Create a prepared statement
+            PreparedStatement preparedStatement = cnx.prepareStatement(query);
 
-            preparedStatement.setString(8, user.getEmail());
-            preparedStatement.setString(9,user.getPassword()) ;
+            // Set the parameters for the prepared statement
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2,user.getPassword());
+            preparedStatement.setString(3, user.getNom());
+            preparedStatement.setString(4, user.getPrenom());
+            preparedStatement.setString(5, user.getDate_de_naissance());
+            preparedStatement.setString(6, user.getrole());
+            preparedStatement.setString(7, user.getGenre());
+            preparedStatement.setString(8, user.getAdresse());
+            preparedStatement.setString(9, user.getNum_de_telephone());
 
-            preparedStatement.setInt(10, id);
+            preparedStatement.setInt(10, user.getId());
 
-            preparedStatement.executeUpdate();
-            System.out.println("User updated!");
+            // Execute the update query
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println("User updated successfully.");
+            } else {
+                System.out.println("No User found with the given ID.");
+            }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error updating user: " + e.getMessage());
+            e.printStackTrace(); // Print the stack trace for detailed error information
+        } catch (NullPointerException e) {
+            System.out.println("Connection is not initialized: " + e.getMessage());
+            e.printStackTrace(); // Print the stack trace for detailed error information
         }
+
     }
+
+
+
+
+
+
     //Delete User methode
     @Override
     public void DeleteUser(int id) {
@@ -91,16 +113,16 @@ public class userservice implements IService<user>{
             ResultSet rs = srt.executeQuery(query);
             while(rs.next()){
                 user user = new user (
-
-                        rs.getString("nom"),
-                        rs.getString("prenom"),
-                        rs.getString("date_de_naissance"),
-                        rs.getString("genre"),
-                        rs.getString("adresse"),
-                        rs.getString("num_de_telephone"),
-
-                        rs.getString("email"),
-                        rs.getString("password"));
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10));
 
 
                 list.add(user);
@@ -111,7 +133,51 @@ public class userservice implements IService<user>{
         }
         return list;
     }
-    //Methode to encrypt the Username password
+    //Methode to login
+    public user loginUser(String email, String password){
+        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
+        String encryptedPassword = encrypt(password);
+
+        try (PreparedStatement preparedStatement = MyConnexion.getInstance().getCon().prepareStatement(query)) {
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, encryptedPassword);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // User login successful, create a user object and return it
+                    int userId = resultSet.getInt("id");
+
+                    String userEmail = resultSet.getString("email");
+                    String userPassword = resultSet.getString("password");
+                    String userNom = resultSet.getString("nom");
+                    String userPrenom = resultSet.getString("prenom");
+                    String userDateDeNaissance = resultSet.getString("date_de_naissance");
+                    String userrole = resultSet.getString("role");
+                    String userGenre = resultSet.getString("genre");
+                    String userAdresse = resultSet.getString("adresse");
+                    String userNumDeTelephone = resultSet.getString("num_de_telephone");
+
+
+                    return new user(userId,  userEmail, userPassword, userNom, userPrenom, userDateDeNaissance,  userrole,userGenre, userAdresse,userNumDeTelephone);
+                } else {
+                    return null;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    // isUsernameTaken/isEmailTaken methodes to check the uniqueness of a user
+
+    public boolean isEmailTaken(String email) throws SQLException {
+        String query = "SELECT * FROM user WHERE user_email = ?";
+        PreparedStatement preparedStatement = MyConnexion.getInstance().getCon().prepareStatement(query);
+        preparedStatement.setString(1, email);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            return resultSet.next();
+        }
+    }
+    //crypt the Username password
     public static String encrypt(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -127,5 +193,30 @@ public class userservice implements IService<user>{
             throw new RuntimeException(e);
         }
     }
+    public void DeleteUserr(user user) {
+        String query = "DELETE FROM user WHERE id = ?";
+        try {
+            PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query);
+            preparedStatement.setInt(1, user.getId());
+            preparedStatement.executeUpdate();
+            System.out.println("User with the id = " + user.getId() + " is deleted!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void DeleteEntityWithConfirmation(user User) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirmation");
+        confirmationAlert.setHeaderText("Suppression de logement");
+        confirmationAlert.setContentText("Voulez-vous vraiment supprimer ce logement?");
+
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // User confirmed deletion, proceed with deletion
+            DeleteUserr(User);
+        }
+    }
+
 }
 

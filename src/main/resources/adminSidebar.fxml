@@ -10,13 +10,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="700.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.adminSidebar">
+<AnchorPane prefHeight="700.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.adminSidebar">
     <children>
-        <ImageView fitHeight="35.0" fitWidth="200.0" layoutX="50.0" layoutY="27.0">
-            <image>
-                <Image url="@images/logoblack.png" />
-            </image>
-        </ImageView>
+
         <Pane layoutX="12.0" layoutY="79.0" prefHeight="605.0" prefWidth="275.0" style="-fx-background-color: #2ecc71; -fx-border-radius: 10; -fx-border-color: #6096BA; -fx-background-radius: 10;">
             <children>
                 <Label fx:id="welcome" layoutX="69.0" layoutY="42.0" text="Welcome Back!">
@@ -26,11 +22,7 @@
                 </Label>
                 <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="97.0" mnemonicParsing="false" onAction="#goto_dashboard" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Dashboard">
                     <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@images/Icons/dashboard.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic>
                     <opaqueInsets>
                         <Insets />
@@ -38,64 +30,36 @@
                 </Button>
                 <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="144.0" mnemonicParsing="false" onAction="#goto_user" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion des utilisateurs ">
                     <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@images/Icons/user.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic></Button>
                 <Button alignment="BASELINE_CENTER" layoutX="49.0" layoutY="191.0" mnemonicParsing="false" onAction="#goto_event" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion des repas ">
                     <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@images/Icons/events.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic>
                 </Button>
                 <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="238.0" mnemonicParsing="false" onAction="#goto_forum" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion des Activités">
                     <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@images/Icons/forum.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic>
                 </Button>
                 <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="285.0" mnemonicParsing="false" onAction="#goto_shop" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion des produits">
                     <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@images/Icons/shop.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic>
                 </Button>
                 <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="332.0" mnemonicParsing="false" onAction="#goto_blog" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion des Objectifs ">
                     <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@images/Icons/blog.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic>
                 </Button>
                 <Button alignment="BASELINE_CENTER" layoutX="49.0" layoutY="419.0" mnemonicParsing="false" onAction="#goto_edit" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Modifier votre profile">
                     <graphic>
-                        <ImageView>
-                            <image>
-                                <Image url="@images/Icons/pencil.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic>
                 </Button>
                 <Button alignment="BASELINE_CENTER" layoutX="49.0" layoutY="466.0" mnemonicParsing="false" onAction="#disconnect" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Déconnexion ">
                     <graphic>
-                        <ImageView rotate="180.0">
-                            <image>
-                                <Image url="@images/Icons/logout.png" />
-                            </image>
-                        </ImageView>
+
                     </graphic>
                 </Button>
                 <ImageView fx:id="picture" fitHeight="65.0" fitWidth="65.0" layoutX="17.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0); -fx-padding: 10;" />

@@ -1,7 +1,4 @@
-package edu.CodeRed.Controllers;
-
-
-
+package edu.CodeRed.controllers;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +10,15 @@ import java.io.IOException;
 
 public class Home extends Application {
     private static Stage primaryStage;
+
     public static void main(String[] args) {
         launch(args);
     }
 
-
-
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/addUser.fxml"));
+        Home.primaryStage = primaryStage; // Assign primaryStage to the static field
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/listUser.fxml"));
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -29,11 +26,9 @@ public class Home extends Application {
             primaryStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
-
-
-
         }
     }
+
     public static FXMLLoader loadFXML(String fxmlFileName) throws IOException {
         FXMLLoader loader = new FXMLLoader(Home.class.getResource(fxmlFileName));
         Parent root = loader.load();
