@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+
+<AnchorPane prefHeight="640.0" prefWidth="1090.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.ListFrontRecetteController">
+
+    <BorderPane layoutY="-62.0" prefHeight="602.0" prefWidth="300.0">
+        <left>
+            <fx:include source="adminSidebar.fxml" />
+        </left>
+    </BorderPane>
+   <AnchorPane layoutX="302.0" layoutY="24.0" prefHeight="608.0" prefWidth="769.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css">
+      <styleClass>
+         <String fx:value="white-bg" />
+         <String fx:value="shadow" />
+         <String fx:value="radius" />
+      </styleClass>
+      <children>
+         <GridPane fx:id="Recette_gridPane" layoutX="14.0" layoutY="14.0" prefHeight="16.0" prefWidth="100.0">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+         </GridPane>
+         <GridPane fx:id="Recette_gridPane" layoutX="24.0" layoutY="24.0" prefHeight="16.0" prefWidth="100.0">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+         </GridPane>
+      </children>
+   </AnchorPane>
+
+</AnchorPane>

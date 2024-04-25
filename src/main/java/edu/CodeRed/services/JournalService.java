@@ -18,19 +18,58 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class JournalService implements JService<Journal, Recette> {
+
     @Override
     public void addJournal(Journal journal, List<Recette> recettes) {
-        String query = "INSERT INTO journal (id_user_id, calories_journal, date) VALUES (?, ?, ?)";
-        try {
-            try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-                ps.setInt(1, journal.getUserId());
-                ps.setInt(2, calculerCalories(recettes));
-                ps.setDate(3, new java.sql.Date(journal.getDate().getTime()));
-                ps.executeUpdate();
+        String checkExistingJournalQuery = "SELECT id FROM journal WHERE id_user_id = ? AND date = ?";
+        String insertJournalQuery = "INSERT INTO journal (id_user_id, calories_journal, date) VALUES (?, ?, ?)";
+        String insertJournalRecetteQuery = "INSERT INTO journal_recette (journal_id, recette_id) VALUES (?, ?)";
+        String updateCaloriesQuery = "UPDATE journal SET calories_journal = ? WHERE id = ?";
 
-                // Get the auto-generated ID of the newly inserted journal
+        try {
+            // Check if a journal already exists for the given date
+            try (PreparedStatement psCheck = MyConnexion.getInstance().getCnx().prepareStatement(checkExistingJournalQuery)) {
+                psCheck.setInt(1, journal.getUserId());
+                psCheck.setDate(2, new java.sql.Date(journal.getDate().getTime()));
+                try (ResultSet rs = psCheck.executeQuery()) {
+                    if (rs.next()) { // Journal exists for the given date
+                        int journalId = rs.getInt("id");
+
+                        // Update calories_journal in the existing journal
+                        int totalCalories = calculerCalories(getRecettesForJournal(journalId));
+                        for (Recette recette : recettes) {
+                            totalCalories += recette.getCalorieRecette();
+                        }
+                        try (PreparedStatement psUpdate = MyConnexion.getInstance().getCnx().prepareStatement(updateCaloriesQuery)) {
+                            psUpdate.setInt(1, totalCalories);
+                            psUpdate.setInt(2, journalId);
+                            psUpdate.executeUpdate();
+                        }
+
+                        // Insert new recettes into journal_recette table
+                        try (PreparedStatement psInsert = MyConnexion.getInstance().getCnx().prepareStatement(insertJournalRecetteQuery)) {
+                            for (Recette recette : recettes) {
+                                psInsert.setInt(1, journalId);
+                                psInsert.setInt(2, recette.getId());
+                                psInsert.executeUpdate();
+                            }
+                        }
+
+                        System.out.println("Recettes added to existing journal successfully!");
+                        return;
+                    }
+                }
+            }
+
+            // If no journal exists for the given date, insert a new journal
+            try (PreparedStatement psInsertJournal = MyConnexion.getInstance().getCnx().prepareStatement(insertJournalQuery, Statement.RETURN_GENERATED_KEYS)) {
+                psInsertJournal.setInt(1, journal.getUserId());
+                psInsertJournal.setInt(2, calculerCalories(recettes));
+                psInsertJournal.setDate(3, new java.sql.Date(journal.getDate().getTime()));
+                psInsertJournal.executeUpdate();
+
                 int journalId;
-                try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = psInsertJournal.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         journalId = generatedKeys.getInt(1);
                     } else {
@@ -38,27 +77,24 @@ public class JournalService implements JService<Journal, Recette> {
                     }
                 }
 
-                // Insert into journal_recette table to establish many-to-many relationship
-                String insertJournalRecetteQuery = "INSERT INTO journal_recette (journal_id, recette_id) VALUES (?, ?)";
-                try (PreparedStatement ps1 = MyConnexion.getInstance().getCnx().prepareStatement(insertJournalRecetteQuery)) {
-                    System.out.println(journalId);
-
+                // Insert recettes into journal_recette table
+                try (PreparedStatement psInsertJournalRecette = MyConnexion.getInstance().getCnx().prepareStatement(insertJournalRecetteQuery)) {
                     for (Recette recette : recettes) {
-                        // Insert the relationship
-                        ps1.setInt(1, journalId);
-                        ps1.setInt(2, recette.getId());
-                        ps1.executeUpdate();
+                        psInsertJournalRecette.setInt(1, journalId);
+                        psInsertJournalRecette.setInt(2, recette.getId());
+                        psInsertJournalRecette.executeUpdate();
                     }
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
                 }
 
-                System.out.println("Journal added successfully!");
+                System.out.println("New journal added successfully!");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
+
+
 
     public int calculerCalories(List<Recette> list){
         int total=0;

@@ -42,7 +42,7 @@ public class CardDesignController {
         this.ingredient = ingredient;
         System.out.println(ingredient.getId());
         nameIng.setText(ingredient.getNom());
-        image = new Image("C:\\tools\\optihealth\\src\\main\\resources\\images\\IngredientsImages\\"+ingredient.getImage());
+        image = new Image("C:\\tools\\optihealth\\src\\main\\java\\edu\\CodeRed\\uploads\\"+ingredient.getImage());
         prod_imageView.setImage(image);
     }
 
