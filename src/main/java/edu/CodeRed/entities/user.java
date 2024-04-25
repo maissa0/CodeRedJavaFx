@@ -66,11 +66,11 @@ public class user {
         this.date_de_naissance = date_de_naissance;
     }
 
-    public String getrole() {
+    public String getRole() {
         return role;
     }
 
-    public void setrole(String role) {
+    public void setRole(String role) {
         this.role = role;
     }
 
@@ -113,58 +113,45 @@ public user( String email,String nom, String prenom, String date_de_naissance, S
     this.num_de_telephone = num_de_telephone;
 
 }
-    //constructors
 
-    public user(int id, String email, String password, String nom, String prenom, String date_de_naissance, String role, String genre, String adresse, String num_de_telephone) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.date_de_naissance = date_de_naissance;
-        this.role = role;
-        this.genre = genre;
-        this.adresse = adresse;
-        this.num_de_telephone = num_de_telephone;
+    public user() {
     }
 
     //Login Constructor
-  /*  public user(int id, String email,  String password, String nom, String prenom, String date_de_naissance, String genre, String adresse, String num_de_telephone, String role) {
-        this.id = id;
-        this.email = email;
+   public user(int id, String email,  String password, String nom, String prenom, String date_de_naissance, String genre, String adresse, String num_de_telephone, String role) {
+       this.id = id;
+       this.email = email;
 
-        this.password = password;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.date_de_naissance = date_de_naissance;
-        this.genre = genre;
-        this.adresse = adresse;
-        this.num_de_telephone = num_de_telephone;
-        role = role;
-    }*/
-    //update constructor
+       this.password = password;
+       this.nom = nom;
+       this.prenom = prenom;
+       this.date_de_naissance = date_de_naissance;
+       this.genre = genre;
+       this.adresse = adresse;
+       this.num_de_telephone = num_de_telephone;
+       this.role = role;
 
-    //to String
+       //update constructor
 
+       //to String
+
+
+   }
 
     @Override
     public String toString() {
         return "user{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
-
                 ", password='" + password + '\'' +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
                 ", date_de_naissance='" + date_de_naissance + '\'' +
                 ", role='" + role + '\'' +
                 ", genre='" + genre + '\'' +
-
                 ", adresse='" + adresse + '\'' +
                 ", num_de_telephone='" + num_de_telephone + '\'' +
-
                 '}';
     }
-
 }
 

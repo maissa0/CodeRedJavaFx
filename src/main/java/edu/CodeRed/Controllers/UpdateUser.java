@@ -57,7 +57,7 @@ public class UpdateUser {
         numtel_input.setText(User.getNum_de_telephone());
         prenom_input.setText(User.getPrenom());
         nom_input.setText(User.getNom());
-        role_combobox.setValue(User.getrole());
+        role_combobox.setValue(User.getRole());
         mdp_input.setText(User.getPassword());
         gender_combobox.setValue(User.getGenre());
 
@@ -110,7 +110,7 @@ public class UpdateUser {
         User.setNom(nom);
         User.setPrenom(prenom);
         User.setNum_de_telephone(numtel);
-        User.setrole(role);
+        User.setRole(role);
 
         // Perform actions to update user data in the database or send it to a server
         // Example: You can call a service method to update the user data

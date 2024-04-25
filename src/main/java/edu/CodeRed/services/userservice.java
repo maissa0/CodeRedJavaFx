@@ -33,7 +33,7 @@ public class userservice implements IService<user>{
             pstm.setString(3, user.getNom());
             pstm.setString(4, user.getPrenom());
             pstm.setString(5, user.getDate_de_naissance());
-            pstm.setString(6, user.getrole());
+            pstm.setString(6, user.getRole());
             pstm.setString(7, user.getGenre());
             pstm.setString(8, user.getAdresse());
             pstm.setString(9, user.getNum_de_telephone());
@@ -60,7 +60,7 @@ public class userservice implements IService<user>{
             preparedStatement.setString(3, user.getNom());
             preparedStatement.setString(4, user.getPrenom());
             preparedStatement.setString(5, user.getDate_de_naissance());
-            preparedStatement.setString(6, user.getrole());
+            preparedStatement.setString(6, user.getRole());
             preparedStatement.setString(7, user.getGenre());
             preparedStatement.setString(8, user.getAdresse());
             preparedStatement.setString(9, user.getNum_de_telephone());
@@ -112,20 +112,20 @@ public class userservice implements IService<user>{
             Statement srt = MyConnexion.getInstance().getCnx().createStatement();
             ResultSet rs = srt.executeQuery(query);
             while(rs.next()){
-                user user = new user (
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getString(9),
-                        rs.getString(10));
+                user User = new user ();
+                        User.setId(rs.getInt(1));
+                User.setEmail(rs.getString("email"));
+                User.setPassword(rs.getString("password"));
+                User.setNom(rs.getString("nom"));
+                User.setPrenom(rs.getString("prenom"));
+                User.setDate_de_naissance(rs.getString("date_de_naissance"));
+                User.setRole(rs.getString("role"));
+                User.setGenre(rs.getString("genre"));
+                User.setAdresse(rs.getString("adresse"));
+                User.setNum_de_telephone(rs.getString("num_de_telephone"));
 
 
-                list.add(user);
+                list.add(User);
             }
             System.out.println("All users are added to the list!");
         } catch (SQLException e) {
@@ -133,18 +133,21 @@ public class userservice implements IService<user>{
         }
         return list;
     }
+
+
     //Methode to login
     public user loginUser(String email, String password){
         String query = "SELECT * FROM user WHERE email = ? AND password = ?";
+
         String encryptedPassword = encrypt(password);
 
-        try (PreparedStatement preparedStatement = MyConnexion.getInstance().getCon().prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, encryptedPassword);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    // User login successful, create a user object and return it
+                    // ser login successful, create a user object and return it
                     int userId = resultSet.getInt("id");
 
                     String userEmail = resultSet.getString("email");

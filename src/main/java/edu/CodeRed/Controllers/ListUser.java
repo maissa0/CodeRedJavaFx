@@ -83,14 +83,14 @@ public class ListUser {
 
         // Set cell value factories for each TableColumn
         user_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        user_adresse.setCellValueFactory(new PropertyValueFactory<>("adresse"));
         user_email.setCellValueFactory(new PropertyValueFactory<>("email"));
-        user_prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        user_mdp.setCellValueFactory(new PropertyValueFactory<>("password"));
         user_nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        user_prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         user_datedenaissance.setCellValueFactory(new PropertyValueFactory<>("date_de_naissance"));
         user_Role.setCellValueFactory(new PropertyValueFactory<>("role"));
         user_genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
-        user_mdp.setCellValueFactory(new PropertyValueFactory<>("password"));
+        user_adresse.setCellValueFactory(new PropertyValueFactory<>("adresse"));
         user_numtel.setCellValueFactory(new PropertyValueFactory<>("num_de_telephone"));
         actions1.setCellFactory(createActionsCellFactory());
         // Set the items to the TableView
