@@ -81,6 +81,7 @@
                   <Font name="Dubai Regular" size="15.0" />
                </font>
             </Text>
+            <Button fx:id="btnPDF" layoutX="39.0" layoutY="112.0" onMouseClicked="#genererPDF" mnemonicParsing="false" prefHeight="37.0" prefWidth="72.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="PDF" />
             </children>
         </AnchorPane>
     </children>

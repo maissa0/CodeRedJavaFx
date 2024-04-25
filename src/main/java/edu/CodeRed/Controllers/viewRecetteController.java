@@ -6,6 +6,7 @@ import edu.CodeRed.services.IngredientService;
 import edu.CodeRed.services.RecetteService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -201,5 +202,15 @@ public class viewRecetteController implements Initializable {
             alert.setContentText("Veuillez sélectionner un ingrédient à supprimer.");
             alert.showAndWait();
         }
+    }
+
+    @FXML
+    void open_Stat(ActionEvent event) throws IOException{
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/statistiques.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 }

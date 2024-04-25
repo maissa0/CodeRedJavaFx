@@ -33,7 +33,9 @@ public class ListFrontRecetteController implements Initializable {
         return this.idRecette;
     }
 
-
+    public void setIdRecette(int id){
+        this.idRecette=id;
+    }
 
 
     @Override
@@ -51,6 +53,8 @@ public class ListFrontRecetteController implements Initializable {
             }
             CardDesignRecetteFrontController itemController = fxmlLoader.getController();
             itemController.setRecetteDataF(recetteList.get(i));
+            setIdRecette(recetteList.get(i).getId());
+            System.out.println(getIdRecette());
 
 
             if (column == 3) {

@@ -34,15 +34,6 @@ public class CardDesignRecetteFrontController {
     void showDetailsRecetteF(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/showDetailsRecetteFront.fxml"));
         Parent root = loader.load();
-        showDetailsRecetteFrontController controller = loader.getController();
-
-        // Pass the ID of the recipe to the showDetailsRecetteFrontController
-        controller.setIdRecette(rec.getId()); // Assuming rec is the selected recipe
-
-        // Close the current stage
-        Stage stage = (Stage) card_form.getScene().getWindow();
-        stage.close();
-
         // Open a new stage to show the details of the recipe
         Scene scene = new Scene(root);
         Stage newStage = new Stage();

@@ -40,38 +40,27 @@ public class showDetailsRecetteFrontController implements Initializable {
     private VBox vBoxIng;
 
     Recette r;
-    private int idRecette;
-
-
-    public void setIdRecette(int idRecette) {
-        this.idRecette = idRecette;
-    }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        RecetteService rs = new RecetteService();
+        RecetteService rs=new RecetteService();
         try {
             FXMLLoader load = new FXMLLoader();
             load.setLocation(getClass().getResource("/ListFrontRecette.fxml"));
             AnchorPane pane = load.load();
             ListFrontRecetteController item = load.getController();
 
-            int idRecette = item.getIdRecette(); // Access idRecette here
-
-            r = rs.findById(idRecette);
+            try {
+                r = rs.findById(item.getIdRecette());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
-
         labelNomRecette.setText(r.getNom());
         labelCategRecette.setText(r.getCategorie());
-
         labelImgRecette.setImage(new Image("C:\\tools\\optihealth\\src\\main\\java\\edu\\CodeRed\\uploads\\"+r.getImage()));
-
         labelDescriptionRecette.setText(r.getDescription());
         labelCalorieRecette.setText(String.valueOf(r.getCalorieRecette()));
         System.out.println(r.getId());
