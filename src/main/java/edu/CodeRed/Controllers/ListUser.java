@@ -29,13 +29,16 @@ import java.util.Optional;
 public class ListUser {
 
     @FXML
+    public TableColumn<user, Void> actions1;
+
+    @FXML
     private TableView<user> list_user;
 
     @FXML
-    private TextField searchbar_id;
+    public TextField searchbar_id;
 
     @FXML
-    private TableColumn<user, Void> actions;
+    private TableColumn<user, String> user_Role;
 
     @FXML
     private TableColumn<user, String> user_adresse;
@@ -62,7 +65,8 @@ public class ListUser {
     private TableColumn<user, String> user_numtel;
 
     @FXML
-    private TableColumn<user, String> user_prenom;
+    private TableColumn<user, String > user_prenom;
+
 
     private final userservice userService = new userservice(); // Initialize UserService
 
@@ -84,15 +88,17 @@ public class ListUser {
         user_prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         user_nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         user_datedenaissance.setCellValueFactory(new PropertyValueFactory<>("date_de_naissance"));
+        user_Role.setCellValueFactory(new PropertyValueFactory<>("role"));
         user_genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
         user_mdp.setCellValueFactory(new PropertyValueFactory<>("password"));
         user_numtel.setCellValueFactory(new PropertyValueFactory<>("num_de_telephone"));
-
+        actions1.setCellFactory(createActionsCellFactory());
         // Set the items to the TableView
         list_user.setItems(userList);
 
-        // Set the cell factory for the actions column
-        actions.setCellFactory(createActionsCellFactory());
+
+
+
     }
 
     private Callback<TableColumn<user, Void>, TableCell<user, Void>> createActionsCellFactory() {
