@@ -173,6 +173,7 @@ public class IngredientController {
             // Effacer les champs après l'ajout réussi
             nomIng.clear();
             imageIng.clear();
+            imgIngredientInput.setImage(null);
 
 
         } catch (Exception e) {
@@ -192,15 +193,19 @@ public class IngredientController {
             Image image = new Image(selectedImageFile.toURI().toString());
             imgIngredientInput.setImage(image);
 
-            // Générer un nom de fichier unique pour l'image
+            // Generate a unique file name for the image
             String uniqueID = UUID.randomUUID().toString();
             String extension = selectedImageFile.getName().substring(selectedImageFile.getName().lastIndexOf("."));
             imageName = uniqueID + extension;
+
+            // Set the text value of imageIng to the generated file name
+            imageIng.setText(imageName);
 
             Path destination = Paths.get(System.getProperty("user.dir"), "src","main","java","edu","CodeRed", "uploads", imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
     }
+
 
 
     private void showAlert(String message) {

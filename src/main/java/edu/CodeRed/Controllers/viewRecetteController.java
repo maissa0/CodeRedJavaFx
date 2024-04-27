@@ -213,4 +213,16 @@ public class viewRecetteController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+
+    @FXML
+    void open_addRecette(ActionEvent event) throws IOException {
+
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/AddRecette.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+    }
 }

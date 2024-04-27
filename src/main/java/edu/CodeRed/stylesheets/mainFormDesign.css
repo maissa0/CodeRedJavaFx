@@ -41,9 +41,7 @@ and open the template in the editor.
     -fx-background-color: #a71931;
 }
 
-.shadow{
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5,0,0,0);
-}
+
 
 .white-bg{
     -fx-background-color: #fff;

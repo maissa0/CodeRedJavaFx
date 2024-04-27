@@ -10,15 +10,16 @@ import java.io.IOException;
 
 public class Home extends Application {
     private static Stage primaryStage;
+
     public static void main(String[] args) {
         launch(args);
     }
 
-
     @Override
     public void start(Stage primaryStage) {
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/viewRecette.fxml"));
+        Home.primaryStage = primaryStage; // Initialize the primaryStage field
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ingredient.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -28,7 +29,7 @@ public class Home extends Application {
         }
     }
 
-    public static FXMLLoader loadFXML(String fxmlFileName) throws IOException {
+    public static FXMLLoader loadFXML(Stage primaryStage, String fxmlFileName) throws IOException {
         FXMLLoader loader = new FXMLLoader(Home.class.getResource(fxmlFileName));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -37,4 +38,3 @@ public class Home extends Application {
         return loader;
     }
 }
-

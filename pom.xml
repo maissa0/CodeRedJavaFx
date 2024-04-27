@@ -58,6 +58,10 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+
+        <javafx.version>20.0.2</javafx.version>
+        <css.version>3.0</css.version>
     </properties>
 
 </project>

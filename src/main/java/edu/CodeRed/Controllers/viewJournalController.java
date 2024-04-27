@@ -6,6 +6,7 @@ import edu.CodeRed.services.JournalService;
 import edu.CodeRed.services.RecetteService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -152,6 +153,17 @@ public class viewJournalController implements Initializable {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.showAndWait();
+    }
+
+    @FXML
+    void GoToAddJournal(ActionEvent event) throws IOException {
+        FXMLLoader loader =new FXMLLoader(getClass().getResource("/addJournal.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.showAndWait();
+
     }
     void openDetails()throws IOException{
         FXMLLoader loader =new FXMLLoader(getClass().getResource("/showDetailsJournal.fxml"));

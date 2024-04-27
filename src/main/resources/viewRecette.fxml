@@ -19,7 +19,7 @@
 
             <AnchorPane prefHeight="641.0" prefWidth="1145.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <children>
-                    <AnchorPane layoutX="292.0" layoutY="14.0" prefHeight="608.0" prefWidth="849.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css">
+                    <AnchorPane layoutX="303.0" layoutY="14.0" prefHeight="608.0" prefWidth="838.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css">
                         <styleClass>
                             <String fx:value="white-bg" />
                             <String fx:value="shadow" />
@@ -36,7 +36,8 @@
                            <TableColumn fx:id="actionsColumn" prefWidth="207.33343505859375" text="Actions" />
                        </columns>
                      </TableView>
-                     <Button layoutX="344.0" layoutY="37.0" mnemonicParsing="false" onAction="#open_Stat" text="Statistiques" />
+                     <Button layoutX="199.0" layoutY="55.0" mnemonicParsing="false" onAction="#open_Stat" text="Statistiques" />
+                     <Button layoutX="95.0" layoutY="55.0" mnemonicParsing="false" onAction="#open_addRecette" text="Ajouter" />
                   </children>
                     </AnchorPane>
                 </children>

@@ -111,21 +111,42 @@ public class AddRecetteController implements Initializable {
 
     @FXML
     void addRecette(ActionEvent event) {
-        if (nomRec.getText().isEmpty() || catRec.getItems().isEmpty() || descRec.getText().isEmpty() || calRec.getText().isEmpty())
-        {
+        if (nomRec.getText().isEmpty() || catRec.getItems().isEmpty() || descRec.getText().isEmpty() || calRec.getText().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Information manquante");
             alert.setHeaderText(null);
             alert.setContentText("Vous devez remplir tous les détails concernant votre recette.");
-            Optional<ButtonType> option = alert.showAndWait();
+            alert.showAndWait();
         } else {
+            int cal = 0;
+            try {
+                cal = Integer.parseInt(calRec.getText());
+                if (cal <= 0) {
+                    // Notify the user about the invalid input
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Valeur invalide");
+                    alert.setHeaderText(null);
+                    alert.setContentText("La valeur des calories doit être un entier positif.");
+                    alert.showAndWait();
+                    return; // Stop further execution
+                }
+            } catch (NumberFormatException e) {
+                // Handle the case where the input is not a valid integer
+                // Notify the user about the invalid input
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Valeur invalide");
+                alert.setHeaderText(null);
+                alert.setContentText("La valeur des calories doit être un entier positif.");
+                alert.showAndWait();
+                return; // Stop further execution
+            }
+
             ajouterRecette();
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Ajouté avec succès");
             alert.setHeaderText(null);
             alert.setContentText("Votre recette a été ajoutée avec succès.");
-            Optional<ButtonType> option = alert.showAndWait();
-
+            alert.showAndWait();
         }
     }
 
@@ -160,6 +181,7 @@ public class AddRecetteController implements Initializable {
         String categ=catRec.getValue();
         String image=imageName;
         int cal = Integer.parseInt(calRec.getText());
+
 
         RecetteService rs = new RecetteService();
         Recette r = new Recette(nom,categ,image,description,cal);
