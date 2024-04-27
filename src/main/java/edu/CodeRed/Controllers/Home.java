@@ -18,7 +18,7 @@ public class Home extends Application {
     @Override
     public void start(Stage primaryStage) {
         Home.primaryStage = primaryStage; // Assign primaryStage to the static field
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/listUser.fxml"));
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);

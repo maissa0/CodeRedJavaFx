@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -11,41 +10,40 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="700" prefWidth="1200" style="-fx-background-color: #FFDBC4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.loginUser">
+<AnchorPane prefHeight="698.0" prefWidth="1105.0" style="-fx-background-color: #FFDBC4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.loginUser">
     <children>
-        <TextField fx:id="email_input" layoutX="116.0" layoutY="299.0" prefHeight="29.0" prefWidth="264.0" style="-fx-border-color: black; -fx-background-color: #FFDBC4; -fx-border-radius: 100; -fx-background-color: #FFDBC4; -fx-border-width: 2; -fx-text-fill: white;" />
-        <PasswordField fx:id="password_input" layoutX="116.0" layoutY="364.0" prefHeight="29.0" prefWidth="264.0" style="-fx-background-color: #FFDBC4; -fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2; -fx-text-fill: white;" />
-        <Text fill="#161616" layoutX="115.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:">
+        <TextField fx:id="email_input" layoutX="607.0" layoutY="256.0" prefHeight="29.0" prefWidth="264.0" style="-fx-border-color: black; -fx-background-color: #FFDBC4; -fx-border-radius: 100; -fx-background-color: #FFDBC4; -fx-border-width: 2; -fx-text-fill: white;" />
+        <PasswordField fx:id="password_input" layoutX="610.0" layoutY="337.0" prefHeight="29.0" prefWidth="264.0" style="-fx-background-color: #FFDBC4; -fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2; -fx-text-fill: white;" />
+        <Text fill="#161616" layoutX="631.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:">
             <font>
                 <Font name="Montserrat Regular" size="25.0" />
             </font>
         </Text>
-        <Text fill="#161616" layoutX="116.0" layoutY="358.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mot De Passe" wrappingWidth="171.0">
+        <Text fill="#161616" layoutX="614.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mot De Passe" wrappingWidth="171.0">
             <font>
                 <Font name="Montserrat Regular" size="25.0" />
             </font>
         </Text>
-        <Text layoutX="115.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Se Connecter ! ">
+        <Text layoutX="618.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Se Connecter ! ">
             <font>
                 <Font name="Dubai Bold" size="50.0" />
             </font>
         </Text>
-        <CheckBox layoutX="116.0" layoutY="400.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="171.0" style="-fx-background-color: #FFDBC4;" text="Stay Connected" textFill="#07e26d" />
 
-        <Button layoutX="116.0" layoutY="453.0" mnemonicParsing="false" onAction="#login" prefHeight="29.0" prefWidth="107.0" style="-fx-border-color: black; -fx-border-radius: 100; -fx-background-color: #FFDBC4; -fx-border-width: 2;" text="Connexion " textFill="#ff9000">
+        <Button layoutX="614.0" layoutY="383.0" mnemonicParsing="false" onAction="#login" prefHeight="29.0" prefWidth="107.0" style="-fx-border-color: black; -fx-border-radius: 100; -fx-background-color: #FFDBC4; -fx-border-width: 2;" text="Connexion " textFill="#ff9000">
             <font>
                 <Font name="Montserrat SemiBold" size="15.0" />
             </font>
         </Button>
-        <Text fill="WHITE" layoutX="236.0" layoutY="477.0" strokeType="OUTSIDE" strokeWidth="0.0" text="or" wrappingWidth="14.490234375">
+        <Text fill="WHITE" layoutX="380.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="or" wrappingWidth="14.490234375">
             <font>
                 <Font size="14.0" />
             </font></Text>
-        <Hyperlink layoutX="250.0" layoutY="458.0" onAction="#register_page" text="S'inscrire ">
+        <Hyperlink layoutX="759.0" layoutY="387.0" onAction="#register_page" text="S'inscrire ">
             <font>
                 <Font size="14.0" />
             </font></Hyperlink>
-        <ImageView fitHeight="700.0" fitWidth="600.0" layoutX="600.0">
+        <ImageView fitHeight="700.0" fitWidth="780.0" layoutX="-262.0" layoutY="10.0">
             <image>
                 <Image url="@images/logobg.png" />
             </image>

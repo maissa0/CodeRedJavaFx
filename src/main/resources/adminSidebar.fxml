@@ -9,32 +9,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-
-            prefHeight="700.0" prefWidth="300.0">
-
+<AnchorPane prefHeight="700.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.adminSidebar">
     <children>
-        <ImageView fitHeight="35.0" fitWidth="200.0" layoutX="50.0" layoutY="27.0">
-            <image>
-                <Image url="@images/logo.png" />
-            </image>
-        </ImageView>
-        <Pane layoutX="12.0" layoutY="79.0" prefHeight="605.0" prefWidth="275.0" style="-fx-background-color: #6096BA; -fx-border-radius: 10; -fx-border-color: #6096BA; -fx-background-radius: 10;">
+        <Pane layoutX="10.0" layoutY="13.0" prefHeight="663.0" prefWidth="281.0" style="-fx-background-color: #4CC459; -fx-border-radius: 10; -fx-border-color: #4CC459; -fx-background-radius: 10;">
             <children>
-                <Label fx:id="welcome" layoutX="69.0" layoutY="42.0" text="Welcome Back!">
-                    <font>
-                        <Font name="System Bold" size="21.0" />
-                    </font>
-                </Label>
-                <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="97.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Dashboard">
+                <Button alignment="BASELINE_CENTER" layoutX="38.0" layoutY="97.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Dashboard">
 
                     <opaqueInsets>
                         <Insets />
                     </opaqueInsets>
                 </Button>
-                <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="144.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="User Management">
+                <Button alignment="BASELINE_CENTER" onAction="#back_to_list" layoutX="40.0" layoutY="144.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="User Management">
                     <graphic>
                         <ImageView>
                             <image>
@@ -42,7 +27,7 @@
                             </image>
                         </ImageView>
                     </graphic></Button>
-                <Button alignment="BASELINE_CENTER" layoutX="49.0" layoutY="191.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Events Management">
+                <Button alignment="BASELINE_CENTER" layoutX="40.0" layoutY="191.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion Des Repas">
                     <graphic>
                         <ImageView>
                             <image>
@@ -51,7 +36,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="238.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Forum Management">
+                <Button alignment="BASELINE_CENTER" layoutX="37.0" layoutY="238.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Forum Management">
                     <graphic>
                         <ImageView>
                             <image>
@@ -60,7 +45,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="285.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Shop Management">
+                <Button alignment="BASELINE_CENTER" layoutX="37.0" layoutY="285.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="210.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion de boutique ">
                     <graphic>
                         <ImageView>
                             <image>
@@ -69,7 +54,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button alignment="BASELINE_CENTER" layoutX="50.0" layoutY="332.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Blog Management">
+                <Button alignment="BASELINE_CENTER" layoutX="44.0" layoutY="332.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Blog Management">
                     <graphic>
                         <ImageView>
                             <image>
@@ -78,7 +63,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button alignment="BASELINE_CENTER" layoutX="49.0" layoutY="419.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Edit your profile">
+                <Button alignment="BASELINE_CENTER"  onAction="#modifyy_user" layoutX="49.0" layoutY="419.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Modifier Votre Profile">
                     <graphic>
                         <ImageView>
                             <image>
@@ -87,7 +72,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Button alignment="BASELINE_CENTER" layoutX="49.0" layoutY="466.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Deconnexion">
+                <Button alignment="BASELINE_CENTER" onAction="#back_to_login" layoutX="49.0" layoutY="466.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Deconnexion">
 
                 </Button>
                 <ImageView fx:id="picture" fitHeight="65.0" fitWidth="65.0" layoutX="17.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0,😎, 10, 0, 0, 0)); -fx-padding: 10;" />
@@ -95,7 +80,7 @@
 
                 <Label fx:id="role" layoutX="200.0" layoutY="550.0" text="Label" />
                 <Label fx:id="Nom" layoutX="200.0" layoutY="526.0" text="Label" />
-                <Label layoutX="124.0" layoutY="526.0" text="otre Nom:">
+                <Label layoutX="124.0" layoutY="526.0" text="Votre Nom:">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font></Label>
@@ -105,6 +90,11 @@
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
+              <ImageView fitHeight="71.0" fitWidth="126.0" layoutX="77.0" layoutY="14.0">
+                  <image>
+                      <Image url="@images/logo.png" />
+                  </image>
+              </ImageView>
 
             </children>
         </Pane>

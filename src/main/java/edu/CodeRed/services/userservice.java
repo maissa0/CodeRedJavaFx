@@ -5,10 +5,11 @@ import edu.CodeRed.interfaces.IService;
 import edu.CodeRed.tools.MyConnexion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
 import java.security.MessageDigest;
-
 import java.security.NoSuchAlgorithmException;
+
+
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -22,6 +23,8 @@ public class userservice implements IService<user>{
     }
     @Override
     public void addUser(user user) {
+        String passwordencrypted = encrypt(user.getPassword());
+
         // 1. Prepare the SQL statement using a placeholder for each value
         String sql = "INSERT INTO `user` (`email`, `password`,`nom`, `prenom`, `date_de_naissance`, `role`,`genre`, `adresse`, `num_de_telephone`) VALUES (?,  ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -145,10 +148,13 @@ public class userservice implements IService<user>{
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, encryptedPassword);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            try (ResultSet resultSet = preparedStatement.executeQuery())
+            {
                 if (resultSet.next()) {
+
                     // ser login successful, create a user object and return it
                     int userId = resultSet.getInt("id");
+
 
                     String userEmail = resultSet.getString("email");
                     String userPassword = resultSet.getString("password");
@@ -211,8 +217,8 @@ public class userservice implements IService<user>{
     public void DeleteEntityWithConfirmation(user User) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText("Suppression de logement");
-        confirmationAlert.setContentText("Voulez-vous vraiment supprimer ce logement?");
+        confirmationAlert.setHeaderText("Suppression de l'utilisateur");
+        confirmationAlert.setContentText("Voulez-vous vraiment supprimer cet utilisateur?");
 
         Optional<ButtonType> result = confirmationAlert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {

@@ -9,6 +9,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 import java.time.LocalDate;
 
 public class UpdateUser {
@@ -70,13 +72,21 @@ public class UpdateUser {
     }
 
     @FXML
-    void back_to_list(ActionEvent event) {
-        // Implement method to go back to the list view
+    void back_to_list(ActionEvent event) throws IOException {
+        edu.CodeRed.controllers.Home.loadFXML("/listUser.fxml");
     }
 
     @FXML
     void reset_input(ActionEvent event) {
-        // Implement method to reset input fields
+        nom_input.clear();
+        birthday_input.setValue(null);
+        email_input.clear();
+        prenom_input.clear();
+        role_combobox.setValue(null);
+        gender_combobox.setValue(null);
+        mdp_input.clear();
+        adresse_input.clear();
+        numtel_input.clear();
     }
 
     @FXML

@@ -1,4 +1,5 @@
 package edu.CodeRed.controllers;
+import com.sun.javafx.geom.AreaOp;
 import edu.CodeRed.entities.user;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,10 +15,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;
 public class loginUser {
-
-
-
-
         @FXML
         private TextField password_input;
         @FXML
@@ -26,12 +23,11 @@ public class loginUser {
         private Text error;
         private userservice userservice = new userservice();
 
-
-
     @FXML
         void login(ActionEvent event) throws SQLException {
             try {
                 user user;
+
                 if ((user = userservice.loginUser(email_input.getText(), password_input.getText()))!=null) {
                     UserSession.getInstance(user.getId(),user.getEmail(), user.getPassword(),user.getNom(),user.getPrenom(),user.getDate_de_naissance(),user.getRole(),user.getGenre(),user.getAdresse(),user.getNum_de_telephone());
 

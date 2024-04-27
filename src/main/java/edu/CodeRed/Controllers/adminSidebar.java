@@ -25,9 +25,22 @@ public class adminSidebar {
     private Label welcome;
 
     @FXML
-    void go_toRecetteAdd(ActionEvent event) throws IOException {
-        edu.CodeRed.controllers.Home.loadFXML("/AddRecette.fxml");
+    void go_toadduser(ActionEvent event) throws IOException {
+        edu.CodeRed.controllers.Home.loadFXML("/addUser.fxml");
 
+    }
+    @FXML
+    void back_to_list(ActionEvent event) throws IOException {
+        edu.CodeRed.controllers.Home.loadFXML("/listUser.fxml");
+    }
+    @FXML
+    void back_to_login(ActionEvent event) throws IOException {
+        edu.CodeRed.controllers.Home.loadFXML("/login.fxml");
+    }
+
+    @FXML
+    void modifyy_user(ActionEvent event) throws IOException {
+        edu.CodeRed.controllers.Home.loadFXML("/UpdateUser.fxml");
     }
 
 }

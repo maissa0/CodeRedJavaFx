@@ -46,7 +46,7 @@
         <Text fx:id="error" fill="RED" layoutX="469.0" layoutY="624.0" strokeType="OUTSIDE" strokeWidth="0.0" />
 
     </children>
-    <BorderPane layoutY="-62.0" prefHeight="602.0" prefWidth="300.0">
+    <BorderPane layoutY="-2.0" prefHeight="602.0" prefWidth="200.0">
         <left>
             <fx:include source="adminSidebar.fxml" />
         </left>

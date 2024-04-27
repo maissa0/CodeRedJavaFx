@@ -49,8 +49,8 @@ public class AddUser {
     private TextField prenom_input;
 
     @FXML
-    void back_to_list(ActionEvent event) {
-
+    void back_to_list(ActionEvent event) throws IOException {
+        edu.CodeRed.controllers.Home.loadFXML("/listUser.fxml");
     }
 
 
@@ -91,6 +91,21 @@ public class AddUser {
             error.setVisible(true);
             return false;
         }
+        // Vérifie si la date de naissance est sélectionnée
+        LocalDate selectedDate = birthday_input.getValue();
+        if (selectedDate == null) {
+            error.setText("Please select your date of birth");
+            error.setVisible(true);
+            return false;
+        }
+
+        // Vérifie si la date de naissance est antérieure à 2004
+        if (selectedDate.getYear() < 2004) {
+            error.setText("You must be born after 2004");
+            error.setVisible(true);
+            return false;
+        }
+
 
         String email = email_input.getText();
         if (!isEmailValid(email)) {
@@ -106,6 +121,7 @@ public class AddUser {
         }
         return true;
     }
+
     //Password validation methode
     private boolean isValidPassword(String password) {
         String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!/])(?=\\S+$).{8,}$";

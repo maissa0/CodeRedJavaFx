@@ -9,25 +9,28 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="673.0" prefWidth="1427.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.ListUser">
+<AnchorPane prefHeight="686.0" prefWidth="1049.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.ListUser">
     <children>
 
-        <TableView fx:id="list_user" layoutX="304.0" layoutY="145.0" prefHeight="438.0" prefWidth="1097.0">
+        <TableView fx:id="list_user" layoutX="304.0" layoutY="176.0" prefHeight="407.0" prefWidth="700.0">
             <columns>
-                <TableColumn fx:id="user_id" prefWidth="84.66665649414062" text="ID" />
-                <TableColumn fx:id="user_nom" prefWidth="88.0" text="Nom" />
-                <TableColumn fx:id="user_prenom" prefWidth="84.66671752929688" text="Prénom" />
-                <TableColumn fx:id="user_datedenaissance" minWidth="0.0" prefWidth="104.0" text="Date de naissance" />
-                <TableColumn fx:id="user_genre" prefWidth="101.0" text="Genre" />
-                <TableColumn fx:id="user_numtel" prefWidth="91.0" text="num de téléphone" />
-                <TableColumn fx:id="user_adresse" prefWidth="124.0" text="Adresse" />
-                <TableColumn fx:id="user_email" prefWidth="124.666748046875" text="E-mail" />
-                <TableColumn fx:id="user_mdp" prefWidth="112.6666259765625" text="Mot de Passe" />
-                <TableColumn fx:id="user_Role" prefWidth="91.333251953125" text="Role" />
-            <TableColumn fx:id="actions1" prefWidth="91.333251953125" text="Actions" />
+                <TableColumn fx:id="user_id" prefWidth="44.66668701171875" text="ID" />
+                <TableColumn fx:id="user_nom" prefWidth="79.33334350585938" text="Nom" />
+                <TableColumn fx:id="user_prenom" prefWidth="81.33331298828125" text="Prénom" />
+                <TableColumn fx:id="user_datedenaissance" minWidth="0.0" prefWidth="125.33340454101562" text="Date de naissance" />
+                <TableColumn fx:id="user_genre" prefWidth="80.00006103515625" text="Genre" />
+                <TableColumn fx:id="user_numtel" prefWidth="110.66668701171875" text="num de téléphone" />
+                <TableColumn fx:id="user_adresse" prefWidth="82.66668701171875" text="Adresse" />
+                <TableColumn fx:id="user_email" prefWidth="83.33331298828125" text="E-mail" />
+                <TableColumn fx:id="user_mdp" prefWidth="118.6666259765625" text="Mot de Passe" />
+                <TableColumn fx:id="user_Role" prefWidth="89.33349609375" text="Role" />
+            <TableColumn fx:id="actions1" minWidth="8.6666259765625" prefWidth="203.333251953125" text="Actions" />
             </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
         </TableView>
-        <Button layoutX="1204.0" layoutY="607.0" mnemonicParsing="false" onAction="#add_user" prefHeight="36.0" prefWidth="199.0" style="-fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: white;" text="Ajouter un utilisateur">
+        <Button layoutX="782.0" layoutY="601.0" mnemonicParsing="false" onAction="#add_user" prefHeight="36.0" prefWidth="199.0" style="-fx-border-color: black; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-color: white;" text="Ajouter un utilisateur">
             <font>
                 <Font name="Montserrat SemiBold" size="15.0" />
             </font></Button>
@@ -41,13 +44,13 @@
                 <Font size="15.0" />
             </font>
         </Text>
-        <TextField fx:id="searchbar_id" layoutX="1133.0" layoutY="100.0" prefHeight="25.0" prefWidth="262.0" style="-fx-background-color: transparent; -fx-border-color: black;" />
-        <Text layoutX="1061.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rechercher:">
+        <TextField fx:id="searchbar_id" layoutX="765.0" layoutY="125.0" prefHeight="28.0" prefWidth="133.0" style="-fx-background-color: transparent; -fx-border-color: black;" />
+        <Text layoutX="682.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rechercher:">
             <font>
                 <Font name="Dubai Regular" size="15.0" />
             </font>
         </Text>
-        <BorderPane layoutY="-62.0" prefHeight="602.0" prefWidth="300.0">
+        <BorderPane layoutY="12.0" prefHeight="691.0" prefWidth="300.0">
             <left>
                 <fx:include source="adminSidebar.fxml" />
             </left>
