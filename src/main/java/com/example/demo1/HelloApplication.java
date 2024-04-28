@@ -7,7 +7,9 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -23,11 +25,9 @@ public class HelloApplication extends Application {
     public HelloApplication() throws SQLException {
     }
 
-
     @Override
     public void start(Stage primaryStage) throws IOException, SQLException {
         produitController = new ProduitController();
-
 
         BorderPane root = new BorderPane();
         root.setStyle("-fx-background-color: #f0f0f0;");
@@ -57,8 +57,12 @@ public class HelloApplication extends Application {
     private VBox createSlider() {
         VBox slider = new VBox();
         slider.setSpacing(10);
-        slider.setStyle("-fx-background-color: #4CAF50; -fx-padding: 10;");
+        slider.setStyle("-fx-background-color: #6096BA; -fx-padding: 10;");
         slider.setPrefWidth(200);
+
+        ImageView logoImageView = new ImageView(new Image("C:\\Users\\Aya\\IdeaProjects\\demo1\\src\\main\\resources\\Images\\Logo Optyhealth.png"));
+        logoImageView.setFitWidth(200);
+        logoImageView.setFitHeight(100);
 
         Button produitsButton = createButton("Produits");
         produitsButton.setOnAction(event -> {
@@ -66,17 +70,21 @@ public class HelloApplication extends Application {
             produitController.afficherProduits(produitsView);
             ((StackPane) ((BorderPane) produitsButton.getScene().getRoot()).getCenter()).getChildren().setAll(produitsView);
         });
-
         Button commandesButton = createButton("Commandes");
         commandesButton.setOnAction(event -> {
-            TableView<Commande> commandeTableView = new TableView<>();
+            TableView
+        <Commande> commandeTableView = new TableView<>();
 
             commandeController.afficherCommandes(commandeTableView);
             ((StackPane) ((BorderPane) commandesButton.getScene().getRoot()).getCenter()).getChildren().setAll(commandeTableView);
         });
 
-        slider.getChildren().addAll(produitsButton, commandesButton);
+        Label welcomeLabel = new Label("MARKETPLACE");
+        welcomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 21px;");
 
+        Separator separator = new Separator();
+
+        slider.getChildren().addAll(logoImageView, welcomeLabel, produitsButton,commandesButton, separator);
 
         return slider;
     }
@@ -84,8 +92,8 @@ public class HelloApplication extends Application {
     // Création de boutons pour le slider
     private Button createButton(String text) {
         Button button = new Button(text);
-        button.setPrefWidth(180);
-        button.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold; -fx-background-radius: 30;");
+        button.setPrefWidth(179);
+        button.setStyle("-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;");
         return button;
     }
 

@@ -2,7 +2,7 @@ package com.example.demo1.model;
 
 public class Produit {
 
-    private String nom;
+    private static String nom;
     private String description;
     private double prix;
     private String image;
@@ -14,7 +14,7 @@ public class Produit {
         this.image=image;
     }
 
-    public String getNom() {
+    public static String getNom() {
         return nom;
     }
 

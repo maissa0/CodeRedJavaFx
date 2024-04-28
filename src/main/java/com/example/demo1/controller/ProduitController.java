@@ -1,7 +1,11 @@
 package com.example.demo1.controller;
 
 import com.example.demo1.database.DataBase;
+import com.example.demo1.model.Panier;
 import com.example.demo1.model.Produit;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -13,8 +17,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+
 import javafx.stage.FileChooser;
 
 import java.io.File;
@@ -23,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static java.io.File.separator;
 
 public class ProduitController {
     private Connection connection;
@@ -31,12 +33,26 @@ public class ProduitController {
     public ProduitController() throws SQLException {
         this.connection = DataBase.getConnection();
     }
+
     public void afficherProduits(VBox produitsView) {
         List<Produit> produits = getAllProduits();
         produitsView.getChildren().clear();
 
+        // Create a search bar (optional, based on your needs)
+        // Create a centered HBox for the search bar and button
+        HBox searchBox = new HBox();
+        searchBox.setAlignment(Pos.CENTER);
+        produitsView.getChildren().add(searchBox);
 
+        // Create a smaller search bar with prompt text
+        TextField searchBar = new TextField();
+        searchBar.setPrefWidth(200); // Set preferred width for smaller size
+        searchBar.setPromptText("Rechercher un produit");
+        searchBox.getChildren().add(searchBar);
 
+        Button searchButton = new Button("Rechercher");
+        searchButton.setDisable(true); // Disable the button for UI purposes only
+        searchBox.getChildren().add(searchButton);
         TilePane tilePane = new TilePane();
         tilePane.setPadding(new Insets(10));
         tilePane.setHgap(20);
@@ -145,6 +161,7 @@ public class ProduitController {
                 }
             });
 
+
             boutonsBox.getChildren().addAll(editButton, deleteButton);
             carteProduit.getChildren().add(boutonsBox);
 
@@ -158,6 +175,7 @@ public class ProduitController {
         ajouterButton.setOnAction(event -> {
             afficherFormulaireAjoutProduit(produitsView);
         });
+
 
         // Créer une VBox pour contenir la TilePane et le bouton d'ajout de produit
         VBox container = new VBox();
@@ -265,6 +283,8 @@ public class ProduitController {
             prixField.clear();
             imageView.setImage(null); // Réinitialiser l'image affichée dans l'ImageView
         });
+
+
 
 
         // Créer un VBox pour contenir les champs du formulaire
@@ -391,6 +411,17 @@ public class ProduitController {
         // Si aucun produit avec le même nom n'a été trouvé, retourner faux
         return false;
     }
+    private void afficherMessageConfirmation() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Ajout au panier");
+        alert.setHeaderText(null);
+        alert.setContentText("Le produit a été ajouté au panier avec succès.");
+        alert.showAndWait();
+    }
+
+
+
+
 
 
 }

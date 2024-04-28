@@ -2,24 +2,41 @@ package com.example.demo1.controller;
 
 import com.example.demo1.database.DataBase;
 import com.example.demo1.model.Commande;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CommandeController {
     private Connection connection;
+    private ImageView QRCodeImageView;
+
+
+
+    // Raw use without specifying the type parameter
 
     public CommandeController() throws SQLException {
         this.connection = DataBase.getConnection();
+        this.QRCodeImageView = new ImageView();
 
     }
 
@@ -43,6 +60,7 @@ public class CommandeController {
         // À l'intérieur de la méthode afficherCommandes dans votre CommandeController
         editerColumn.setCellFactory(param -> new TableCell<>() {
             private final Button editerButton = new Button("Editer");
+
             {
                 editerButton.setOnAction(event -> {
                     Commande commande = getTableView().getItems().get(getIndex());
@@ -90,6 +108,7 @@ public class CommandeController {
                     ));
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -122,6 +141,7 @@ public class CommandeController {
                     }
                 });
             }
+
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -161,16 +181,50 @@ public class CommandeController {
                 }
             }
         });
+        TableColumn<Commande, Void> qrCodeColumn = new TableColumn<>("QRCode");
+        qrCodeColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button qrCodeButton = new Button("QRCode");
+            {
+                qrCodeButton.setOnAction(event -> {
+                    Commande selectedCommande = tableView.getSelectionModel().getSelectedItem();
+                    if (selectedCommande != null) {
+                        try {
+                            generateQRCode(tableView, selectedCommande);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        // Afficher un message d'erreur si aucune commande n'est sélectionnée
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Erreur");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Veuillez sélectionner une commande.");
+                        alert.showAndWait();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(qrCodeButton);
+                }
+            }
+        });
 
 
         // Ajouter les colonnes à la TableView
         tableView.getColumns().clear();
-        tableView.getColumns().addAll(idColumn, dateCmdColumn, etatCmdColumn,editerColumn, supprimerColumn,detailsColumn);
+        tableView.getColumns().addAll(idColumn, dateCmdColumn, etatCmdColumn, editerColumn, supprimerColumn, detailsColumn,qrCodeColumn);
 
         // Ajouter les commandes à la TableView
         ObservableList<Commande> commandeObservableList = FXCollections.observableArrayList(commandes);
         tableView.setItems(commandeObservableList);
     }
+
     public List<Commande> getAllCommandes() {
         List<Commande> commandes = new ArrayList<>();
 
@@ -195,6 +249,7 @@ public class CommandeController {
 
         return commandes;
     }
+
     public void editerCommande(int id, LocalDate newDateCmd, String newEtatCmd, int newQuantiteCmd, double newTotal) {
         try {
             String query = "UPDATE commande SET date_cmd = ?, etat_cmd = ?, qte_cmd = ?, total = ? WHERE id = ?";
@@ -221,6 +276,31 @@ public class CommandeController {
             e.printStackTrace();
         }
     }
+    private void generateQRCode(TableView<Commande> tableView, Commande selectedCommande) throws InterruptedException {
+        selectedCommande = tableView.getSelectionModel().getSelectedItem();
+        if (selectedCommande != null) {
+            String eventData = selectedCommande.toString(); // Adjust this based on your event data format
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            try {
+                Map<EncodeHintType, Object> hints = new HashMap<>();
+                hints.put(EncodeHintType.MARGIN, 0);
+                BitMatrix bitMatrix = new QRCodeWriter().encode(eventData, BarcodeFormat.QR_CODE, 200, 150, hints);
+                MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            byte[] qrCodeBytes = outputStream.toByteArray();
+            Image qrCodeImage = new Image(new ByteArrayInputStream(qrCodeBytes));
+            QRCodeImageView.setImage(qrCodeImage);
+        } else {
 
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select an event.");
+            alert.showAndWait();
+        }
+    }
 }
+
+
