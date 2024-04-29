@@ -19,7 +19,7 @@ public class Home extends Application {
     public void start(Stage primaryStage) {
         Home.primaryStage = primaryStage; // Initialize the primaryStage field
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ingredient.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListFrontRecette.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
