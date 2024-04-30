@@ -36,7 +36,7 @@
 
             </children>
         </VBox>
-        <TableView fx:id="tableview" layoutX="476.0" layoutY="161.0" prefHeight="233.0" prefWidth="581.0">
+        <TableView fx:id="tableview" layoutX="478.0" layoutY="219.0" prefHeight="233.0" prefWidth="581.0">
             <columns>
                 <TableColumn fx:id="ColID" prefWidth="62.0" text="ID" />
                 <TableColumn fx:id="ColSexe" prefWidth="93.0" text="Sexe" />
@@ -74,5 +74,6 @@
          </children>
       </AnchorPane>
           <Button fx:id="btnModifier" layoutX="264.0" layoutY="500.0" mnemonicParsing="false" onAction="#Modifier" text="Modifier" />
+      <TextField fx:id="searchField" layoutX="864.0" layoutY="172.0" promptText="recherche" style="-fx-background-color: #fff;" />
     </children>
 </AnchorPane>

@@ -1,9 +1,12 @@
 package controllers;
 
 import entities.Objectif;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import services.ServiceObjectif;
@@ -60,6 +63,8 @@ public class CrudController {
 
     @FXML
     private TextField tAge;
+    @FXML
+    private TextField  searchField;
 
     @FXML
     private TextField tCalorie;
@@ -204,6 +209,7 @@ public class CrudController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        search();
     }
 
     // Méthode pour configurer un TextField pour accepter uniquement des valeurs numériques
@@ -298,6 +304,40 @@ public class CrudController {
             alert.setContentText("Une erreur s'est produite lors de l'ouverture de la fenêtre. Veuillez réessayer.");
             alert.showAndWait();
         }
+    }
+    private void search() {
+        ObservableList<Objectif> data = tableview.getItems();
+        FilteredList<Objectif> filteredData = new FilteredList<>(data, p -> true);
+
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(obj -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(obj.getId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches ID
+                } else if (obj.getSexe().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches sexe
+                } else if (String.valueOf(obj.getAge()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches age
+                }
+                // Add other fields to search if needed...
+
+                return false; // Does not match any filter
+            });
+        });
+
+        // Wrap the filtered list in a SortedList
+        SortedList<Objectif> sortedData = new SortedList<>(filteredData);
+
+        // Bind the SortedList comparator to the TableView comparator
+        sortedData.comparatorProperty().bind(tableview.comparatorProperty());
+
+        // Add sorted (and filtered) data to the table
+        tableview.setItems(sortedData);
     }
 
 }
