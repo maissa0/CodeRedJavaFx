@@ -3,6 +3,7 @@ package com.example.demo1;
 import com.example.demo1.controller.CommandeController;
 import com.example.demo1.controller.ProduitController;
 import com.example.demo1.model.Commande;
+import com.google.zxing.qrcode.encoder.QRCode;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,12 +16,15 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class HelloApplication extends Application {
     private ProduitController produitController;
     CommandeController commandeController = new CommandeController();
+    private ImageView QRCodeImageView;
 
     public HelloApplication() throws SQLException {
     }
@@ -72,12 +76,38 @@ public class HelloApplication extends Application {
         });
         Button commandesButton = createButton("Commandes");
         commandesButton.setOnAction(event -> {
-            TableView
-        <Commande> commandeTableView = new TableView<>();
-
+            TableView<Commande> commandeTableView = new TableView<>();
             commandeController.afficherCommandes(commandeTableView);
+
+            Commande selectedCommande = commandeTableView.getSelectionModel().getSelectedItem();
+            if (selectedCommande != null) {
+                try {
+                    // Generate QR code
+                    Image qrCodeImage = commandeController.generateQRCode(selectedCommande,QRCodeImageView);
+                    if (qrCodeImage != null) {
+                        ImageView qrCodeImageView = new ImageView(qrCodeImage);
+
+                        // Create a new BorderPane and set the QR code image as the center content
+                        BorderPane rootPane = new BorderPane();
+                        rootPane.setCenter(qrCodeImageView);
+
+                        // Set the new BorderPane as the root of the scene
+                        Scene scene = commandesButton.getScene();
+                        scene.setRoot(rootPane);
+                    } else {
+                        System.out.println("QR code image is null.");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("No commande selected.");
+            }
             ((StackPane) ((BorderPane) commandesButton.getScene().getRoot()).getCenter()).getChildren().setAll(commandeTableView);
+
         });
+
+
 
         Label welcomeLabel = new Label("MARKETPLACE");
         welcomeLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 21px;");

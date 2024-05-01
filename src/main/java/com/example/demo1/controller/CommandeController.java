@@ -5,7 +5,6 @@ import com.example.demo1.model.Commande;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -16,11 +15,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -30,15 +29,12 @@ public class CommandeController {
     private Connection connection;
     private ImageView QRCodeImageView;
 
-
-
-    // Raw use without specifying the type parameter
-
     public CommandeController() throws SQLException {
         this.connection = DataBase.getConnection();
         this.QRCodeImageView = new ImageView();
 
     }
+
 
     public void afficherCommandes(TableView<Commande> tableView) {
         // Récupérer la liste des commandes depuis la base de données
@@ -186,15 +182,16 @@ public class CommandeController {
             private final Button qrCodeButton = new Button("QRCode");
             {
                 qrCodeButton.setOnAction(event -> {
-                    Commande selectedCommande = tableView.getSelectionModel().getSelectedItem();
+                    Commande selectedCommande = getTableRow().getItem(); // Get the selected Commande from the TableRow
                     if (selectedCommande != null) {
                         try {
-                            generateQRCode(tableView, selectedCommande);
+                            // Call generateQRCode method to generate the QR code image
+                            generateQRCode(selectedCommande,QRCodeImageView);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     } else {
-                        // Afficher un message d'erreur si aucune commande n'est sélectionnée
+                        // Show an error message if no commande is selected
                         Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setTitle("Erreur");
                         alert.setHeaderText(null);
@@ -276,16 +273,18 @@ public class CommandeController {
             e.printStackTrace();
         }
     }
-    private void generateQRCode(TableView<Commande> tableView, Commande selectedCommande) throws InterruptedException {
-        selectedCommande = tableView.getSelectionModel().getSelectedItem();
+    public Image generateQRCode(Commande selectedCommande, ImageView QRCodeImageView) throws InterruptedException {
         if (selectedCommande != null) {
-            String eventData = selectedCommande.toString(); // Adjust this based on your event data format
+            String eventData = selectedCommande.toString();
+            System.out.println("Event data: " + eventData); // Adjust this based on your event data format
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             try {
                 Map<EncodeHintType, Object> hints = new HashMap<>();
                 hints.put(EncodeHintType.MARGIN, 0);
                 BitMatrix bitMatrix = new QRCodeWriter().encode(eventData, BarcodeFormat.QR_CODE, 200, 150, hints);
                 MatrixToImageWriter.writeToStream(bitMatrix, "PNG", outputStream);
+                System.out.println("QR code image generated");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -297,9 +296,10 @@ public class CommandeController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText(null);
-            alert.setContentText("Please select an event.");
+            alert.setContentText("Please select a commande .");
             alert.showAndWait();
         }
+        return null;
     }
 }
 

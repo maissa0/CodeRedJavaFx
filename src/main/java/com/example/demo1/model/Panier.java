@@ -1,43 +1,38 @@
 package com.example.demo1.model;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Panier {
-    private List<Produit> produits;
+
+    private Map<Produit, Integer> produits;
 
     public Panier() {
-        this.produits = new ArrayList<>();
+        produits = new HashMap<>();
     }
 
-    // Méthode pour ajouter un produit au panier
-    public void ajouterProduit(Produit produit) {
-        produits.add(produit);
+    public void ajouterProduit(Produit produit, int quantite) {
+        produits.put(produit, quantite);
     }
 
-    // Méthode pour supprimer un produit du panier
-    public void supprimerProduit(Produit produit) {
-        produits.remove(produit);
-    }
-
-    // Méthode pour vider le panier
-    public void viderPanier() {
-        produits.clear();
-    }
-
-    // Méthode pour récupérer la liste des produits dans le panier
-    public List<Produit> getListeProduits() {
-        return produits;
-    }
-
-    // Méthode pour calculer le total du panier
-    public double calculerTotal() {
-        double total = 0;
-        for (Produit produit : produits) {
-            total += produit.getPrix();
+    public List<PanierProduit> getItems() {
+        List<PanierProduit> items = new ArrayList<>();
+        for (Map.Entry<Produit, Integer> entry : produits.entrySet()) {
+            Produit produit = entry.getKey();
+            int quantite = entry.getValue();
+            double prixUnitaire = produit.getPrix(); // Supposons que getPrix() renvoie le prix unitaire du produit
+            double total = quantite * prixUnitaire;
+            PanierProduit item = new PanierProduit(produit.getNom(), quantite, prixUnitaire, total);
+            items.add(item);
         }
-        return total;
+        return items;
     }
 
-    // Ajoutez d'autres méthodes selon les besoins, comme récupérer la quantité d'un produit, etc.
+    // Méthode pour récupérer la quantité d'un produit spécifique dans le panier
+    public int getQuantiteProduit(Produit produit) {
+        return produits.getOrDefault(produit, 0);
+    }
+
 }
 

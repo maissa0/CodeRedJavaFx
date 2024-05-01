@@ -1,14 +1,12 @@
 package com.example.demo1.controller;
 
 import com.example.demo1.database.DataBase;
-import com.example.demo1.model.Panier;
 import com.example.demo1.model.Produit;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +15,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+
 
 import javafx.stage.FileChooser;
 
@@ -29,30 +28,33 @@ import java.util.Optional;
 
 public class ProduitController {
     private Connection connection;
+    private TextField searchField;
+    private PanierController panierController;
+
 
     public ProduitController() throws SQLException {
         this.connection = DataBase.getConnection();
+        this.searchField = new TextField();
+        this.panierController = new PanierController();
     }
 
     public void afficherProduits(VBox produitsView) {
         List<Produit> produits = getAllProduits();
         produitsView.getChildren().clear();
 
-        // Create a search bar (optional, based on your needs)
-        // Create a centered HBox for the search bar and button
-        HBox searchBox = new HBox();
+        HBox searchBox = new HBox(10);
         searchBox.setAlignment(Pos.CENTER);
+
+        // Create the search button
+        Button searchButton = new Button("Rechercher");
+        searchButton.setOnAction(event -> System.out.println("Resultat:"+ searchField.getText()));
+        // Add the search field and button to the searchBox
+        searchBox.getChildren().addAll(searchField, searchButton);
+
+        // Add the searchBox to produitsView
         produitsView.getChildren().add(searchBox);
 
-        // Create a smaller search bar with prompt text
-        TextField searchBar = new TextField();
-        searchBar.setPrefWidth(200); // Set preferred width for smaller size
-        searchBar.setPromptText("Rechercher un produit");
-        searchBox.getChildren().add(searchBar);
 
-        Button searchButton = new Button("Rechercher");
-        searchButton.setDisable(true); // Disable the button for UI purposes only
-        searchBox.getChildren().add(searchButton);
         TilePane tilePane = new TilePane();
         tilePane.setPadding(new Insets(10));
         tilePane.setHgap(20);
@@ -160,14 +162,19 @@ public class ProduitController {
                     afficherProduits(produitsView);
                 }
             });
+            Button addToCartButton = new Button("Ajouter au panier");
+            addToCartButton.setOnAction(event -> {
+                ajouterAuPanier(produit);
+                panierController.afficherProduitsDuPanier();
+            });
 
-
-            boutonsBox.getChildren().addAll(editButton, deleteButton);
+            boutonsBox.getChildren().addAll(editButton, deleteButton,addToCartButton);
             carteProduit.getChildren().add(boutonsBox);
 
             // Ajouter la carte au TilePane
             tilePane.getChildren().add(carteProduit);
         }
+
         // Ajouter le TilePane contenant toutes les cartes de produits à la vue des produits
         produitsView.getChildren().add(tilePane);
         Button ajouterButton = new Button("Ajouter un produit");
@@ -185,7 +192,6 @@ public class ProduitController {
         // Ajouter le conteneur à la vue des produits
         produitsView.getChildren().add(container);
     }
-
     public void afficherFormulaireAjoutProduit(VBox produitsView) {
         produitsView.getChildren().clear(); // Effacer le contenu précédent de produitsView
 
@@ -318,7 +324,6 @@ public class ProduitController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return produits;
     }
 
@@ -411,17 +416,7 @@ public class ProduitController {
         // Si aucun produit avec le même nom n'a été trouvé, retourner faux
         return false;
     }
-    private void afficherMessageConfirmation() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Ajout au panier");
-        alert.setHeaderText(null);
-        alert.setContentText("Le produit a été ajouté au panier avec succès.");
-        alert.showAndWait();
+    public void ajouterAuPanier(Produit produit) {
+        panierController.ajouterProduitAuPanier(produit);
     }
-
-
-
-
-
-
 }

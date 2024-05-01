@@ -14,6 +14,10 @@ public class Produit {
         this.image=image;
     }
 
+    public Produit() {
+
+    }
+
     public static String getNom() {
         return nom;
     }
