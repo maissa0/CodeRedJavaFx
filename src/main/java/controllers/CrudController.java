@@ -88,6 +88,8 @@ public class CrudController {
     private TableView<Objectif> tableview;
     @FXML
     private Button ajouterobjectif;
+    @FXML
+    private Pagination pagination;
 
 
 
@@ -206,6 +208,18 @@ public class CrudController {
 
             // Configurer la gestion des événements de clic sur la TableView
             tableview();
+
+            int pageCount = (int) Math.ceil((double) observableliste .size() / 4);
+            pagination.setPageCount(pageCount);
+            pagination.setCurrentPageIndex(0);
+
+            pagination.setPageFactory(pageIndex -> {
+                int fromIndex = pageIndex * 3;
+                int toIndex = Math.min(fromIndex + 3, observableliste .size());
+                tableview.setItems(FXCollections.observableArrayList(observableliste .subList(fromIndex, toIndex)));
+                return tableview;
+            });
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
