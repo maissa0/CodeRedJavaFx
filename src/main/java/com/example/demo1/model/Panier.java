@@ -23,16 +23,12 @@ public class Panier {
             int quantite = entry.getValue();
             double prixUnitaire = produit.getPrix(); // Supposons que getPrix() renvoie le prix unitaire du produit
             double total = quantite * prixUnitaire;
-            PanierProduit item = new PanierProduit(produit.getNom(), quantite, prixUnitaire, total);
+            PanierProduit item = new PanierProduit(produit.getNom(), quantite, prixUnitaire );
             items.add(item);
         }
         return items;
     }
 
-    // Méthode pour récupérer la quantité d'un produit spécifique dans le panier
-    public int getQuantiteProduit(Produit produit) {
-        return produits.getOrDefault(produit, 0);
-    }
 
 }
 

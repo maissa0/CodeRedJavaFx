@@ -4,14 +4,12 @@ public class PanierProduit extends Produit {
     private String nomProduit;
     private int quantite;
     private double prixUnitaire;
-    private double total;
 
-    public PanierProduit(String nomProduit, int quantite, double prixUnitaire, double total) {
+    public PanierProduit(String nomProduit, int quantite, double prixUnitaire) {
         super();
         this.nomProduit = nomProduit;
         this.quantite = quantite;
         this.prixUnitaire = prixUnitaire;
-        this.total = total;
     }
 
     public String getNomProduit() {
@@ -38,13 +36,7 @@ public class PanierProduit extends Produit {
         this.prixUnitaire = prixUnitaire;
     }
 
-    public double getTotal() {
-        return total;
-    }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
 
     @Override
     public String toString() {
@@ -52,7 +44,6 @@ public class PanierProduit extends Produit {
                 "nomProduit='" + nomProduit + '\'' +
                 ", quantite=" + quantite +
                 ", prixUnitaire=" + prixUnitaire +
-                ", total=" + total +
                 '}';
     }
 

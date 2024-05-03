@@ -2,7 +2,7 @@ package com.example.demo1.model;
 
 public class Produit {
 
-    private static String nom;
+    private String nom;
     private String description;
     private double prix;
     private String image;
@@ -18,8 +18,8 @@ public class Produit {
 
     }
 
-    public static String getNom() {
-        return nom;
+    public String getNom() {
+        return nom ;
     }
 
     public void setNom(String nom) {

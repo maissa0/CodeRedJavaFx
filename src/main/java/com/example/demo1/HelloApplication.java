@@ -78,31 +78,6 @@ public class HelloApplication extends Application {
         commandesButton.setOnAction(event -> {
             TableView<Commande> commandeTableView = new TableView<>();
             commandeController.afficherCommandes(commandeTableView);
-
-            Commande selectedCommande = commandeTableView.getSelectionModel().getSelectedItem();
-            if (selectedCommande != null) {
-                try {
-                    // Generate QR code
-                    Image qrCodeImage = commandeController.generateQRCode(selectedCommande,QRCodeImageView);
-                    if (qrCodeImage != null) {
-                        ImageView qrCodeImageView = new ImageView(qrCodeImage);
-
-                        // Create a new BorderPane and set the QR code image as the center content
-                        BorderPane rootPane = new BorderPane();
-                        rootPane.setCenter(qrCodeImageView);
-
-                        // Set the new BorderPane as the root of the scene
-                        Scene scene = commandesButton.getScene();
-                        scene.setRoot(rootPane);
-                    } else {
-                        System.out.println("QR code image is null.");
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("No commande selected.");
-            }
             ((StackPane) ((BorderPane) commandesButton.getScene().getRoot()).getCenter()).getChildren().setAll(commandeTableView);
 
         });

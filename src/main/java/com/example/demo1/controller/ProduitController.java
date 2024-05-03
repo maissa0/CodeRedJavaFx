@@ -2,11 +2,10 @@ package com.example.demo1.controller;
 
 import com.example.demo1.database.DataBase;
 import com.example.demo1.model.Produit;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,9 +15,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-
 import javafx.stage.FileChooser;
-
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ public class ProduitController {
     private Connection connection;
     private TextField searchField;
     private PanierController panierController;
+    private VBox produitsView;
 
 
     public ProduitController() throws SQLException {
@@ -39,20 +37,19 @@ public class ProduitController {
     }
 
     public void afficherProduits(VBox produitsView) {
+        this.produitsView = produitsView;
         List<Produit> produits = getAllProduits();
         produitsView.getChildren().clear();
 
         HBox searchBox = new HBox(10);
         searchBox.setAlignment(Pos.CENTER);
 
-        // Create the search button
         Button searchButton = new Button("Rechercher");
-        searchButton.setOnAction(event -> System.out.println("Resultat:"+ searchField.getText()));
-        // Add the search field and button to the searchBox
+        searchButton.setOnAction(event -> search()
+        );
         searchBox.getChildren().addAll(searchField, searchButton);
-
-        // Add the searchBox to produitsView
         produitsView.getChildren().add(searchBox);
+
 
 
         TilePane tilePane = new TilePane();
@@ -167,6 +164,7 @@ public class ProduitController {
                 ajouterAuPanier(produit);
                 panierController.afficherProduitsDuPanier();
             });
+
 
             boutonsBox.getChildren().addAll(editButton, deleteButton,addToCartButton);
             carteProduit.getChildren().add(boutonsBox);
@@ -416,7 +414,38 @@ public class ProduitController {
         // Si aucun produit avec le même nom n'a été trouvé, retourner faux
         return false;
     }
+    private void search() {
+        String searchText = searchField.getText().toLowerCase();
+
+        for (Node node : produitsView.getChildren()) {
+            if (node instanceof VBox) {
+                VBox carteProduit = (VBox) node;
+                Label nomLabel = null;
+
+                // Recherchez le label contenant le nom du produit dans la carte du produit
+                for (Node innerNode : carteProduit.getChildren()) {
+                    if (innerNode instanceof Label) {
+                        nomLabel = (Label) innerNode;
+                        break;
+                    }
+                }
+
+                if (nomLabel != null) {
+                    // Vérifiez si le nom du produit dans le label correspond au texte de recherche
+                    boolean matchFound = nomLabel.getText().toLowerCase().contains(searchText);
+
+                    // Affichez ou masquez la carte du produit en fonction de la correspondance
+                    carteProduit.setVisible(matchFound);
+                    carteProduit.setManaged(matchFound);
+                }
+            }
+        }
+    }
+
+
     public void ajouterAuPanier(Produit produit) {
         panierController.ajouterProduitAuPanier(produit);
     }
+
+
 }

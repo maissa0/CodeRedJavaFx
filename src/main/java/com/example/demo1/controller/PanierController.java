@@ -4,14 +4,13 @@ import com.example.demo1.database.DataBase;
 import com.example.demo1.model.Panier;
 import com.example.demo1.model.PanierProduit;
 import com.example.demo1.model.Produit;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
+import javafx.application.Application;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -46,15 +45,9 @@ public class PanierController {
                 int quantite = Integer.parseInt(quantiteStr);
                 if (quantite > 0) {
                     double total = quantite * produit.getPrix(); // Calcul du total
-                    PanierProduit panierProduit = new PanierProduit(produit.getNom(), quantite, produit.getPrix(), total);
+                    PanierProduit panierProduit = new PanierProduit(produit.getNom(), quantite, produit.getPrix());
                     panier.getItems().add(panierProduit); // Ajout au panier
-
-                    // Afficher un message de confirmation
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Produit ajouté au panier");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Le produit a été ajouté au panier avec succès.");
-                    alert.showAndWait();
+                    // Rest of your code
                 } else {
                     // Afficher un message d'erreur si la quantité est invalide
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -74,62 +67,99 @@ public class PanierController {
         });
     }
 
+
     public void afficherProduitsDuPanier() {
         List<PanierProduit> produitsDuPanier = getAllProduitsDuPanier();
+
         TableView<PanierProduit> tableView = new TableView<>();
         TableColumn<PanierProduit, String> nomColumn = new TableColumn<>("Nom du produit");
-        TableColumn<PanierProduit, Integer> prixColumn = new TableColumn<>("Prix");
-        TableColumn<PanierProduit, Double> quantiteColumn = new TableColumn<>("Quantité");
+        TableColumn<PanierProduit, Double> prixColumn = new TableColumn<>("Prix");
+        TableColumn<PanierProduit, Integer> quantiteColumn = new TableColumn<>("Quantité");
         TableColumn<PanierProduit, Double> totalColumn = new TableColumn<>("Total");
-        TableColumn<PanierProduit, Void> actionColumn = new TableColumn<>("Actions");
+        TableColumn<PanierProduit, Void> payerColumn = new TableColumn<>("");
 
-        // Associer les propriétés aux colonnes
-        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
-        prixColumn.setCellValueFactory(new PropertyValueFactory<>("prix"));
-        quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("quantite"));
-        totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        // Créer une cellule de type bouton pour la colonne Payer
+        payerColumn.setCellFactory(param -> new TableCell<PanierProduit, Void>() {
+            private final Button payerButton = new Button("Payer");
 
-        // Ajouter les colonnes à la TableView
-        tableView.getColumns().addAll(nomColumn, prixColumn, quantiteColumn, totalColumn);
+            {
+                // Définir l'action du bouton Payer pour chaque ligne
+                payerButton.setOnAction(event -> {
+                    PanierProduit produit = getTableView().getItems().get(getIndex());
+                    try {
+                        afficherFormulairePaiement(produit);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Paiement pour le produit : " + produit.getNomProduit());
+                });
+            }
 
-        // Ajouter les produits du panier à la TableView
-        tableView.getItems().addAll(produitsDuPanier);
-        Button payerButton = new Button("Payer");
-        payerButton.setOnAction(event -> {
-            // Ajoutez ici votre logique pour le paiement
-            // Par exemple, afficher une boîte de dialogue de confirmation
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Paiement effectué");
-            alert.setHeaderText(null);
-            alert.setContentText("Le paiement a été effectué avec succès!");
-            alert.showAndWait();
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(payerButton);
+                }
+            }
         });
 
-        // Ajouter la table et le bouton à un HBox
-        HBox hbox = new HBox(tableView);
-        hbox.setSpacing(10);
+        // Set cell value factories
+        nomColumn.setCellValueFactory(new PropertyValueFactory<>("nomProduit"));
+        prixColumn.setCellValueFactory(new PropertyValueFactory<>("prixUnitaire"));
+        quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+
+        // Calculate total for each product
+        totalColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(calculerTotal(cellData.getValue())).asObject());
+
+        // Add columns to the table
+        tableView.getColumns().addAll(nomColumn, prixColumn, quantiteColumn, totalColumn,payerColumn);
+
+        // Add products to the table
+        tableView.getItems().addAll(produitsDuPanier);
+
+        // CSS for TableView
+        String tableViewStyle ="-fx-font-size: 14px; " +
+                "-fx-pref-height: 400px; " +
+                "-fx-pref-width: 600px; " +
+                "-fx-background-color: #ccffcc; " + // Light green background
+                "-fx-border-color: #000000; " + // Black border
+                "-fx-border-width: 1px;";
+
+        // Apply the style to the TableView
+        tableView.setStyle(tableViewStyle);
+
+
+        // Style personnalisé pour le bouton Payer
+        // Créer un conteneur VBox pour la TableView et le bouton
+        VBox vbox = new VBox(tableView);
+        vbox.setSpacing(10);
+        vbox.setPadding(new Insets(10));
+        vbox.setAlignment(Pos.CENTER);
 
         // Créer la scène et afficher la fenêtre
         Stage stage = new Stage();
         stage.setTitle("Produits du Panier");
-        stage.setScene(new Scene(new VBox(tableView), 600, 400));
+        stage.setScene(new Scene(new VBox(vbox), 600, 400));
         stage.show();
     }
+
 
     public List<PanierProduit> getAllProduitsDuPanier() {
         List<PanierProduit> produitsDuPanier = new ArrayList<>();
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT Nom, Prix, quantit, Total FROM produitpanier")) {
+             ResultSet resultSet = statement.executeQuery("SELECT Nom, Prix, quantit FROM produitpanier")) {
 
             while (resultSet.next()) {
                 String Nom = resultSet.getString("Nom");
                 int Prix = resultSet.getInt("Prix");
                 double quantit = resultSet.getDouble("quantit");
-                double Total = resultSet.getDouble("Total");
 
-                PanierProduit produit = new PanierProduit(Nom, Prix, quantit, Total);
+                PanierProduit produit = new PanierProduit(Nom, Prix, quantit);
                 produitsDuPanier.add(produit);
             }
         } catch (SQLException e) {
@@ -137,6 +167,16 @@ public class PanierController {
         }
 
         return produitsDuPanier;
+    }
+    private void afficherFormulairePaiement(PanierProduit produit) throws Exception {
+        // Créer une nouvelle instance de PaymentForm
+        Application paymentForm = new PaymentForm();
+
+        // Appeler la méthode start() de PaymentForm pour afficher le formulaire de paiement
+        paymentForm.start(new Stage());
+    }
+    public double calculerTotal(PanierProduit produit) {
+        return produit.getPrixUnitaire() * produit.getQuantite();
     }
 
 }

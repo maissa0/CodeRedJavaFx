@@ -4,6 +4,7 @@ module com.example.demo1 {
     requires java.sql;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires stripe.java;
 
 
     opens com.example.demo1 to javafx.fxml;

@@ -11,12 +11,14 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -186,7 +188,8 @@ public class CommandeController {
                     if (selectedCommande != null) {
                         try {
                             // Call generateQRCode method to generate the QR code image
-                            generateQRCode(selectedCommande,QRCodeImageView);
+                            Image qrCodeImage = generateQRCode(selectedCommande);
+                            displayQRCodeImage(qrCodeImage);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -273,7 +276,7 @@ public class CommandeController {
             e.printStackTrace();
         }
     }
-    public Image generateQRCode(Commande selectedCommande, ImageView QRCodeImageView) throws InterruptedException {
+    public Image generateQRCode(Commande selectedCommande) throws InterruptedException {
         if (selectedCommande != null) {
             String eventData = selectedCommande.toString();
             System.out.println("Event data: " + eventData); // Adjust this based on your event data format
@@ -289,17 +292,19 @@ public class CommandeController {
                 e.printStackTrace();
             }
             byte[] qrCodeBytes = outputStream.toByteArray();
-            Image qrCodeImage = new Image(new ByteArrayInputStream(qrCodeBytes));
-            QRCodeImageView.setImage(qrCodeImage);
+            return new Image(new ByteArrayInputStream(qrCodeBytes));
         } else {
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Please select a commande .");
-            alert.showAndWait();
+            return null;
         }
-        return null;
+    }
+    private void displayQRCodeImage(Image qrCodeImage) {
+        Stage qrCodeStage = new Stage();
+        qrCodeStage.setTitle("QR Code");
+        ImageView imageView = new ImageView(qrCodeImage);
+        imageView.setFitWidth(200); // Adjust width as needed
+        imageView.setFitHeight(200); // Adjust height as needed
+        qrCodeStage.setScene(new Scene(new StackPane(imageView), 220, 220)); // Adjust scene size as needed
+        qrCodeStage.show();
     }
 }
 
