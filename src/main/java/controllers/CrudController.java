@@ -92,7 +92,7 @@ public class CrudController {
     private Pagination pagination;
 
 
-
+    private ObservableList<Objectif> allData;
 
     ServiceObjectif os = new ServiceObjectif();
 
@@ -179,23 +179,12 @@ public class CrudController {
     // Dans votre méthode initialize
     @FXML
     void initialize() throws SQLException {
-        String[] items = { "Homme", "Femme"};
-        tSexe.getItems().addAll(items);
-        String[] items2 = { "Sédentaire ", "Léger ","Modéré ","Actif ","Très_actif"};
-        tActivity_level.getItems().addAll(items2);
-        String[] items3 = { "perdre_de_poids", "gagne_de_poids"};
-        tObjectif.getItems().addAll(items3);
-
-        // Configuration des TextFormatters pour accepter uniquement des valeurs numériques
-        configureNumericTextField(tAge);
-        configureNumericTextField(tWeight);
-        configureNumericTextField(tHeight);
-        configureNumericTextField(tCalorie);
-        configureNumericTextField(tID);
+        // Votre code d'initialisation existant ici...
 
         try {
             ObservableList<Objectif> observableliste = FXCollections.observableList(os.read());
-            tableview.setItems(observableliste);
+            allData = observableliste; // Copiez les données initiales dans la liste allData
+
             // Remplir les colonnes avec les propriétés des objets User
             ColID.setCellValueFactory(new PropertyValueFactory<>("id"));
             ColSexe.setCellValueFactory(new PropertyValueFactory<>("sexe"));
@@ -209,22 +198,54 @@ public class CrudController {
             // Configurer la gestion des événements de clic sur la TableView
             tableview();
 
-            int pageCount = (int) Math.ceil((double) observableliste .size() / 4);
+            int pageCount = (int) Math.ceil((double) observableliste.size() / 3);
             pagination.setPageCount(pageCount);
             pagination.setCurrentPageIndex(0);
 
             pagination.setPageFactory(pageIndex -> {
                 int fromIndex = pageIndex * 3;
-                int toIndex = Math.min(fromIndex + 3, observableliste .size());
-                tableview.setItems(FXCollections.observableArrayList(observableliste .subList(fromIndex, toIndex)));
+                int toIndex = Math.min(fromIndex + 3, observableliste.size());
+                tableview.setItems(FXCollections.observableArrayList(observableliste.subList(fromIndex, toIndex)));
                 return tableview;
             });
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        // Ajoutez la méthode de recherche pour filtrer les données en fonction du texte saisi
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            FilteredList<Objectif> filteredData = new FilteredList<>(allData, p -> true);
+
+            filteredData.setPredicate(obj -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (String.valueOf(obj.getId()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches ID
+                } else if (obj.getSexe().toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches sexe
+                } else if (String.valueOf(obj.getAge()).toLowerCase().contains(lowerCaseFilter)) {
+                    return true; // Filter matches age
+                }
+                // Add other fields to search if needed...
+
+                return false; // Does not match any filter
+            });
+
+            SortedList<Objectif> sortedData = new SortedList<>(filteredData);
+            sortedData.comparatorProperty().bind(tableview.comparatorProperty());
+
+            tableview.setItems(sortedData);
+        });
+
+        // Appeler la méthode de recherche une seule fois au démarrage de l'application
         search();
     }
+
 
     // Méthode pour configurer un TextField pour accepter uniquement des valeurs numériques
     private void configureNumericTextField(TextField textField) {
@@ -320,8 +341,7 @@ public class CrudController {
         }
     }
     private void search() {
-        ObservableList<Objectif> data = tableview.getItems();
-        FilteredList<Objectif> filteredData = new FilteredList<>(data, p -> true);
+        FilteredList<Objectif> filteredData = new FilteredList<>(allData, p -> true);
 
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(obj -> {
@@ -344,13 +364,9 @@ public class CrudController {
             });
         });
 
-        // Wrap the filtered list in a SortedList
         SortedList<Objectif> sortedData = new SortedList<>(filteredData);
-
-        // Bind the SortedList comparator to the TableView comparator
         sortedData.comparatorProperty().bind(tableview.comparatorProperty());
 
-        // Add sorted (and filtered) data to the table
         tableview.setItems(sortedData);
     }
 

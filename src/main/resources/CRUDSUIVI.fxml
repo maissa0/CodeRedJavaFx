@@ -53,5 +53,6 @@
             <Button layoutY="238.0" mnemonicParsing="false" onAction="#suivifront" prefHeight="66.0" prefWidth="180.0" text="ajouter suivi" textFill="#21a64a" />
          </children>
       </AnchorPane>
+      <TextField fx:id="Recherche" layoutX="747.0" layoutY="140.0" />
    </children>
 </AnchorPane>
