@@ -40,27 +40,33 @@ public class showDetailsRecetteFrontController implements Initializable {
     private VBox vBoxIng;
 
     Recette r;
+    private int idRecette; // Variable to hold the idRecette
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    // Getter and setter for idRecette
+    public int getIdRecette() {
+        return idRecette;
+    }
+
+    public void setIdRecette(int idRecette) {
+        this.idRecette = idRecette;
+        System.out.println("Set Recipe ID: " + idRecette);
+
+        // Call the method to initialize recipe details
+        initializeRecipeDetails();
+    }
+
+    // Method to initialize recipe details
+    private void initializeRecipeDetails() {
         RecetteService rs=new RecetteService();
         try {
-            FXMLLoader load = new FXMLLoader();
-            load.setLocation(getClass().getResource("/ListFrontRecette.fxml"));
-            AnchorPane pane = load.load();
-            ListFrontRecetteController item = load.getController();
-
-            try {
-                r = rs.findById(item.getIdRecette());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (IOException e) {
+            r = rs.findById(idRecette);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
         labelNomRecette.setText(r.getNom());
         labelCategRecette.setText(r.getCategorie());
-        labelImgRecette.setImage(new Image("C:\\tools\\optihealth\\src\\main\\java\\edu\\CodeRed\\uploads\\"+r.getImage()));
+        labelImgRecette.setImage(new Image("file:C:/tools/optihealth/src/main/java/edu/CodeRed/uploads/" + r.getImage()));
         labelDescriptionRecette.setText(r.getDescription());
         labelCalorieRecette.setText(String.valueOf(r.getCalorieRecette()));
         System.out.println(r.getId());
@@ -79,5 +85,10 @@ public class showDetailsRecetteFrontController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // Nothing needs to be done here since idRecette is set externally
     }
 }

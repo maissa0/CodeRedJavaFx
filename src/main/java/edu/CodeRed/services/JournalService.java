@@ -16,6 +16,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.HashMap;
+
 
 public class JournalService implements JService<Journal, Recette> {
 
@@ -266,6 +270,44 @@ public class JournalService implements JService<Journal, Recette> {
             e.printStackTrace();
         }
         return journal;
+    }
+
+    public List<Recette> getTop5MostUsedRecettes() throws SQLException {
+        // Map to store recette IDs and their occurrences
+        Map<Integer, Integer> recetteOccurrences = new HashMap<>();
+
+        // Get all journals
+        List<Journal> allJournals = getAllDataJournal();
+
+        // Iterate through each journal
+        for (Journal journal : allJournals) {
+            // Get all recettes for the current journal
+            List<Recette> recettes = journal.getRecettes();
+
+            // Count occurrences of each recette
+            for (Recette recette : recettes) {
+                int recetteId = recette.getId();
+                recetteOccurrences.put(recetteId, recetteOccurrences.getOrDefault(recetteId, 0) + 1);
+            }
+        }
+
+        // Get the IDs of the top 5 most used recettes
+        List<Integer> top5RecetteIds = recetteOccurrences.entrySet().stream()
+                .sorted((Map.Entry.<Integer, Integer>comparingByValue().reversed()))
+                .limit(5)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+        // Get the Recette objects for the top 5 IDs
+        List<Recette> top5Recettes = new ArrayList<>();
+        for (int recetteId : top5RecetteIds) {
+            Recette recette = new Recette();
+            recette.setId(recetteId);
+            // You may populate other fields of Recette if needed
+            top5Recettes.add(recette);
+        }
+
+        return top5Recettes;
     }
 
 }

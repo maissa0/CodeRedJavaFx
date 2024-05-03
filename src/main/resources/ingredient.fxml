@@ -53,7 +53,7 @@
             <ImageView fx:id="imgIngredientInput" fitHeight="72.0" fitWidth="149.0" layoutX="569.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
             </children>
         </AnchorPane>
-        <AnchorPane layoutX="196.0" layoutY="30.0" prefHeight="343.0" prefWidth="990.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0">
+        <AnchorPane layoutX="300.0" layoutY="29.0" prefHeight="343.0" prefWidth="990.0" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0">
             <styleClass>
                 <String fx:value="white-bg" />
                 <String fx:value="radius" />
@@ -69,19 +69,20 @@
                     </columns>
                 </TableView>
             <Button fx:id="rafraichiring" layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#rafraichirIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="Rafraichir" />
-            <TextField fx:id="searchbar_id" layoutX="650.0" layoutY="17.0" prefHeight="25.0" prefWidth="262.0" style="-fx-background-color: transparent; -fx-border-color: black;" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css">
+            <TextField fx:id="searchbar_id" layoutX="230.0" layoutY="17.0" prefHeight="25.0" prefWidth="262.0" style="-fx-background-color: transparent; -fx-border-color: black;" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css">
                <styleClass>
                   <String fx:value="radius" />
                   <String fx:value="column-header" />
                   <String fx:value="filter" />
                </styleClass>
             </TextField>
-            <Text layoutX="597.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search:">
+            <Text layoutX="162.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chercher:">
                <font>
                   <Font name="Dubai Regular" size="15.0" />
                </font>
             </Text>
-            <Button fx:id="btnPDF" layoutX="39.0" layoutY="112.0" onMouseClicked="#genererPDF" mnemonicParsing="false" prefHeight="37.0" prefWidth="72.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="PDF" />
+            <Button fx:id="btnPDF" layoutX="39.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#genererPDF" prefHeight="37.0" prefWidth="72.0" styleClass="btn" stylesheets="@../java/edu/CodeRed/stylesheets/mainFormDesign.css" text="PDF" />
+            <ComboBox fx:id="trierIng" layoutX="672.0" layoutY="18.0" onAction="#TriChoice" prefWidth="150.0" promptText="Trier" />
             </children>
         </AnchorPane>
     </children>

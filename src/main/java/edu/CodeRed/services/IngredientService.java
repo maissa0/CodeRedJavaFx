@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class IngredientService implements IService<Ingredient,Recette> {
 
@@ -78,6 +79,8 @@ public class IngredientService implements IService<Ingredient,Recette> {
         }
         return data;
     }
+
+
 
     @Override
     public void deleteEntity(int id) {
@@ -154,6 +157,7 @@ public class IngredientService implements IService<Ingredient,Recette> {
         return null;
     }
 
+
     public boolean isIngredientNameExists(String ingNom) {
         String requete = "SELECT * FROM ingredient WHERE nom = ?";
         try {
@@ -166,4 +170,27 @@ public class IngredientService implements IService<Ingredient,Recette> {
             return false;  // Assume an error occurred, or the name doesn't exist
         }
     }
+
+    public List<Ingredient> triNomIngredient() {
+
+        List<Ingredient> list1 = new ArrayList<>();
+        List<Ingredient> list2 = getAllData();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getNom().compareTo(o2.getNom())).collect(Collectors.toList());
+        return list1;
+
+    }
+
+
+    public List<Ingredient> triCategorieIngredient() {
+
+        List<Ingredient> list1 = new ArrayList<>();
+        List<Ingredient> list2 = getAllData();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getCategorieing().compareTo(o2.getCategorieing())).collect(Collectors.toList());
+        return list1;
+
+    }
+
+
 }

@@ -32,8 +32,14 @@ public class CardDesignRecetteFrontController {
 
     @FXML
     void showDetailsRecetteF(ActionEvent event) throws IOException {
+        System.out.println("Selected Recipe ID: " + rec.getId());
+
+        // Set the recipe ID in the controller before loading the new stage
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/showDetailsRecetteFront.fxml"));
         Parent root = loader.load();
+        showDetailsRecetteFrontController controller = loader.getController();
+        controller.setIdRecette(rec.getId()); // Set the recipe ID here
+
         // Open a new stage to show the details of the recipe
         Scene scene = new Scene(root);
         Stage newStage = new Stage();
@@ -43,6 +49,17 @@ public class CardDesignRecetteFrontController {
 
     private Recette rec;
     private Image image;
+
+    private static int idRecette;
+
+    public int getIdRecette(){
+        return this.idRecette;
+    }
+
+    public void setIdRecette(int id){
+        this.idRecette=id;
+        System.out.println("Set Recipe ID: " + idRecette);
+    }
 
     public void setRecetteDataF(Recette rec){
         this.rec = rec;

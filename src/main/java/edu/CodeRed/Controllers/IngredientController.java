@@ -3,6 +3,8 @@ package edu.CodeRed.Controllers;
 import com.mysql.cj.xdevapi.JsonParser;
 import edu.CodeRed.entities.Ingredient;
 import edu.CodeRed.services.IngredientService;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -78,6 +80,9 @@ public class IngredientController {
     private Label categorie;
 
     @FXML
+    private ComboBox<String> trierIng;
+
+    @FXML
     private ComboBox<String> categorieIng;
 
     @FXML
@@ -101,6 +106,8 @@ public class IngredientController {
     @FXML
     private TextField searchbar_id;
 
+    ObservableList<Ingredient> dataList;
+
     @FXML
     private TextField nomIng;
 
@@ -115,6 +122,12 @@ public class IngredientController {
     void initialize() {
         ObservableList<String> categoriesOptions = FXCollections.observableArrayList("cereales", "sucreries", "viandes", "legumes", "fruits", "produit laitiers");
         categorieIng.setItems(categoriesOptions);
+        trierIng.setOnAction(event -> TriChoice(event));
+        search();
+
+
+        ObservableList<String> Trichoices = FXCollections.observableArrayList("Nom", "Categorie");
+        trierIng.setItems(Trichoices);
 
         IngredientService ingredientService = new IngredientService();
         ObservableList<Ingredient> list = FXCollections.observableList(ingredientService.getAllData());
@@ -124,6 +137,8 @@ public class IngredientController {
         IngredientImage.setCellValueFactory(new PropertyValueFactory<>("image"));
         actions.setCellFactory(createActionsCellFactory());
         listing.setItems(list);
+
+
     }
 
 
@@ -522,5 +537,88 @@ public class IngredientController {
             }
         }
     }
+
+
+
+
+    public IngredientService is = new IngredientService();
+    void search() {
+        FilteredList<Ingredient> filteredData = new FilteredList<>(FXCollections.observableArrayList(is.getAllData()), p -> true);
+        searchbar_id.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(act -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String nom = String.valueOf(act.getNom());
+                String Categorie = String.valueOf(act.getCategorieing());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // Debug statements
+                System.out.println("Search Query: " + lowerCaseFilter);
+                System.out.println("Name: " + nom);
+                System.out.println("Category: " + Categorie);
+
+                if (nom.toLowerCase().contains(lowerCaseFilter)) {
+                    System.out.println("Matched by Name: " + nom);
+                    return true;
+                } else if (Categorie.toLowerCase().contains(lowerCaseFilter)) {
+                    System.out.println("Matched by Category: " + Categorie);
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        SortedList<Ingredient> sortedData = new SortedList<>(filteredData);
+        sortedData.comparatorProperty().bind(listing.comparatorProperty());
+
+        System.out.println("Filtered and Sorted Data: " + sortedData);
+
+        // Update the TableView with the sorted filtered data
+        listing.setItems(sortedData);
+
+    }
+
+
+
+
+
+
+    private void TrieNom() {
+        IngredientService is = new IngredientService();
+        List<Ingredient> i = is.triNomIngredient();
+        ingredientNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        IngredientCategorie.setCellValueFactory(new PropertyValueFactory<>("categorieing"));
+        IngredientImage.setCellValueFactory(new PropertyValueFactory<>("image"));
+        actions.setCellFactory(createActionsCellFactory());
+
+
+        listing.setItems(FXCollections.observableList(i));
+
+    }
+
+    private void TrieCategorie() {
+        IngredientService is = new IngredientService();
+        List<Ingredient> i = is.triCategorieIngredient();
+        ingredientNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        IngredientCategorie.setCellValueFactory(new PropertyValueFactory<>("categorieing"));
+        IngredientImage.setCellValueFactory(new PropertyValueFactory<>("image"));
+        actions.setCellFactory(createActionsCellFactory());
+
+
+        listing.setItems(FXCollections.observableList(i));
+
+    }
+
+    @FXML
+    void TriChoice(ActionEvent event) {
+        if (trierIng.getValue().equals("Nom")) {
+            TrieNom();
+        } else if (trierIng.getValue().equals("Categorie")) {
+            TrieCategorie();
+        }
+
+    }
 }
+
 

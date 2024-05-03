@@ -8,6 +8,7 @@ import edu.CodeRed.services.JournalService;
 import edu.CodeRed.services.RecetteService;
 import edu.CodeRed.tools.MyConnexion;
 
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
 public class MainClass {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         //MyConnexion mc = new MyConnexion();
 
         // Create a new instance of IngredientService
@@ -110,7 +111,7 @@ public class MainClass {
 
 
         // Call the deleteJournal method
-        System.out.println(journalService.getAllDataJournal());
+        System.out.println(journalService.getTop5MostUsedRecettes());
 
 
 
