@@ -6,6 +6,7 @@ import edu.CodeRed.entities.Recette;
 import edu.CodeRed.interfaces.JService;
 import edu.CodeRed.interfaces.RService;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -310,4 +311,34 @@ public class JournalService implements JService<Journal, Recette> {
         return top5Recettes;
     }
 
+    public double convertirkjoule(int cal) {
+
+        double conv = 4.184;
+
+        double caljoule = cal * conv;
+
+        return caljoule;
+    }
+
+    public List<Journal> getJournalEntriesForDate(ZonedDateTime date) {
+        List<Journal> journalEntries = new ArrayList<>();
+        String query = "SELECT * FROM journal WHERE DATE(date) = ?";
+        try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
+            ps.setDate(1, java.sql.Date.valueOf(date.toLocalDate()));
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Journal journal = new Journal();
+                    journal.setId(rs.getInt("id"));
+                    journal.setDate(rs.getDate("date"));
+                    journal.setUserId(rs.getInt("id_user_id"));
+                    journal.setCaloriesJournal(rs.getInt("calories_journal"));
+                    // If needed, you can fetch associated recettes here as well
+                    journalEntries.add(journal);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return journalEntries;
+    }
 }

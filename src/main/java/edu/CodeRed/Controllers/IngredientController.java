@@ -123,7 +123,7 @@ public class IngredientController {
         ObservableList<String> categoriesOptions = FXCollections.observableArrayList("cereales", "sucreries", "viandes", "legumes", "fruits", "produit laitiers");
         categorieIng.setItems(categoriesOptions);
         trierIng.setOnAction(event -> TriChoice(event));
-        search();
+        //search();
 
 
         ObservableList<String> Trichoices = FXCollections.observableArrayList("Nom", "Categorie");
@@ -138,9 +138,34 @@ public class IngredientController {
         actions.setCellFactory(createActionsCellFactory());
         listing.setItems(list);
 
+        searchbar_id.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterTable(newValue);
+        });
+
+
+
 
     }
 
+
+    private void filterTable(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            listing.setItems(initialData());
+        } else {
+            ObservableList<Ingredient> filteredList = FXCollections.observableArrayList();
+            for (Ingredient vehicule : listing.getItems()) {
+                if (vehicule.getNom().toLowerCase().contains(keyword.toLowerCase())) {
+                    filteredList.add(vehicule);
+                }
+            }
+            listing.setItems(filteredList);
+        }
+    }
+
+    ObservableList<Ingredient>initialData(){
+        IngredientService V = new IngredientService();
+        return  FXCollections.observableArrayList(V.getAllData());
+    }
 
     @FXML
     void AjouterIngredient(ActionEvent event) {
@@ -542,7 +567,7 @@ public class IngredientController {
 
 
     public IngredientService is = new IngredientService();
-    void search() {
+    /*void search() {
         FilteredList<Ingredient> filteredData = new FilteredList<>(FXCollections.observableArrayList(is.getAllData()), p -> true);
         searchbar_id.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(act -> {
@@ -574,10 +599,10 @@ public class IngredientController {
 
         System.out.println("Filtered and Sorted Data: " + sortedData);
 
-        // Update the TableView with the sorted filtered data
+        //list apres sort
         listing.setItems(sortedData);
 
-    }
+    }*/
 
 
 

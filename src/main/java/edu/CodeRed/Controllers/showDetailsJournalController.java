@@ -67,5 +67,42 @@ public class showDetailsJournalController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+
+
+        //////////////////////////////////////////////
+
+
+        JournalService jc=new JournalService();
+        try {
+            FXMLLoader load = new FXMLLoader();
+            load.setLocation(getClass().getResource("/calendar.fxml"));
+            AnchorPane pane = load.load();
+            CalendarController item = load.getController();
+
+            try {
+                j = js.findById(item.getSelectedJournalId());
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        labelCaloriesJournal.setText(String.valueOf(j.getCaloriesJournal()));
+        labelDateJournal.setText(String.valueOf(j.getDate()));
+
+        List<Recette> recListCalendar = new ArrayList<>();
+        recListCalendar=js.getRecettesForJournal(j.getId());
+        for(int i=0;i<recListCalendar.size();i++){
+            try {
+                FXMLLoader load = new FXMLLoader();
+                load.setLocation(getClass().getResource("/itemRecette.fxml"));
+                AnchorPane pane = load.load();
+                itemRecetteController item = load.getController();
+                item.setData(recListCalendar.get(i));
+                vBoxRecettes.getChildren().add(pane);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
