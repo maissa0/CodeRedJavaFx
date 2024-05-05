@@ -173,7 +173,7 @@ public class JournalService implements JService<Journal, Recette> {
         return journals;
     }
 
-    public List<Recette> getRecettesForJournal(int journalId) {
+    public static List<Recette> getRecettesForJournal(int journalId) {
         List<Recette> recettes = new ArrayList<>();
         String query = "SELECT r.* FROM recette r " +
                 "INNER JOIN journal_recette jr ON r.id = jr.recette_id " +
@@ -344,4 +344,24 @@ public class JournalService implements JService<Journal, Recette> {
         }
         return journalEntries;
     }
+
+    public static Journal findById1(int id) throws SQLException {
+        Journal journal = new Journal();
+
+        try {
+            String req = "SELECT * from journal where id='" + id + "'";
+            Statement st = MyConnexion.getInstance().getCnx().createStatement();
+            ResultSet rs = st.executeQuery(req);
+            while (rs.next()) {
+                journal.setId(rs.getInt("id"));
+                journal.setUserId(rs.getInt("id_user_id"));
+                journal.setCaloriesJournal(rs.getInt("calories_journal"));
+                journal.setDate(rs.getDate("date"));
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return journal;
+    }
+
 }

@@ -28,41 +28,40 @@ public class showDetailsJournalCalController implements Initializable {
     @FXML
     private VBox vBoxRecettes;
 
+    private int selectedJournalId;
+
+
 
     Journal j;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        JournalService js = new JournalService();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Calendar.fxml"));
-
         try {
-            AnchorPane pane = loader.load();
-            CalendarController controller = loader.getController();
-            int selectedJournalId = controller.getSelectedJournalId();
-            j = js.findById(selectedJournalId);
-        } catch (IOException | SQLException e) {
-            throw new RuntimeException(e);
-        }
+            // Retrieve the selected journal by ID
+            Journal journal = JournalService.findById1(selectedJournalId);
+            System.out.println(selectedJournalId);
+            if (journal != null) {
+                // Set label texts with journal information
+                labelCaloriesJournal.setText(String.valueOf(journal.getCaloriesJournal()));
+                labelDateJournal.setText(String.valueOf(journal.getDate()));
 
-        labelCaloriesJournal.setText(String.valueOf(j.getCaloriesJournal()));
-        labelDateJournal.setText(String.valueOf(j.getDate()));
-
-        System.out.println(j.getCaloriesJournal());
-        System.out.println(j.getDate());
-
-        List<Recette> recList = new ArrayList<>();
-        recList = js.getRecettesForJournal(j.getId());
-        for (Recette recette : recList) {
-            try {
-                FXMLLoader load = new FXMLLoader(getClass().getResource("/itemRecette.fxml"));
-                AnchorPane pane = load.load();
-                itemRecetteController item = load.getController();
-                item.setData(recette);
-                vBoxRecettes.getChildren().add(pane);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                // Retrieve associated recettes for the journal
+                List<Recette> recettes = JournalService.getRecettesForJournal(journal.getId());
+                for (Recette recette : recettes) {
+                    try {
+                        // Load and display each recette in the VBox
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("/itemRecette.fxml"));
+                        AnchorPane pane = loader.load();
+                        itemRecetteController item = loader.getController();
+                        item.setData(recette);
+                        vBoxRecettes.getChildren().add(pane);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
