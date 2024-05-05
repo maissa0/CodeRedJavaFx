@@ -28,6 +28,9 @@ public class CardDesignRecetteFrontController {
     @FXML
     private ImageView prod_imageView;
 
+    @FXML
+    private ImageView imageProgBar;
+
 
 
     @FXML
@@ -49,6 +52,7 @@ public class CardDesignRecetteFrontController {
 
     private Recette rec;
     private Image image;
+    private Image imagebar;
 
     private static int idRecette;
 
@@ -61,15 +65,46 @@ public class CardDesignRecetteFrontController {
         System.out.println("Set Recipe ID: " + idRecette);
     }
 
-    public void setRecetteDataF(Recette rec){
+    public void setRecetteDataF(Recette rec) {
         this.rec = rec;
         System.out.println(rec.getId());
         nameRecF.setText(rec.getNom());
         categRecF.setText(rec.getCategorie());
-        image = new Image("C:\\tools\\optihealth\\src\\main\\java\\edu\\CodeRed\\uploads\\"+rec.getImage());
+        if ("Facile".equals(rec.getCategorie())) {
+            try {
+                imagebar = new Image("file:///C:/tools/optihealth/src/main/resources/images/facile.png");
+                // Debugging: Print out the image URL
+                System.out.println("Image URL: " + imagebar.getUrl());
+                imageProgBar.setImage(imagebar);
+            } catch (Exception e) {
+                System.out.println("Error loading image: " + e.getMessage());
+            }
+
+        }
+        else if ("Moyenne".equals(rec.getCategorie())){
+
+            try {
+                imagebar = new Image("file:///C:/tools/optihealth/src/main/resources/images/moyenne.png");
+                // Debugging: Print out the image URL
+                System.out.println("Image URL: " + imagebar.getUrl());
+                imageProgBar.setImage(imagebar);
+            } catch (Exception e) {
+                System.out.println("Error loading image: " + e.getMessage());
+            }
+        }
+        else{
+            try {
+                imagebar = new Image("file:///C:/tools/optihealth/src/main/resources/images/difficile.png");
+                // Debugging: Print out the image URL
+                System.out.println("Image URL: " + imagebar.getUrl());
+                imageProgBar.setImage(imagebar);
+            } catch (Exception e) {
+                System.out.println("Error loading image: " + e.getMessage());
+            }
+        }
+        image = new Image("C:\\tools\\optihealth\\src\\main\\java\\edu\\CodeRed\\uploads\\" + rec.getImage());
         prod_imageView.setImage(image);
+
+
     }
-
-
-
 }

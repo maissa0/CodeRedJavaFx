@@ -155,8 +155,16 @@ public class CalendarController implements Initializable {
 
 
     void openDetails()throws IOException {
-        FXMLLoader loader =new FXMLLoader(getClass().getResource("/showDetailsJournal.fxml"));
+        int selectedId = getSelectedJournalId(); // Retrieve the selected journal ID
+        System.out.println("Opening details for journal ID: " + selectedId); // Print selected journal ID
+
+        // Debug: Print the retrieved ID from CalendarController
+        System.out.println("Calendar Journal ID: " + selectedId);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/showDetailsJournalCal.fxml"));
         Parent root = loader.load();
+        showDetailsJournalCalController controller = loader.getController();
+        //controller.setJournalId(selectedId); // Pass the selected journal ID to the controller
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);

@@ -1,6 +1,13 @@
 package edu.CodeRed.entities;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import edu.CodeRed.entities.Ingredient;
+import edu.CodeRed.tools.MyConnexion;
 
 public class Recette {
 
@@ -100,4 +107,6 @@ public class Recette {
                 ", ingredients=" + ingredients +
                 '}';
     }
+
+
 }

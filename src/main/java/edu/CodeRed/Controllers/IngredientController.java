@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.awt.*;
 import java.io.File;
 
 import javafx.scene.control.Alert;
@@ -434,10 +435,11 @@ public class IngredientController {
     @FXML
     void genererPDF(MouseEvent event) {
         // Afficher la boîte de dialogue de sélection de fichier
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Enregistrer le fichier PDF");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Fichiers PDF", "*.pdf"));
-        File selectedFile = fileChooser.showSaveDialog(((Node) event.getSource()).getScene().getWindow());
+        String downloadsPath = System.getProperty("user.home") + "/Downloads/";
+        String fileName = "ingredients.pdf";
+        String filePath = downloadsPath + fileName;
+        File selectedFile = new File(filePath);
+
 
         if (selectedFile != null) {
             // Générer le fichier PDF avec l'emplacement de sauvegarde sélectionné
@@ -555,6 +557,13 @@ public class IngredientController {
                 table.setSpacingBefore(20);
                 document.add(table);
                 document.close();
+
+
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(selectedFile);
+                } else {
+                    System.out.println("Desktop is not supported on this platform.");
+                }
 
                 System.out.println("Le fichier PDF a été généré avec succès.");
             } catch (Exception e) {

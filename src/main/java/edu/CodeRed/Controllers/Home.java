@@ -19,7 +19,7 @@ public class Home extends Application {
     public void start(Stage primaryStage) {
         Home.primaryStage = primaryStage; // Initialize the primaryStage field
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Calendar.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewJournal.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);

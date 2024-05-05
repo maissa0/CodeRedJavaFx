@@ -301,23 +301,26 @@ public class JournalService implements JService<Journal, Recette> {
 
         // Get the Recette objects for the top 5 IDs
         List<Recette> top5Recettes = new ArrayList<>();
+        RecetteService recetteService = new RecetteService(); // Assuming you have a RecetteService
         for (int recetteId : top5RecetteIds) {
-            Recette recette = new Recette();
-            recette.setId(recetteId);
-            // You may populate other fields of Recette if needed
-            top5Recettes.add(recette);
+            // Retrieve the Recette object from the database using RecetteService
+            Recette recette = recetteService.findById(recetteId); // Assuming you have a method to retrieve a Recette by ID
+            if (recette != null) {
+                top5Recettes.add(recette);
+            }
         }
 
         return top5Recettes;
     }
 
-    public double convertirkjoule(int cal) {
+
+    public int convertirkjoule(int cal) {
 
         double conv = 4.184;
 
         double caljoule = cal * conv;
 
-        return caljoule;
+        return (int)caljoule;
     }
 
     public List<Journal> getJournalEntriesForDate(ZonedDateTime date) {

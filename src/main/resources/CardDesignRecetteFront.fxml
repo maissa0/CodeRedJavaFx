@@ -14,13 +14,14 @@
                     <Font name="Cambria" size="24.0" />
                 </font>
             </Label>
-            <Label fx:id="categRecF" layoutX="103.0" layoutY="38.0" prefHeight="49.0" prefWidth="137.0" style="-fx-alignment: Center;" text="Cherry">
+            <Label fx:id="categRecF" layoutX="103.0" layoutY="26.0" prefHeight="49.0" prefWidth="137.0" style="-fx-alignment: Center;" text="Cherry">
                 <font>
                     <Font name="Cambria" size="17.0" />
                 </font>
             </Label>
           <ImageView fx:id="prod_imageView" fitHeight="94.0" fitWidth="99.0" layoutX="14.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" />
-          <Button layoutX="198.0" layoutY="82.0" mnemonicParsing="false" onAction="#showDetailsRecetteF" text="Details" />
+          <Button layoutX="198.0" layoutY="87.0" mnemonicParsing="false" onAction="#showDetailsRecetteF" text="Details" />
+      <ImageView fx:id="imageProgBar" fitHeight="17.0" fitWidth="99.0" layoutX="130.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" />
     </children>
     <styleClass>
         <String fx:value="card" />

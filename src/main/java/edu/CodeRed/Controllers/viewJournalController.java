@@ -44,6 +44,8 @@ public class viewJournalController implements Initializable {
 
     @FXML
     private TableView<Journal> tabJournal;
+    @FXML
+    private ComboBox<String> conversioCal;
 
 
     @Override
@@ -84,6 +86,10 @@ public class viewJournalController implements Initializable {
         caloriesColumn.setCellValueFactory(new PropertyValueFactory<>("caloriesJournal"));
         actionsColumn.setCellFactory(createActionsCellFactory());
         tabJournal.setItems(list);
+
+        ObservableList<String> conversionchoices = FXCollections.observableArrayList("Kcal","Kjoule");
+        conversioCal.setItems(conversionchoices);
+
     }
 
     private static int idJournal;
@@ -201,4 +207,42 @@ public class viewJournalController implements Initializable {
             alert.showAndWait();
         }
     }
+
+    @FXML
+    void convert(ActionEvent event) {
+
+
+        JournalService js = new JournalService();
+        ObservableList<Journal> listcal = FXCollections.observableList(js.getAllDataJournal());
+        // Check the selected option in the ComboBox
+        String selectedOption = conversioCal.getValue();
+
+        // Check if the selected option is "Kjoule"
+        if (selectedOption != null && selectedOption.equals("Kjoule")) {
+            // Create a new list to store Journal objects with converted calories
+            ObservableList<Journal> convertedList = FXCollections.observableArrayList();
+
+            // Iterate over the Journal items in the table
+            for (Journal journal : tabJournal.getItems()) {
+                // Convert the calories to Kjoule using convertirkjoule method
+                int kjoule = js.convertirkjoule(journal.getCaloriesJournal());
+
+                // Create a new Journal object with converted calories
+                Journal convertedJournal = new Journal();
+                convertedJournal.setId(journal.getId());
+                convertedJournal.setDate(journal.getDate());
+                convertedJournal.setCaloriesJournal(kjoule);
+                // Add the converted Journal object to the list
+                convertedList.add(convertedJournal);
+            }
+
+            // Set the TableView items to the converted list to display the converted calories
+            tabJournal.setItems(convertedList);
+        }else {
+
+            tabJournal.setItems(listcal);
+
+        }
+    }
+
 }

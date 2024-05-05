@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RecetteService implements RService<Recette,Ingredient> {
 
@@ -257,5 +259,20 @@ public class RecetteService implements RService<Recette,Ingredient> {
     }
 
 
+    public Map<String, Integer> getingredientCounts() {
+        Map<String, Integer> cityCounts = new HashMap<>();
+        String query = "SELECT categorie, COUNT(*) AS count FROM recette GROUP BY categorie";
+        try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String city = rs.getString("categorie");
+                int count = rs.getInt("count");
+                cityCounts.put(city, count);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving categorie counts: " + e.getMessage());
+        }
+        return cityCounts;
+    }
 }
 

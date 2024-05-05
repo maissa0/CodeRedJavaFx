@@ -1,15 +1,12 @@
 package edu.CodeRed.Controllers;
 
-import edu.CodeRed.entities.Ingredient;
 import edu.CodeRed.entities.Journal;
 import edu.CodeRed.entities.Recette;
 import edu.CodeRed.services.JournalService;
-import edu.CodeRed.services.RecetteService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
@@ -20,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class showDetailsJournalController implements Initializable {
+public class showDetailsJournalCalController implements Initializable {
 
     @FXML
     private Label labelCaloriesJournal;
@@ -33,35 +30,35 @@ public class showDetailsJournalController implements Initializable {
 
 
     Journal j;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        JournalService js=new JournalService();
-        try {
-            FXMLLoader load = new FXMLLoader();
-            load.setLocation(getClass().getResource("/viewJournal.fxml"));
-            AnchorPane pane = load.load();
-            viewJournalController item = load.getController();
+        JournalService js = new JournalService();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/Calendar.fxml"));
 
-            try {
-                j = js.findById(item.getIdJournal());
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } catch (IOException e) {
+        try {
+            AnchorPane pane = loader.load();
+            CalendarController controller = loader.getController();
+            int selectedJournalId = controller.getSelectedJournalId();
+            j = js.findById(selectedJournalId);
+        } catch (IOException | SQLException e) {
             throw new RuntimeException(e);
         }
+
         labelCaloriesJournal.setText(String.valueOf(j.getCaloriesJournal()));
         labelDateJournal.setText(String.valueOf(j.getDate()));
 
+        System.out.println(j.getCaloriesJournal());
+        System.out.println(j.getDate());
+
         List<Recette> recList = new ArrayList<>();
-        recList=js.getRecettesForJournal(j.getId());
-        for(int i=0;i<recList.size();i++){
+        recList = js.getRecettesForJournal(j.getId());
+        for (Recette recette : recList) {
             try {
-                FXMLLoader load = new FXMLLoader();
-                load.setLocation(getClass().getResource("/itemRecette.fxml"));
+                FXMLLoader load = new FXMLLoader(getClass().getResource("/itemRecette.fxml"));
                 AnchorPane pane = load.load();
                 itemRecetteController item = load.getController();
-                item.setData(recList.get(i));
+                item.setData(recette);
                 vBoxRecettes.getChildren().add(pane);
             } catch (IOException e) {
                 throw new RuntimeException(e);

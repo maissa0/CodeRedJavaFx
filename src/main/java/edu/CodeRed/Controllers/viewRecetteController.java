@@ -49,6 +49,13 @@ public class viewRecetteController implements Initializable {
     @FXML
     private TableView<Recette> tabRecette;
 
+    @FXML
+    private ComboBox<String> categ;
+
+
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -113,6 +120,10 @@ public class viewRecetteController implements Initializable {
         });
         actionsColumn.setCellFactory(createActionsCellFactory());
         tabRecette.setItems(list);
+
+        ObservableList<String> filterchoices = FXCollections.observableArrayList("all","Facile", "Moyenne","Difficile");
+        categ.setItems(filterchoices);
+        categ.setOnAction(event -> filtercat(event));
     }
 
 
@@ -225,4 +236,35 @@ public class viewRecetteController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+
+    void filtercat(ActionEvent event) {
+        String selectedCategory = categ.getValue();
+        RecetteService rs = new RecetteService();
+        ObservableList<Recette> allRecettes = FXCollections.observableList(rs.getAllDataRecette());
+
+        if (selectedCategory != null && !selectedCategory.isEmpty()&& !selectedCategory.equalsIgnoreCase("all")) {
+
+            tabRecette.setItems(allRecettes);
+            ObservableList<Recette> filteredRecettes = FXCollections.observableArrayList();
+
+            for (Recette recette : tabRecette.getItems()) {
+                if (recette.getCategorie().equalsIgnoreCase(selectedCategory)) {
+                    filteredRecettes.add(recette);
+                }
+            }
+
+            // Update the table with only the filtered recettes
+            tabRecette.setItems(filteredRecettes);
+        }  else {
+            // If no category is selected, show all recettes
+
+            tabRecette.setItems(allRecettes);
+        }
+
+    }
+
+
+
 }
