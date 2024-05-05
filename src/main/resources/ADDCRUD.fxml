@@ -17,15 +17,15 @@
             <ComboBox fx:id="tSexe" prefWidth="150.0" />
             <Label text="age" />
             <TextField fx:id="tAge" prefHeight="12.0" prefWidth="239.0" />
-            <Label text="height" />
+            <Label text="height(cm)" />
             <TextField fx:id="tHeight" />
-            <Label text="weight" />
+            <Label text="weight(kg)" />
             <TextField fx:id="tWeight" />
             <Label text="activity level" />
             <ComboBox fx:id="tActivity_level" prefWidth="150.0" />
             <Label text="objectif" />
             <ComboBox fx:id="tObjectif" prefWidth="150.0" />
-            <Label text="calorie" />
+            <Label text="votre calorie nécessaire" />
             <TextField fx:id="tCalorie" />
          </children>
       </VBox>

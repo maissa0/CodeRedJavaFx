@@ -6,6 +6,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -22,6 +23,10 @@ import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CrudController {
 
@@ -90,6 +95,8 @@ public class CrudController {
     private Button ajouterobjectif;
     @FXML
     private Pagination pagination;
+    @FXML
+    private PieChart pieChart;
 
 
     private ObservableList<Objectif> allData;
@@ -179,6 +186,13 @@ public class CrudController {
     // Dans votre méthode initialize
     @FXML
     void initialize() throws SQLException {
+
+        String[] items = { "Homme", "Femme"};
+        tSexe.getItems().addAll(items);
+        String[] items2 = { "Sédentaire ", "Léger ","Modéré ","Actif ","Très_actif"};
+        tActivity_level.getItems().addAll(items2);
+        String[] items3 = { "perdre_de_poids", "gagne_de_poids"};
+        tObjectif.getItems().addAll(items3);
         // Votre code d'initialisation existant ici...
 
         try {
@@ -369,5 +383,31 @@ public class CrudController {
 
         tableview.setItems(sortedData);
     }
+
+    @FXML
+    void afficherStatistiques(ActionEvent event) {
+        // Calculate statistics and update the PieChart
+        List<String> choixList = new ArrayList<>();
+        Map<String, Integer> choixOccurrences = new HashMap<>();
+        for (Objectif objectif : allData) {
+            String choix = objectif.getChoix();
+            if (!choixList.contains(choix)) {
+                choixList.add(choix);
+                choixOccurrences.put(choix, 0);
+            }
+            choixOccurrences.put(choix, choixOccurrences.get(choix) + 1);
+        }
+
+        pieChart.getData().clear();
+        for (String choix : choixList) {
+            int occurrences = choixOccurrences.get(choix);
+            PieChart.Data data = new PieChart.Data(choix, occurrences);
+            pieChart.getData().add(data);
+        }
+
+        pieChart.setTitle("Répartition des choix");
+    }
+
+
 
 }
