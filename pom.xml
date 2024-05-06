@@ -27,6 +27,13 @@
             <version>20.0.2</version>
         </dependency>
 
+        <!--<dependency>
+            <groupId>com.twilio.sdk</groupId>
+            <artifactId>twilio</artifactId>
+            <version>9.4.0</version>  Remplacez {version} par la dernière version de Twilio
+        </dependency>-->
+
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>

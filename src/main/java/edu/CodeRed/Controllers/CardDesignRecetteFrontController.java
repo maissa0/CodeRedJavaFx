@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -29,7 +30,7 @@ public class CardDesignRecetteFrontController {
     private ImageView prod_imageView;
 
     @FXML
-    private ImageView imageProgBar;
+    private ProgressBar progbar;
 
 
 
@@ -71,36 +72,27 @@ public class CardDesignRecetteFrontController {
         nameRecF.setText(rec.getNom());
         categRecF.setText(rec.getCategorie());
         if ("Facile".equals(rec.getCategorie())) {
-            try {
-                imagebar = new Image("file:///C:/tools/optihealth/src/main/resources/images/facile.png");
-                // Debugging: Print out the image URL
-                System.out.println("Image URL: " + imagebar.getUrl());
-                imageProgBar.setImage(imagebar);
-            } catch (Exception e) {
-                System.out.println("Error loading image: " + e.getMessage());
-            }
+            progbar.setProgress(0.3);
+
+            // Apply custom style to change the color to green
+            progbar.setStyle("-fx-accent: green;");
 
         }
         else if ("Moyenne".equals(rec.getCategorie())){
 
-            try {
-                imagebar = new Image("file:///C:/tools/optihealth/src/main/resources/images/moyenne.png");
-                // Debugging: Print out the image URL
-                System.out.println("Image URL: " + imagebar.getUrl());
-                imageProgBar.setImage(imagebar);
-            } catch (Exception e) {
-                System.out.println("Error loading image: " + e.getMessage());
-            }
+            progbar.setProgress(0.5);
+
+            // Apply custom style to change the color to green
+            progbar.setStyle("-fx-accent: orange;");
+
+
         }
         else{
-            try {
-                imagebar = new Image("file:///C:/tools/optihealth/src/main/resources/images/difficile.png");
-                // Debugging: Print out the image URL
-                System.out.println("Image URL: " + imagebar.getUrl());
-                imageProgBar.setImage(imagebar);
-            } catch (Exception e) {
-                System.out.println("Error loading image: " + e.getMessage());
-            }
+            progbar.setProgress(1);
+
+            // Apply custom style to change the color to green
+            progbar.setStyle("-fx-accent: red;");
+
         }
         image = new Image("C:\\tools\\optihealth\\src\\main\\java\\edu\\CodeRed\\uploads\\" + rec.getImage());
         prod_imageView.setImage(image);

@@ -245,4 +245,32 @@ public class viewJournalController implements Initializable {
         }
     }
 
+
+   /* void send_SMS (){
+        // Initialisation de la bibliothèque Twilio avec les informations de votre compte
+        String ACCOUNT_SID = "AC52b4c1f2b1f2ecfe3a48c85b038d88d0";
+        String AUTH_TOKEN = "0774eed704b3f40dff0e9883f11ae248";
+
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        String recipientNumber = "+216" + txtNumUser.getText();
+        String message = "Bonjour Mr ,\n"
+                + "Nous sommes ravis de vous informer qu'un planning a été ajouté.\n "
+                + "Veuillez contactez l'administration pour plus de details.\n "
+                + "Merci de votre fidélité et à bientôt chez EnergyBox.\n"
+                + "Cordialement,\n"
+                ;
+
+        Message twilioMessage = Message.creator(
+                new PhoneNumber(recipientNumber),
+                new PhoneNumber("+14698080489"),message).create();
+
+        System.out.println("SMS envoyé : " + twilioMessage.getSid());
+          //  TrayNotificationAlert.notif("Coupon", "Coupon sent successfully.",
+            //NotificationType.SUCCESS, AnimationType.POPUP, Duration.millis(2500));
+
+
+
+    }*/
+
 }

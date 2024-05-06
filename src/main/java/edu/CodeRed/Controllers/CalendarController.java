@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -39,19 +40,19 @@ public class CalendarController implements Initializable {
     @FXML
     private FlowPane calendar;
 
-
+    private static int selectedJournalId;
 
     public void setSelectedJournalId(int id) {
         this.selectedJournalId = id;
     }
 
     // Method to get the selected journal's ID
+
     public int getSelectedJournalId() {
         return this.selectedJournalId;
     }
 
 
-    private int selectedJournalId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -97,12 +98,21 @@ public class CalendarController implements Initializable {
                 StackPane stackPane = new StackPane();
 
                 Rectangle rectangle = new Rectangle();
-                rectangle.setFill(Color.TRANSPARENT);
-                rectangle.setStroke(Color.BLACK);
+                rectangle.setFill(Color.WHITE);
+                rectangle.setStroke(Color.WHITE);
+                rectangle.setStrokeWidth(1.5);
+                rectangle.setArcWidth(10); // Set arc width for rounded corners
+                rectangle.setArcHeight(10); // Set arc height for rounded corners
                 double rectangleWidth = (calendar.getPrefWidth() / 7);
                 double rectangleHeight = (calendar.getPrefHeight() / 6);
                 rectangle.setWidth(rectangleWidth);
                 rectangle.setHeight(rectangleHeight);
+
+                DropShadow shadow = new DropShadow();
+                shadow.setColor(Color.rgb(40, 97, 85)); // Set shadow color
+                shadow.setWidth(10); // Set shadow width
+                shadow.setHeight(10); // Set shadow height
+                rectangle.setEffect(shadow);
                 stackPane.getChildren().add(rectangle);
 
                 int calculatedDate = (j + 1) + (7 * i);
@@ -111,6 +121,16 @@ public class CalendarController implements Initializable {
                     if (currentDate <= monthMaxDate) {
                         Text dateText = new Text(String.valueOf(currentDate));
                         stackPane.getChildren().add(dateText);
+
+                        dateText.setStyle("-fx-font-size: 20");
+
+                        // Set color for today's date
+                        if (dateFocus.getYear() == today.getYear() && dateFocus.getMonth() == today.getMonth() && currentDate == today.getDayOfMonth()) {
+                            dateText.setFill(Color.rgb(203, 107, 22));
+                            dateText.setStyle("-fx-font-weight: bold");
+                            dateText.setStyle("-fx-font-size: 24");
+
+                        }
 
                         // Fetch journal entries for the current date from the database
                         List<Journal> journalEntries = journalService.getJournalEntriesForDate(dateFocus.withDayOfMonth(currentDate));
@@ -125,6 +145,7 @@ public class CalendarController implements Initializable {
                                 int journalId = getJournalIdFromDate(dateFocus, currentDate);
                                 // Set the selected journal's ID
                                 setSelectedJournalId(journalId);
+
                                 // Print the selected journal's ID (for testing purposes)
                                 System.out.println(getSelectedJournalId());
                                 try {
@@ -154,7 +175,9 @@ public class CalendarController implements Initializable {
     }
 
 
+
     void openDetails()throws IOException {
+        // Retrieve the selected journal ID directly from the instance variable
         int selectedId = getSelectedJournalId(); // Retrieve the selected journal ID
         System.out.println("Opening details for journal ID: " + selectedId); // Print selected journal ID
 
@@ -163,13 +186,15 @@ public class CalendarController implements Initializable {
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/showDetailsJournalCal.fxml"));
         Parent root = loader.load();
-        showDetailsJournalCalController controller = loader.getController();
-        //controller.setJournalId(selectedId); // Pass the selected journal ID to the controller
+        //showDetailsJournalCalController controller = loader.getController();
+        // Pass the selected journal ID to the controller
+        //controller.setSelectedJournalId(selectedId);
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.showAndWait();
     }
+
 
 
 }

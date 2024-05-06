@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -61,6 +62,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 public class IngredientController {
 
     private Ingredient ingredient;
+    @FXML
+    private ImageView picture;
 
     @FXML
     private Button rafraichiring;
@@ -651,6 +654,52 @@ public class IngredientController {
         } else if (trierIng.getValue().equals("Categorie")) {
             TrieCategorie();
         }
+
+    }
+
+    /////////////////////////////////////////sidebar
+
+
+
+    @FXML
+    void openViewActitvite(ActionEvent event) {
+
+    }
+
+    @FXML
+    void openViewCommande(ActionEvent event) {
+
+    }
+
+    @FXML
+    void openViewIngredient(ActionEvent event) throws IOException {
+
+        Home.loadFXML((Stage) picture.getScene().getWindow(), "/ingredient.fxml");
+    }
+
+    @FXML
+    void openViewObjectif(ActionEvent event) {
+
+    }
+
+    @FXML
+    void openViewProduit(ActionEvent event) {
+
+    }
+
+    @FXML
+    void openViewRecette(ActionEvent event) throws IOException {
+
+        Home.loadFXML((Stage) picture.getScene().getWindow(), "/viewRecette.fxml");
+    }
+
+    @FXML
+    void openViewSuiviObj(ActionEvent event) {
+
+    }
+
+    @FXML
+    void openViewUser(ActionEvent event) {
 
     }
 }

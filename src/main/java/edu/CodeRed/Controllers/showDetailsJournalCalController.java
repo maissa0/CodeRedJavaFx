@@ -10,10 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,16 +28,16 @@ public class showDetailsJournalCalController implements Initializable {
 
     private int selectedJournalId;
 
-
-
-    Journal j;
+    public void setSelectedJournalId(int id) {
+        this.selectedJournalId = id;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        JournalService js = new JournalService();
         try {
             // Retrieve the selected journal by ID
-            Journal journal = JournalService.findById1(selectedJournalId);
-            System.out.println(selectedJournalId);
+            Journal journal = js.findById(selectedJournalId);
             if (journal != null) {
                 // Set label texts with journal information
                 labelCaloriesJournal.setText(String.valueOf(journal.getCaloriesJournal()));
