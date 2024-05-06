@@ -10,7 +10,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.front">
    <children>
       <BorderPane layoutX="-3.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="794.0">
@@ -51,7 +50,7 @@
                   <Button layoutX="293.0" layoutY="28.0" mnemonicParsing="false" text="produits" />
                   <Button layoutX="365.0" layoutY="28.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="97.0" text="commande" />
                   <Button layoutX="458.0" layoutY="28.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="81.0" text="panier" />
-                  <Button layoutX="539.0" layoutY="28.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="97.0" text="objectif" />
+                  <Button layoutX="539.0" layoutY="28.0" mnemonicParsing="false" onAction="#objectiffront" prefHeight="32.0" prefWidth="97.0" text="objectif" />
                   <Button layoutX="636.0" layoutY="28.0" mnemonicParsing="false" text="suivi objectif" />
                   <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="748.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                      <image>
