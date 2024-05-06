@@ -147,6 +147,7 @@ public class ADDCRUD {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+            ((Stage) afficherobj.getScene().getWindow()).close();
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);

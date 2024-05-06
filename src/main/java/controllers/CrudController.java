@@ -294,6 +294,7 @@ public class CrudController {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
             stage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
