@@ -10,7 +10,6 @@ public class Commande {
     private String etatCmd;
     private int quantiteCmd;
     private double total;
-    private List<LigneCommande> lignesCommande;
 
     public Commande(int id, LocalDate dateCmd, String etatCmd, int quantiteCmd, double total) {
         this.id = id;
@@ -18,7 +17,6 @@ public class Commande {
         this.etatCmd = etatCmd;
         this.quantiteCmd = quantiteCmd;
         this.total = total;
-        this.lignesCommande = new ArrayList<>();
     }
 
     public int getId() {
@@ -71,12 +69,5 @@ public class Commande {
                 ", total=" + total +
                 '}';
     }
-    public void ajouterLigneCommande(LigneCommande ligneCommande) {
-        lignesCommande.add(ligneCommande);
-        // Mettre à jour le total de la commande
-        total += ligneCommande.getPrixTotal();
-    }
-    public List<LigneCommande> getLignesCommande() {
-        return lignesCommande;
-    }
+
 }

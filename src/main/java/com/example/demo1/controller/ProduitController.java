@@ -25,31 +25,24 @@ import java.util.Optional;
 
 public class ProduitController {
     private Connection connection;
-    private TextField searchField;
     private PanierController panierController;
     private VBox produitsView;
+    private VBox produitsViewFront;
+    private List<Produit> produits;
+
 
 
     public ProduitController() throws SQLException {
         this.connection = DataBase.getConnection();
-        this.searchField = new TextField();
         this.panierController = new PanierController();
+
     }
 
     public void afficherProduits(VBox produitsView) {
         this.produitsView = produitsView;
         List<Produit> produits = getAllProduits();
+
         produitsView.getChildren().clear();
-
-        HBox searchBox = new HBox(10);
-        searchBox.setAlignment(Pos.CENTER);
-
-        Button searchButton = new Button("Rechercher");
-        searchButton.setOnAction(event -> search()
-        );
-        searchBox.getChildren().addAll(searchField, searchButton);
-        produitsView.getChildren().add(searchBox);
-
 
 
         TilePane tilePane = new TilePane();
@@ -161,7 +154,11 @@ public class ProduitController {
             });
             Button addToCartButton = new Button("Ajouter au panier");
             addToCartButton.setOnAction(event -> {
-                ajouterAuPanier(produit);
+                try {
+                    ajouterAuPanier(produit);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 panierController.afficherProduitsDuPanier();
             });
 
@@ -275,28 +272,100 @@ public class ProduitController {
                 return;
             }
 
-            // Ajouter le produit avec les informations saisies
             ajouterProduit(produitNom, produitDescription, produitPrix, imagePath[0]); // Utilisez imagePath[0] pour obtenir le chemin de l'image
-
-            // Afficher à nouveau la liste des produits après l'ajout
             afficherProduits(produitsView);
-
-            // Effacer les champs de saisie après l'ajout du produit
             nomField.clear();
             descriptionField.clear();
             prixField.clear();
             imageView.setImage(null); // Réinitialiser l'image affichée dans l'ImageView
         });
 
-
-
-
-        // Créer un VBox pour contenir les champs du formulaire
         VBox formulaireAjoutProduit = new VBox(10);
         formulaireAjoutProduit.getChildren().addAll(nomField, descriptionField, prixField, choisirImageButton,imageView ,  ajouterProduitButton);
-
-        // Ajouter le formulaire à la vue des produits
         produitsView.getChildren().add(formulaireAjoutProduit);
+    }
+    public void afficherProduitsFront(VBox produitsViewFront) {
+        this.produitsViewFront = produitsViewFront;
+        List<Produit> produits = getAllProduits();
+        produitsViewFront.getChildren().clear();
+
+
+        HBox galleryBox = new HBox();
+        galleryBox.setPadding(new Insets(80));
+        galleryBox.setSpacing(30);
+
+        // Parcourir tous les produits
+        for (Produit produit : produits) {
+            String nom = produit.getNom();
+            String description = produit.getDescription();
+            double prix = produit.getPrix();
+            String Image = produit.getImage();
+
+            // Créer une carte pour chaque produit
+            VBox carteProduit = new VBox(10);
+            carteProduit.setStyle("-fx-border-color: #ccc; -fx-border-width: 1px; -fx-border-radius: 5px; -fx-padding: 10px;");
+            carteProduit.setMaxWidth(250);
+
+            Image image = new Image("file:" + Image);
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(250); // Définir la largeur de l'image
+            imageView.setFitHeight(150); // Définir la hauteur de l'image
+            carteProduit.getChildren().add(imageView);
+
+
+            // Créer un conteneur pour le nom, la description et le prix
+            VBox detailsProduit = new VBox(5);
+            detailsProduit.setPadding(new Insets(10));
+
+            // Ajouter le nom du produit
+            Label nomLabel = new Label(nom);
+            nomLabel.setFont(Font.font(16));
+            detailsProduit.getChildren().add(nomLabel);
+
+            // Ajouter la description du produit
+            Label descriptionLabel = new Label(description);
+            descriptionLabel.setWrapText(true);
+            detailsProduit.getChildren().add(descriptionLabel);
+
+            // Ajouter le prix du produit
+            Label prixLabel = new Label("Prix: $" + prix);
+            detailsProduit.getChildren().add(prixLabel);
+
+            carteProduit.getChildren().add(detailsProduit);
+
+            // Créer un bouton pour convertir le prix en TND
+
+            Button convertButton = new Button("Convertir en TND");
+            convertButton.setOnAction(event -> {
+                // Convertir le prix en TND en utilisant la fonction de conversion
+                double prixEnTND = convertirEnTND(prix);
+
+                // Mettre à jour l'affichage du prix avec le prix converti en TND
+                prixLabel.setText("Prix: " + prixEnTND + " TND");
+            });
+            Button addToCartButton = new Button("Ajouter au panier");
+            addToCartButton.setOnAction(event -> {
+                try {
+                    ajouterAuPanier(produit);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                panierController.afficherProduitsDuPanier();
+            });
+
+            carteProduit.getChildren().addAll(convertButton,addToCartButton);
+
+            // Ajouter la carte au TilePane
+            galleryBox.getChildren().add(carteProduit);
+        }
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(galleryBox);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS); // Afficher toujours la barre de défilement horizontale
+        scrollPane.setFitToWidth(true);
+
+        // Ajouter le conteneur à la vue des produits
+        produitsViewFront.getChildren().add(scrollPane);
     }
 
 
@@ -306,12 +375,12 @@ public class ProduitController {
         List<Produit> produits = new ArrayList<>();
 
         try (Connection connection = DataBase.getConnection()) {
-            String query = "SELECT nom, description, prix , image FROM produits";
+            String query = "SELECT nom_produit, description, prix , image FROM produit";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                String nom = resultSet.getString("nom");
+                String nom = resultSet.getString("nom_produit");
                 String description = resultSet.getString("description");
                 double prix = resultSet.getDouble("prix");
                 String image =resultSet.getString("image");
@@ -328,7 +397,7 @@ public class ProduitController {
     public void ajouterProduit(String nom, String description, double prix, String imagePath ) {
         Produit produit = new Produit(nom, description, prix, imagePath);
         try {
-            String query = "INSERT INTO produits (nom, description, prix , image ) VALUES (?, ?, ?, ?)";
+            String query = "INSERT INTO produit (nom_produit, description, prix , image ) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, nom);
             statement.setString(2, description);
@@ -341,7 +410,7 @@ public class ProduitController {
     }
     public void supprimerProduit(String nom) {
         try {
-            String query = "DELETE FROM produits WHERE nom = ?";
+            String query = "DELETE FROM produit WHERE nom_produit = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, nom);
             statement.executeUpdate();
@@ -353,7 +422,7 @@ public class ProduitController {
     // Méthode pour éditer un produit
     public void editerProduit(String ancienNom, String nouveauNom, String description, double prix) {
         try {
-            String query = "UPDATE produits SET nom = ?, description = ?, prix = ? WHERE nom = ?";
+            String query = "UPDATE produit SET nom_produit = ?, description = ?, prix = ? WHERE nom = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, nouveauNom);
             statement.setString(2, description);
@@ -380,10 +449,10 @@ public class ProduitController {
 
         try {
             // Établir la connexion à la base de données
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/gesprod", "root", "");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/optihealth", "root", "");
 
             // Requête pour vérifier si un produit avec le même nom existe
-            String query = "SELECT COUNT(*) FROM produits WHERE nom = ?";
+            String query = "SELECT COUNT(*) FROM produit WHERE nom_produit = ?";
             statement = connection.prepareStatement(query);
             statement.setString(1, nomProduit);
             resultSet = statement.executeQuery();
@@ -414,36 +483,7 @@ public class ProduitController {
         // Si aucun produit avec le même nom n'a été trouvé, retourner faux
         return false;
     }
-    private void search() {
-        String searchText = searchField.getText().toLowerCase();
-
-        for (Node node : produitsView.getChildren()) {
-            if (node instanceof VBox) {
-                VBox carteProduit = (VBox) node;
-                Label nomLabel = null;
-
-                // Recherchez le label contenant le nom du produit dans la carte du produit
-                for (Node innerNode : carteProduit.getChildren()) {
-                    if (innerNode instanceof Label) {
-                        nomLabel = (Label) innerNode;
-                        break;
-                    }
-                }
-
-                if (nomLabel != null) {
-                    // Vérifiez si le nom du produit dans le label correspond au texte de recherche
-                    boolean matchFound = nomLabel.getText().toLowerCase().contains(searchText);
-
-                    // Affichez ou masquez la carte du produit en fonction de la correspondance
-                    carteProduit.setVisible(matchFound);
-                    carteProduit.setManaged(matchFound);
-                }
-            }
-        }
-    }
-
-
-    public void ajouterAuPanier(Produit produit) {
+    public void ajouterAuPanier(Produit produit) throws SQLException {
         panierController.ajouterProduitAuPanier(produit);
     }
 

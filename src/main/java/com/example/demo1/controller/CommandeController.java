@@ -134,8 +134,7 @@ public class CommandeController {
 
                     Optional<ButtonType> result = alert.showAndWait();
                     if (result.isPresent() && result.get() == ButtonType.OK) {
-                        // Supprimer la commande uniquement si l'utilisateur confirme
-                        // Ajoutez ici la logique pour supprimer la commande sélectionnée
+                        supprimerCommande(commande);
                     }
                 });
             }

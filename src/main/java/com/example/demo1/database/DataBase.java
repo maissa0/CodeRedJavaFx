@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DataBase {
 
-    public static final String JDBC_URL = "jdbc:mysql://localhost:3306/gesprod";
+    public static final String JDBC_URL = "jdbc:mysql://localhost:3306/optihealth";
     public static final String USERNAME = "root";
     public static final String PASSWORD = "";
 

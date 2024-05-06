@@ -7,15 +7,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.sql.SQLException;
 
 public class PaymentForm extends Application {
 
@@ -55,8 +50,20 @@ public class PaymentForm extends Application {
 
         Label countryLabel = new Label("Pays:");
         ComboBox<String> countryComboBox = new ComboBox<>();
-        countryComboBox.getItems().addAll("France", "Belgique", "Suisse"); // Liste complète des pays
-
+        countryComboBox.getItems().addAll(
+                "France",
+                "Belgique",
+                "Suisse",
+               "Tunisie",
+                "Allemagne",
+                "Italie",
+                "Espagne",
+                "Royaume-Uni",
+                "États-Unis",
+                "Canada",
+                "Egypt "
+                // et ainsi de suite...
+        );
         Label postalCodeLabel = new Label("Code postal:");
         TextField postalCodeField = new TextField();
         postalCodeField.setMaxWidth(50);
@@ -100,7 +107,7 @@ public class PaymentForm extends Application {
         formLayout.add(submitButton, 2, 5);
 
         // Création de la scène pour le formulaire de paiement
-        Scene paymentScene = new Scene(formLayout, 600, 200);
+        Scene paymentScene = new Scene(formLayout, 800, 600);
 
         // Création de la fenêtre modale pour le formulaire de paiement
         Stage paymentStage = new Stage();

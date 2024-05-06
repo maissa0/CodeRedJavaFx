@@ -8,6 +8,8 @@ module com.example.demo1 {
 
 
     opens com.example.demo1 to javafx.fxml;
+    opens com.example.demo1.controller to javafx.fxml;
     opens com.example.demo1.model to javafx.base;
     exports com.example.demo1;
+
 }
