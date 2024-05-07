@@ -73,7 +73,7 @@ public class UpdateUser {
 
     @FXML
     void back_to_list(ActionEvent event) throws IOException {
-        edu.CodeRed.controllers.Home.loadFXML("/listUser.fxml");
+        Home.loadFXML("/listUser.fxml");
     }
 
     @FXML

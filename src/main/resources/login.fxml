@@ -30,7 +30,7 @@
             </font>
         </Text>
 
-        <Button layoutX="614.0" layoutY="383.0" mnemonicParsing="false" onAction="#login" prefHeight="29.0" prefWidth="107.0" style="-fx-border-color: black; -fx-border-radius: 100; -fx-background-color: #FFDBC4; -fx-border-width: 2;" text="Connexion " textFill="#ff9000">
+        <Button layoutX="614.0" layoutY="382.0" mnemonicParsing="false" onAction="#login" prefHeight="29.0" prefWidth="107.0" style="-fx-border-color: black; -fx-border-radius: 100; -fx-background-color: #FFDBC4; -fx-border-width: 2;" text="Connexion " textFill="#ff9000">
             <font>
                 <Font name="Montserrat SemiBold" size="15.0" />
             </font>
@@ -39,10 +39,15 @@
             <font>
                 <Font size="14.0" />
             </font></Text>
-        <Hyperlink layoutX="759.0" layoutY="387.0" onAction="#register_page" text="S'inscrire ">
+        <Hyperlink layoutX="730.0" layoutY="387.0" onAction="#register_page" text="S'inscrire ">
             <font>
                 <Font size="14.0" />
             </font></Hyperlink>
+        <Hyperlink layoutX="624.0" layoutY="436.0" onAction="#redirect_passwordpage" text="Mot de passe oublier ?">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Hyperlink>
         <ImageView fitHeight="700.0" fitWidth="780.0" layoutX="-262.0" layoutY="10.0">
             <image>
                 <Image url="@images/logobg.png" />

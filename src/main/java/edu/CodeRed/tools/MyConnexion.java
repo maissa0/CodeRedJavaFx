@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class MyConnexion {
 
-    private String url="jdbc:mysql://127.0.0.1:3306/opti'health";
+    private String url="jdbc:mysql://127.0.0.1:3306/opti'health1";
     private String login="root";
     private String pwd="";
     Connection cnx;

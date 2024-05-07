@@ -1,20 +1,18 @@
 package edu.CodeRed.services;
 
+import com.restfb.types.User;
 import edu.CodeRed.entities.user;
 import edu.CodeRed.interfaces.IService;
 import edu.CodeRed.tools.MyConnexion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+
 import java.security.MessageDigest;
+
 import java.security.NoSuchAlgorithmException;
-
-
-
 import java.sql.*;
-import java.util.ArrayList;
-
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class userservice implements IService<user>{
     //Add user
@@ -23,8 +21,6 @@ public class userservice implements IService<user>{
     }
     @Override
     public void addUser(user user) {
-        String passwordencrypted = encrypt(user.getPassword());
-
         // 1. Prepare the SQL statement using a placeholder for each value
         String sql = "INSERT INTO `user` (`email`, `password`,`nom`, `prenom`, `date_de_naissance`, `role`,`genre`, `adresse`, `num_de_telephone`) VALUES (?,  ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -108,7 +104,7 @@ public class userservice implements IService<user>{
     }
     @Override
     //Retrieving data from database
-    public List<user> getalluserdata() {
+    public  List<user> getalluserdata() {
         List<user> list = new ArrayList<>();
         String query = "SELECT * FROM user";
         try {
@@ -136,57 +132,6 @@ public class userservice implements IService<user>{
         }
         return list;
     }
-
-
-    //Methode to login
-    public user loginUser(String email, String password){
-        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
-
-        String encryptedPassword = encrypt(password);
-
-        try (PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, encryptedPassword);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery())
-            {
-                if (resultSet.next()) {
-
-                    // ser login successful, create a user object and return it
-                    int userId = resultSet.getInt("id");
-
-
-                    String userEmail = resultSet.getString("email");
-                    String userPassword = resultSet.getString("password");
-                    String userNom = resultSet.getString("nom");
-                    String userPrenom = resultSet.getString("prenom");
-                    String userDateDeNaissance = resultSet.getString("date_de_naissance");
-                    String userrole = resultSet.getString("role");
-                    String userGenre = resultSet.getString("genre");
-                    String userAdresse = resultSet.getString("adresse");
-                    String userNumDeTelephone = resultSet.getString("num_de_telephone");
-
-
-                    return new user(userId,  userEmail, userPassword, userNom, userPrenom, userDateDeNaissance,  userrole,userGenre, userAdresse,userNumDeTelephone);
-                } else {
-                    return null;
-                }
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    // isUsernameTaken/isEmailTaken methodes to check the uniqueness of a user
-
-    public boolean isEmailTaken(String email) throws SQLException {
-        String query = "SELECT * FROM user WHERE user_email = ?";
-        PreparedStatement preparedStatement = MyConnexion.getInstance().getCon().prepareStatement(query);
-        preparedStatement.setString(1, email);
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            return resultSet.next();
-        }
-    }
-    //crypt the Username password
     public static String encrypt(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -217,8 +162,8 @@ public class userservice implements IService<user>{
     public void DeleteEntityWithConfirmation(user User) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Confirmation");
-        confirmationAlert.setHeaderText("Suppression de l'utilisateur");
-        confirmationAlert.setContentText("Voulez-vous vraiment supprimer cet utilisateur?");
+        confirmationAlert.setHeaderText("Suppression de logement");
+        confirmationAlert.setContentText("Voulez-vous vraiment supprimer ce logement?");
 
         Optional<ButtonType> result = confirmationAlert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -227,5 +172,88 @@ public class userservice implements IService<user>{
         }
     }
 
+
+    //Methode to login
+    public user loginUser(String Email, String password) throws SQLException {
+        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
+        String encryptedPassword = encrypt(password); // Assuming encrypt is a secure hashing function
+
+        try (PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
+            preparedStatement.setString(1,Email);
+            preparedStatement.setString(2, encryptedPassword);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // User login successful, create a user object and return it
+                    int userId = resultSet.getInt("id");
+                    String userEmail = resultSet.getString("email");
+                    String userNom = resultSet.getString("nom");
+                    String userPrenom = resultSet.getString("prenom");
+                    String userDateDeNaissance = resultSet.getString("date_de_naissance");
+                    String userRole = resultSet.getString("role");
+                    String userGenre = resultSet.getString("genre");
+                    String userAdresse = resultSet.getString("adresse");
+                    String userNumDeTelephone = resultSet.getString("num_de_telephone");
+
+                    // Consider using a builder pattern for user object creation (optional)
+                    return new user(userId, userEmail, userNom, userPrenom, userDateDeNaissance, userRole, userGenre, userAdresse, userNumDeTelephone);
+                } else {
+                    return null; // Login failed
+                }
+            }
+        }
+    }
+
+
+    public void updateforgottenpassword(String Email, String Password) {
+        String passwordencrypted = encrypt(Password);
+
+        String query = "UPDATE user " +
+                "SET password = ? WHERE email = ?";
+        try {
+            PreparedStatement preparedStatement = MyConnexion.getInstance().getCon().prepareStatement(query);
+            preparedStatement.setString(1, passwordencrypted);
+            preparedStatement.setString(2, Email);
+            preparedStatement.executeUpdate();
+            System.out.println("Password updated!");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // isUsernameTaken/isEmailTaken methodes to check the uniqueness of a user
+
+    public boolean isEmailTaken(String Email) throws SQLException {
+        String query = "SELECT * FROM user WHERE email = ?";
+        PreparedStatement preparedStatement = MyConnexion.getInstance().getCon().prepareStatement(query);
+        preparedStatement.setString(1, Email);
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            return resultSet.next();
+        }
+    }
+
+
+    public List<user> triNom() {
+
+        List<user> list1 = new ArrayList<>();
+        List<user> list2 = getalluserdata();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getNom().compareTo(o2.getNom())).collect(Collectors.toList());
+        return list1;
+
+    }
+
+
+    public List<user> trimail() {
+
+        List<user> list1 = new ArrayList<>();
+        List<user> list2 = getalluserdata();
+
+        list1 = list2.stream().sorted((o1, o2) -> o1.getEmail().compareTo(o2.getEmail())).collect(Collectors.toList());
+        return list1;
+
+    }
 }
+
+
 

@@ -12,8 +12,20 @@ public class user {
     private String adresse;
     private String num_de_telephone;
 
+    public user(int userId, String userEmail, String userNom, String userPrenom, String userDateDeNaissance, String userrole, String userGenre, String userAdresse, String userNumDeTelephone) {
+        this.id = id;
+        this.email = email;
 
+        this.password = password;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.date_de_naissance = date_de_naissance;
+        this.genre = genre;
+        this.adresse = adresse;
+        this.num_de_telephone = num_de_telephone;
+        this.role = role;
 
+    }
 
 
     //getters and setters

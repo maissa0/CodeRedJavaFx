@@ -21,12 +21,14 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
 
-
-import javafx.util.Callback;
-
-import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 public class ListUser {
+
+
+
+    @FXML
+    private ComboBox<String> trilist;
 
     @FXML
     public TableColumn<user, Void> actions1;
@@ -72,7 +74,7 @@ public class ListUser {
 
     //Redirect to Add user
     @FXML
-    void add_user(ActionEvent event) throws IOException {
+    void      add_user(ActionEvent event) throws IOException {
         Home.loadFXML("/addUser.fxml");
     }
 
@@ -96,6 +98,18 @@ public class ListUser {
         // Set the items to the TableView
         list_user.setItems(userList);
 
+
+
+        trilist.setOnAction(event -> triList(event));
+        //search();
+
+
+        ObservableList<String> Trichoices = FXCollections.observableArrayList("Nom", "Categorie");
+        trilist.setItems(Trichoices);
+
+        searchbar_id.textProperty().addListener((observable, oldValue, newValue) -> {
+            filterTable(newValue);
+        });
 
 
 
@@ -200,4 +214,75 @@ public class ListUser {
         ObservableList<user> updatedList = FXCollections.observableList(userService.getalluserdata());
         list_user.setItems(updatedList);
     }
+
+
+
+    private void TrieNom() {
+        userservice is = new userservice();
+        List<user> i = is.triNom();
+        user_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        user_email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        user_mdp.setCellValueFactory(new PropertyValueFactory<>("password"));
+        user_nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        user_prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        user_datedenaissance.setCellValueFactory(new PropertyValueFactory<>("date_de_naissance"));
+        user_Role.setCellValueFactory(new PropertyValueFactory<>("role"));
+        user_genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        user_adresse.setCellValueFactory(new PropertyValueFactory<>("adresse"));
+        user_numtel.setCellValueFactory(new PropertyValueFactory<>("num_de_telephone"));
+        actions1.setCellFactory(createActionsCellFactory());
+
+        list_user.setItems(FXCollections.observableList(i));
+
+    }
+
+    private void Trieemail() {
+        userservice is = new userservice();
+        List<user> i = is.trimail();
+        user_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        user_email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        user_mdp.setCellValueFactory(new PropertyValueFactory<>("password"));
+        user_nom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        user_prenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        user_datedenaissance.setCellValueFactory(new PropertyValueFactory<>("date_de_naissance"));
+        user_Role.setCellValueFactory(new PropertyValueFactory<>("role"));
+        user_genre.setCellValueFactory(new PropertyValueFactory<>("genre"));
+        user_adresse.setCellValueFactory(new PropertyValueFactory<>("adresse"));
+        user_numtel.setCellValueFactory(new PropertyValueFactory<>("num_de_telephone"));
+        actions1.setCellFactory(createActionsCellFactory());
+
+
+        list_user.setItems(FXCollections.observableList(i));
+
+    }
+
+
+    private void filterTable(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            list_user.setItems(initialData());
+        } else {
+            ObservableList<user> filteredList = FXCollections.observableArrayList();
+            for (user vehicule : list_user.getItems()) {
+                if (vehicule.getNom().toLowerCase().contains(keyword.toLowerCase())) {
+                    filteredList.add(vehicule);
+                }
+            }
+            list_user.setItems(filteredList);
+        }
+    }
+
+    ObservableList<user>initialData(){
+        userservice V = new userservice();
+        return  FXCollections.observableArrayList(V.getalluserdata());
+    }
+    @FXML
+    void triList(ActionEvent event) {
+
+        if (trilist.getValue().equals("Nom")) {
+            TrieNom();
+        } else if (trilist.getValue().equals("email")) {
+            Trieemail();
+        }
+    }
+
 }

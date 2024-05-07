@@ -1,23 +1,23 @@
 package edu.CodeRed.controllers;
-import edu.CodeRed.services.userservice; // Assurez-vous que le chemin est correct
 
 import java.io.IOException;
-import edu.CodeRed.entities.user;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-public class AddUser {
 
+import edu.CodeRed.entities.user;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
+import edu.CodeRed.services.userservice;
+
+public class registerUser {
     @FXML
     private TextField adresse_input;
 
@@ -49,15 +49,27 @@ public class AddUser {
     private TextField prenom_input;
 
     @FXML
-    void back_to_list(ActionEvent event) throws IOException {
-        Home.loadFXML("/listUser.fxml");
-    }
-
-
+    private PasswordField passwordconfirmation_input;
 
 
     @FXML
-    void reset_input(ActionEvent event) {
+    private TextField phonenumber_input;
+
+
+    @FXML
+    void back_to_login(ActionEvent event) throws IOException {
+        Home.loadFXML("/login.fxml");
+    }
+    @FXML
+    void initialize() {
+        ObservableList<String> genderOptions = FXCollections.observableArrayList("Female", "Male");
+        gender_combobox.setItems(genderOptions);
+        ObservableList<String> roleOptions = FXCollections.observableArrayList("user", "admin");
+        role_combobox.setItems(roleOptions);
+
+    }
+    @FXML
+    void reset_inputs(ActionEvent event) {
         nom_input.clear();
         birthday_input.setValue(null);
         email_input.clear();
@@ -67,7 +79,10 @@ public class AddUser {
         mdp_input.clear();
         adresse_input.clear();
         numtel_input.clear();
+
+
     }
+
     @FXML
     void submit_user(ActionEvent event) throws IOException, SQLException {
         if(validateForm()) {
@@ -77,7 +92,7 @@ public class AddUser {
             String selectedRole = role_combobox.getValue();
             String selectedGender = gender_combobox.getValue();
             user user = new user(email_input.getText(),nom_input.getText(), prenom_input.getText(),formattedBirthday, selectedRole, selectedGender,numtel_input.getText(),  adresse_input.getText(), mdp_input.getText()
-                    );
+            );
             userservice userservice = new userservice(); // Crée une nouvelle instance de la classe UserService
             userservice.addUser(user);
         }
@@ -103,8 +118,15 @@ public class AddUser {
             error.setVisible(true);
             return false;
         }
+
+        if (!mdp_input.getText().equals(passwordconfirmation_input.getText())) {
+            error.setText("Your password is not the same as the confirmation");
+            error.setVisible(true);
+            return false;
+        }
         return true;
     }
+
     //Password validation methode
     private boolean isValidPassword(String password) {
         String regex = "^(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!/])(?=\\S+$).{8,}$";
@@ -112,6 +134,7 @@ public class AddUser {
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
+
     //Email validation methode
     private boolean isEmailValid(String email) {
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
@@ -120,11 +143,24 @@ public class AddUser {
         return matcher.matches();
     }
 
-    @FXML
-    void initialize() {
-        ObservableList<String> genderOptions = FXCollections.observableArrayList("Female", "Male");
-        gender_combobox.setItems(genderOptions);
-        ObservableList<String> roleOptions = FXCollections.observableArrayList("user", "admin");
-        role_combobox.setItems(roleOptions);
+    //Methode to generate user password
+    //WIP
+    public static String generatePassword() {
+        String uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String digits = "0123456789";
+        String specialCharacters = "@$!%*?&";
+        String allCharacters = uppercaseLetters + digits + specialCharacters;
+        int passwordLength = 12;
+        StringBuilder password = new StringBuilder(passwordLength);
+        SecureRandom random = new SecureRandom();
+        password.append(uppercaseLetters.charAt(random.nextInt(uppercaseLetters.length())));
+        password.append(digits.charAt(random.nextInt(digits.length())));
+        password.append(specialCharacters.charAt(random.nextInt(specialCharacters.length())));
+        for (int i = 3; i < passwordLength; i++) {
+            password.append(allCharacters.charAt(random.nextInt(allCharacters.length())));
+        }
+        return password.toString();
+    }
+   }
 
-    }}
+

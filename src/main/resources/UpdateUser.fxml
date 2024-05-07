@@ -6,31 +6,70 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.UpdateUser">
+<AnchorPane prefHeight="719.0" prefWidth="1183.0" style="-fx-background-color: #BBDB6E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.UpdateUser">
    <children>
-      <Label layoutX="487.0" layoutY="77.0" text="Nom:" />
-      <TextField fx:id="nom_input" layoutX="487.0" layoutY="94.0" prefHeight="25.0" prefWidth="287.0" style="-fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="134.0" text="Prénom:" />
-      <TextField fx:id="prenom_input" layoutX="487.0" layoutY="151.0" prefHeight="25.0" prefWidth="287.0" style="-fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="192.0" text="Date de naissance:" />
-      <DatePicker fx:id="birthday_input" layoutX="487.0" layoutY="220.0" prefHeight="25.0" prefWidth="287.0" style="-fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="258.0" text="Rôle:" />
-      <ComboBox fx:id="role_combobox" layoutX="490.0" layoutY="281.0" prefHeight="25.0" prefWidth="287.0" promptText="Choisissez votre rôle" style="-fx-background-color: white; -fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="318.0" prefHeight="28.0" prefWidth="45.0" text="Genre:" />
-      <ComboBox fx:id="gender_combobox" layoutX="490.0" layoutY="346.0" prefHeight="25.0" prefWidth="287.0" promptText="Choisissez votre genre" style="-fx-background-color: white; -fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="374.0" text="Numéro de téléphone:" />
-      <TextField fx:id="numtel_input" layoutX="489.0" layoutY="401.0" prefHeight="25.0" prefWidth="287.0" style="-fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="434.0" text="Adresse:" />
-      <TextField fx:id="adresse_input" layoutX="489.0" layoutY="462.0" prefHeight="25.0" prefWidth="287.0" style="-fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="501.0" text="E-mail:" />
-      <TextField fx:id="email_input" layoutX="489.0" layoutY="519.0" prefHeight="25.0" prefWidth="287.0" style="-fx-border-color: black;" />
-      <Label layoutX="487.0" layoutY="558.0" text="Mot de passe:" />
-      <TextField fx:id="mdp_input" layoutX="487.0" layoutY="582.0" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: white; -fx-border-color: black;" />
-      <Button layoutX="480.0" layoutY="650.0" mnemonicParsing="false" onAction="#reset_input" prefHeight="45.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black; " text="Réinitialiser" />
-      <Button layoutX="656.0" layoutY="650.0" mnemonicParsing="false" onAction="#modify_user" prefHeight="45.0" prefWidth="118.0" style="-fx-background-color: white; -fx-border-color: black; " text="Soumettre" />
-      <Button layoutX="387.0" layoutY="24.0" mnemonicParsing="false" onAction="#back_to_list" prefHeight="45.0" prefWidth="151.0" style=" -fx-border-radius: 0; -fx-border-color: black; -fx-background-color: WHITE;" text="&lt; Retour à la liste" />
+      <Label layoutX="302.0" layoutY="113.0" text="Last Name:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField fx:id="nom_input" layoutX="409.0" layoutY="109.0" prefHeight="25.0" prefWidth="287.0" />
+      <Label layoutX="303.0" layoutY="172.0" text="Name:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField fx:id="prenom_input" layoutX="409.0" layoutY="167.0" prefHeight="25.0" prefWidth="287.0" />
+      <Label layoutX="283.0" layoutY="236.0" text="Date Of Birth :">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <DatePicker fx:id="birthday_input" layoutX="409.0" layoutY="232.0" prefHeight="25.0" prefWidth="287.0" />
+      <Label layoutX="324.0" layoutY="308.0" text="Role:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <ComboBox fx:id="role_combobox" layoutX="409.0" layoutY="303.0" prefHeight="25.0" prefWidth="287.0" promptText="Choose your role" style="-fx-background-color: white;" />
+      <Label layoutX="311.0" layoutY="376.0" prefHeight="28.0" prefWidth="66.0" text="Gendre:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <ComboBox fx:id="gender_combobox" layoutX="409.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="Choose your gendre" style="-fx-background-color: white;" />
+      <Label layoutX="709.0" layoutY="162.0" text="Phone Number:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField fx:id="numtel_input" layoutX="841.0" layoutY="157.0" prefHeight="25.0" prefWidth="287.0" />
+      <Label layoutX="746.0" layoutY="236.0" text="Adress:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField fx:id="adresse_input" layoutX="841.0" layoutY="232.0" prefHeight="25.0" prefWidth="287.0" />
+      <Label layoutX="745.0" layoutY="308.0" text="E-mail:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField fx:id="email_input" layoutX="841.0" layoutY="303.0" prefHeight="25.0" prefWidth="287.0" />
+      <Label layoutX="733.0" layoutY="380.0" text="Password:">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font></Label>
+      <TextField fx:id="mdp_input" layoutX="841.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: white;" />
+      <Button layoutX="775.0" layoutY="515.0" mnemonicParsing="false" onAction="#reset_input" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: orange;" text="Reset " textFill="WHITE" />
+      <Button layoutX="405.0" layoutY="515.0" mnemonicParsing="false" onAction="#modify_user" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: orange;" text="Modify" textFill="WHITE" />
       <Text fx:id="error" fill="RED" layoutX="479.0" layoutY="634.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text layoutX="615.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #BBDB6E;" text="Update User">
+         <font>
+            <Font name="Bell MT" size="36.0" />
+         </font>
+      </Text>
+      <BorderPane layoutX="-9.0" layoutY="-3.0" prefHeight="712.0" prefWidth="300.0">
+         <left>
+            <fx:include source="adminSidebar.fxml" />
+         </left>
+      </BorderPane>
+
    </children>
 </AnchorPane>
