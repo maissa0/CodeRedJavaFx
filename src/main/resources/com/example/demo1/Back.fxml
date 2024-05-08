@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="668.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.controller.Back">
+    <children>
+        <Pane layoutX="3.0" layoutY="4.0" prefHeight="660.0" prefWidth="294.0" style="-fx-background-color: #56a08f; -fx-border-radius: 10; -fx-border-color: #4CC459; -fx-background-radius: 10;">
+            <children>
+
+                <Button alignment="BASELINE_CENTER" layoutX="46.0" layoutY="155.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion Utilisateur">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@user.png" />
+                            </image>
+                        </ImageView>
+                    </graphic></Button>
+                <Button alignment="BASELINE_CENTER" layoutX="47.0" layoutY="337.0" mnemonicParsing="false"  prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Activitées">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@blog.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button alignment="BASELINE_CENTER" layoutX="61.0" layoutY="431.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Modifier Votre Profile">
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@pencil.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button alignment="BASELINE_CENTER" layoutX="61.0" layoutY="478.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Deconnexion">
+
+                </Button>
+                <ImageView fx:id="picture" fitHeight="85.0" fitWidth="77.0" layoutX="17.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0,😎, 10, 0, 0, 0)); -fx-padding: 10;" />
+                <Separator layoutY="534.0" prefHeight="11.0" prefWidth="275.0" />
+
+                <Label fx:id="role" layoutX="200.0" layoutY="596.0" text="Label" />
+                <Label fx:id="Nom" layoutX="200.0" layoutY="572.0" text="Label" />
+                <Label layoutX="124.0" layoutY="572.0" text="Votre Nom:">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font></Label>
+                <Separator layoutY="395.0" prefHeight="11.0" prefWidth="275.0" />
+                <Label layoutX="124.0" layoutY="596.0" text="Role:">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <ImageView fitHeight="99.0" fitWidth="145.0" layoutX="76.0" layoutY="20.0">
+                    <image>
+                        <Image url="@logo.jpeg" />
+                    </image>
+                </ImageView>
+                <MenuButton layoutX="47.0" layoutY="201.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="204.0" style="-fx-background-radius: 100;" text="Gestion Repas" textAlignment="CENTER">
+                    <items>
+                        <MenuItem fx:id="gesIng" mnemonicParsing="false"  text="Ingredients">
+                            <styleClass>
+                                <String fx:value="menu-item:hover" />
+                                <String fx:value="menu-item" />
+                            </styleClass></MenuItem>
+                        <MenuItem fx:id="getRec" mnemonicParsing="false"  style="-fx-background-radius: 100;" text="Recettes">
+                            <styleClass>
+                                <String fx:value="menu-item:hover" />
+                                <String fx:value="menu-item" />
+                            </styleClass></MenuItem>
+                    </items>
+                    <styleClass>
+                        <String fx:value="shadow menu-button" />
+                        <String fx:value="menu-button" />
+                    </styleClass>
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@user.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuButton>
+                <MenuButton layoutX="47.0" layoutY="248.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="204.0" style="-fx-background-radius: 100;" text="Gestion Boutiques" textAlignment="CENTER">
+                    <items>
+                        <MenuItem fx:id="gesIng1" mnemonicParsing="false" onAction="#handleCommandesButtonClick" style="-fx-background-radius: 100;" text="Commandes">
+                            <styleClass>
+                                <String fx:value="menu-item:hover" />
+                                <String fx:value="menu-item" />
+                            </styleClass>
+                        </MenuItem>
+                        <MenuItem fx:id="getRec1" mnemonicParsing="false" onAction="#handleProduitsBButtonClick" style="-fx-background-radius: 100;" text="Produits">
+                            <styleClass>
+                                <String fx:value="menu-item:hover" />
+                                <String fx:value="menu-item" />
+                            </styleClass>
+                        </MenuItem>
+                    </items>
+                    <styleClass>
+                        <String fx:value="shadow menu-button" />
+                        <String fx:value="menu-button" />
+                    </styleClass>
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@user.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuButton>
+                <MenuButton layoutX="46.0" layoutY="292.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="204.0" style="-fx-background-radius: 100;" text="Gestion Objectives" textAlignment="CENTER">
+                    <items>
+                        <MenuItem fx:id="gesIng11" mnemonicParsing="false" text="Objectives">
+                            <styleClass>
+                                <String fx:value="menu-item:hover" />
+                                <String fx:value="menu-item" />
+                            </styleClass>
+                        </MenuItem>
+                        <MenuItem fx:id="getRec11" mnemonicParsing="false"  style="-fx-background-radius: 100;" text="Suivi Onjetives">
+                            <styleClass>
+                                <String fx:value="menu-item:hover" />
+                                <String fx:value="menu-item" />
+                            </styleClass>
+                        </MenuItem>
+                    </items>
+                    <styleClass>
+                        <String fx:value="shadow menu-button" />
+                        <String fx:value="menu-button" />
+                    </styleClass>
+                    <graphic>
+                        <ImageView>
+                            <image>
+                                <Image url="@user.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </MenuButton>
+
+
+            </children>
+        </Pane>
+
+    </children>
+
+</AnchorPane>

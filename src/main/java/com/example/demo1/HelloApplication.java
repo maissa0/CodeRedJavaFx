@@ -28,7 +28,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException, SQLException {
-        Parent root = FXMLLoader.load(getClass().getResource("front.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Back.fxml"));
 
         // Créer la scène
         Scene scene = new Scene(root, 800, 600); // Remplacez 800 et 600 par les dimensions souhaitées

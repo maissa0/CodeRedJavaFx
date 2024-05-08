@@ -228,7 +228,7 @@ public class CommandeController {
         List<Commande> commandes = new ArrayList<>();
 
         try (Connection connection = DataBase.getConnection()) {
-            String query = "SELECT id, date_cmd, etat_cmd, qte_cmd, total FROM commande";
+            String query = "SELECT id, date_cmd, etat_cmd, qte_commande, total FROM commande";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -236,7 +236,7 @@ public class CommandeController {
                 int id = resultSet.getInt("id");
                 LocalDate dateCmd = resultSet.getDate("date_cmd").toLocalDate();
                 String etatCmd = resultSet.getString("etat_cmd");
-                int quantiteCmd = resultSet.getInt("qte_cmd");
+                int quantiteCmd = resultSet.getInt("qte_commande");
                 double total = resultSet.getDouble("total");
 
                 Commande commande = new Commande(id, dateCmd, etatCmd, quantiteCmd, total);
@@ -251,7 +251,7 @@ public class CommandeController {
 
     public void editerCommande(int id, LocalDate newDateCmd, String newEtatCmd, int newQuantiteCmd, double newTotal) {
         try {
-            String query = "UPDATE commande SET date_cmd = ?, etat_cmd = ?, qte_cmd = ?, total = ? WHERE id = ?";
+            String query = "UPDATE commande SET date_cmd = ?, etat_cmd = ?, qte_commande = ?, total = ? WHERE id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setDate(1, Date.valueOf(newDateCmd));
             statement.setString(2, newEtatCmd);

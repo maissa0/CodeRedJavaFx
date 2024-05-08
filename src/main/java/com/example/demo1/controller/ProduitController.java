@@ -45,10 +45,9 @@ public class ProduitController {
         produitsView.getChildren().clear();
 
 
-        TilePane tilePane = new TilePane();
-        tilePane.setPadding(new Insets(10));
-        tilePane.setHgap(20);
-        tilePane.setVgap(20);
+        HBox galleryBox = new HBox();
+        galleryBox.setPadding(new Insets(80));
+        galleryBox.setSpacing(30);
 
         // Parcourir tous les produits
         for (Produit produit : produits) {
@@ -152,40 +151,26 @@ public class ProduitController {
                     afficherProduits(produitsView);
                 }
             });
-            Button addToCartButton = new Button("Ajouter au panier");
-            addToCartButton.setOnAction(event -> {
-                try {
-                    ajouterAuPanier(produit);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                panierController.afficherProduitsDuPanier();
-            });
 
-
-            boutonsBox.getChildren().addAll(editButton, deleteButton,addToCartButton);
+            boutonsBox.getChildren().addAll(editButton, deleteButton);
             carteProduit.getChildren().add(boutonsBox);
 
             // Ajouter la carte au TilePane
-            tilePane.getChildren().add(carteProduit);
+            galleryBox.getChildren().add(carteProduit);
         }
 
-        // Ajouter le TilePane contenant toutes les cartes de produits à la vue des produits
-        produitsView.getChildren().add(tilePane);
-        Button ajouterButton = new Button("Ajouter un produit");
+        produitsView.getChildren().add(galleryBox);
+        Button ajouterButton = new Button("Ajouter");
         ajouterButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10px 20px; -fx-border-radius: 3px;");
         ajouterButton.setOnAction(event -> {
             afficherFormulaireAjoutProduit(produitsView);
         });
-
-
-        // Créer une VBox pour contenir la TilePane et le bouton d'ajout de produit
-        VBox container = new VBox();
-        container.getChildren().addAll(tilePane, ajouterButton);
-        VBox.setVgrow(tilePane, Priority.ALWAYS);
-
-        // Ajouter le conteneur à la vue des produits
-        produitsView.getChildren().add(container);
+       galleryBox.getChildren().add(ajouterButton);
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(galleryBox);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS); // Afficher toujours la barre de défilement horizontale
+        scrollPane.setFitToWidth(true);
+        produitsView.getChildren().add(scrollPane);
     }
     public void afficherFormulaireAjoutProduit(VBox produitsView) {
         produitsView.getChildren().clear(); // Effacer le contenu précédent de produitsView
@@ -271,13 +256,15 @@ public class ProduitController {
                 alert.showAndWait();
                 return;
             }
+            String selectedImagePath = imagePath[0];
 
-            ajouterProduit(produitNom, produitDescription, produitPrix, imagePath[0]); // Utilisez imagePath[0] pour obtenir le chemin de l'image
+
+            ajouterProduit(produitNom, produitDescription, produitPrix, selectedImagePath); // Utilisez imagePath[0] pour obtenir le chemin de l'image
             afficherProduits(produitsView);
             nomField.clear();
             descriptionField.clear();
             prixField.clear();
-            imageView.setImage(null); // Réinitialiser l'image affichée dans l'ImageView
+            imageView.setImage(null);
         });
 
         VBox formulaireAjoutProduit = new VBox(10);
@@ -422,7 +409,7 @@ public class ProduitController {
     // Méthode pour éditer un produit
     public void editerProduit(String ancienNom, String nouveauNom, String description, double prix) {
         try {
-            String query = "UPDATE produit SET nom_produit = ?, description = ?, prix = ? WHERE nom = ?";
+            String query = "UPDATE produit SET nom_produit = ?, description = ?, prix = ? WHERE nom_produit = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, nouveauNom);
             statement.setString(2, description);
