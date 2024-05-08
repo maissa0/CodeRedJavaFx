@@ -10,20 +10,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="searchbar" prefHeight="690.0" prefWidth="1450.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.ListUser">
+<AnchorPane fx:id="searchbar" prefHeight="690.0" prefWidth="1450.0" style="-fx-background-color: #E1DADA;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.ListUser">
     <children>
 
         <TableView fx:id="list_user" layoutX="304.0" layoutY="145.0" prefHeight="438.0" prefWidth="1151.0">
             <columns>
                 <TableColumn fx:id="user_id" prefWidth="84.66665649414062" text="ID" />
-                <TableColumn fx:id="user_nom" prefWidth="88.0" text="Last Name" />
-                <TableColumn fx:id="user_prenom" prefWidth="84.66671752929688" text="Name" />
-                <TableColumn fx:id="user_datedenaissance" minWidth="0.0" prefWidth="104.0" text="Date Of Birth" />
-                <TableColumn fx:id="user_genre" prefWidth="101.0" text="Gendre" />
-                <TableColumn fx:id="user_numtel" prefWidth="91.0" text="Phonr Number" />
-                <TableColumn fx:id="user_adresse" prefWidth="124.0" text="Adress" />
+                <TableColumn fx:id="user_nom" prefWidth="88.0" text="Nom" />
+                <TableColumn fx:id="user_prenom" prefWidth="84.66671752929688" text="Prénom" />
+                <TableColumn fx:id="user_datedenaissance" minWidth="0.0" prefWidth="127.33331298828125" text="Date de naissance" />
+                <TableColumn fx:id="user_genre" prefWidth="78.0" text="Genre" />
+                <TableColumn fx:id="user_numtel" prefWidth="91.0" text="Téléphone" />
+                <TableColumn fx:id="user_adresse" prefWidth="124.0" text="Adresse" />
                 <TableColumn fx:id="user_email" prefWidth="124.666748046875" text="E-mail" />
-                <TableColumn fx:id="user_mdp" prefWidth="112.6666259765625" text="Password" />
+                <TableColumn fx:id="user_mdp" prefWidth="112.6666259765625" text="Mot de passe" />
                 <TableColumn fx:id="user_Role" prefWidth="91.333251953125" text="Role" />
             <TableColumn fx:id="actions1" prefWidth="139.0" text="Actions" />
             </columns>
@@ -32,7 +32,7 @@
             <font>
                 <Font name="System Bold" size="20.0" />
             </font></Button>
-        <Text fill="#e87e06" layoutX="333.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List of User">
+        <Text fill="#e87e06" layoutX="333.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des utilisateurs">
             <font>
                 <Font name="Bell MT" size="36.0" />
             </font>
@@ -42,8 +42,8 @@
                 <Font size="15.0" />
             </font>
         </Text>
-        <TextField fx:id="searchbar_id" layoutX="1133.0" layoutY="100.0" prefHeight="25.0" prefWidth="262.0" style="-fx-background-color: white;" />
-        <Text layoutX="1061.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search:">
+        <TextField fx:id="searchbar_id" layoutX="1141.0" layoutY="101.0" prefHeight="25.0" prefWidth="169.0" style="-fx-background-color: white;" />
+        <Text layoutX="1061.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rechercher:">
             <font>
                 <Font name="Dubai Regular" size="15.0" />
             </font>
@@ -54,5 +54,10 @@
             </left>
         </BorderPane>
       <ComboBox fx:id="trilist" layoutX="886.0" layoutY="101.0" onAction="#triList" prefWidth="150.0" />
+      <Text layoutX="825.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrer" wrappingWidth="46.185546875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

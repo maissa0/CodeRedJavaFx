@@ -43,12 +43,12 @@
             <font>
                 <Font size="14.0" />
             </font></Hyperlink>
-        <Hyperlink layoutX="624.0" layoutY="436.0" onAction="#redirect_passwordpage" text="Mot de passe oublier ?">
+        <Hyperlink layoutX="625.0" layoutY="436.0" onAction="#redirect_passwordpage" text="Mot de passe oublier ?">
             <font>
                 <Font size="14.0" />
             </font>
         </Hyperlink>
-        <ImageView fitHeight="700.0" fitWidth="780.0" layoutX="-262.0" layoutY="10.0">
+        <ImageView fitHeight="549.0" fitWidth="513.0" layoutX="44.0" layoutY="30.0">
             <image>
                 <Image url="@images/logobg.png" />
             </image>

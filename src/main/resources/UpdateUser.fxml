@@ -10,57 +10,57 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="719.0" prefWidth="1183.0" style="-fx-background-color: #BBDB6E;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.UpdateUser">
+<AnchorPane prefHeight="719.0" prefWidth="1183.0" style="-fx-background-color: #E1DADA;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.controllers.UpdateUser">
    <children>
-      <Label layoutX="302.0" layoutY="113.0" text="Last Name:">
+      <Label layoutX="338.0" layoutY="111.0" text="Nom">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <TextField fx:id="nom_input" layoutX="409.0" layoutY="109.0" prefHeight="25.0" prefWidth="287.0" />
-      <Label layoutX="303.0" layoutY="172.0" text="Name:">
+      <TextField fx:id="nom_input" layoutX="429.0" layoutY="109.0" prefHeight="25.0" prefWidth="247.0" />
+      <Label layoutX="329.0" layoutY="171.0" text="Prénom:">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <TextField fx:id="prenom_input" layoutX="409.0" layoutY="167.0" prefHeight="25.0" prefWidth="287.0" />
-      <Label layoutX="283.0" layoutY="236.0" text="Date Of Birth :">
+      <TextField fx:id="prenom_input" layoutX="429.0" layoutY="169.0" prefHeight="22.0" prefWidth="247.0" />
+      <Label layoutX="298.0" layoutY="234.0" text="Date de naissance :">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <DatePicker fx:id="birthday_input" layoutX="409.0" layoutY="232.0" prefHeight="25.0" prefWidth="287.0" />
-      <Label layoutX="324.0" layoutY="308.0" text="Role:">
+      <DatePicker fx:id="birthday_input" layoutX="452.0" layoutY="232.0" prefHeight="25.0" prefWidth="223.0" />
+      <Label layoutX="370.0" layoutY="292.0" text="Role:">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <ComboBox fx:id="role_combobox" layoutX="409.0" layoutY="303.0" prefHeight="25.0" prefWidth="287.0" promptText="Choose your role" style="-fx-background-color: white;" />
-      <Label layoutX="311.0" layoutY="376.0" prefHeight="28.0" prefWidth="66.0" text="Gendre:">
+      <ComboBox fx:id="role_combobox" layoutX="448.0" layoutY="289.0" prefHeight="28.0" prefWidth="231.0" promptText="Choose your role" style="-fx-background-color: white;" />
+      <Label layoutX="357.0" layoutY="346.0" prefHeight="28.0" prefWidth="66.0" text="Genre:">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <ComboBox fx:id="gender_combobox" layoutX="409.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" promptText="Choose your gendre" style="-fx-background-color: white;" />
-      <Label layoutX="709.0" layoutY="162.0" text="Phone Number:">
+      <ComboBox fx:id="gender_combobox" layoutX="445.0" layoutY="346.0" prefHeight="28.0" prefWidth="238.0" promptText="Choose your gendre" style="-fx-background-color: white;" />
+      <Label layoutX="746.0" layoutY="111.0" text="Téléphone">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <TextField fx:id="numtel_input" layoutX="841.0" layoutY="157.0" prefHeight="25.0" prefWidth="287.0" />
-      <Label layoutX="746.0" layoutY="236.0" text="Adress:">
+      <TextField fx:id="numtel_input" layoutX="863.0" layoutY="108.0" prefHeight="28.0" prefWidth="238.0" />
+      <Label layoutX="746.0" layoutY="172.0" text="Adresse:">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <TextField fx:id="adresse_input" layoutX="841.0" layoutY="232.0" prefHeight="25.0" prefWidth="287.0" />
-      <Label layoutX="745.0" layoutY="308.0" text="E-mail:">
+      <TextField fx:id="adresse_input" layoutX="863.0" layoutY="168.0" prefHeight="28.0" prefWidth="238.0" />
+      <Label layoutX="759.0" layoutY="234.0" text="E-mail:">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <TextField fx:id="email_input" layoutX="841.0" layoutY="303.0" prefHeight="25.0" prefWidth="287.0" />
-      <Label layoutX="733.0" layoutY="380.0" text="Password:">
+      <TextField fx:id="email_input" layoutX="863.0" layoutY="232.0" prefHeight="25.0" prefWidth="238.0" />
+      <Label layoutX="739.0" layoutY="297.0" text="Mot de passe:">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font></Label>
-      <TextField fx:id="mdp_input" layoutX="841.0" layoutY="375.0" prefHeight="25.0" prefWidth="287.0" style="-fx-background-color: white;" />
-      <Button layoutX="775.0" layoutY="515.0" mnemonicParsing="false" onAction="#reset_input" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: orange;" text="Reset " textFill="WHITE" />
-      <Button layoutX="405.0" layoutY="515.0" mnemonicParsing="false" onAction="#modify_user" prefHeight="45.0" prefWidth="287.0" style="-fx-background-color: orange;" text="Modify" textFill="WHITE" />
+      <TextField fx:id="mdp_input" layoutX="870.0" layoutY="290.0" prefHeight="25.0" prefWidth="238.0" style="-fx-background-color: white;" />
+      <Button layoutX="780.0" layoutY="446.0" mnemonicParsing="false" onAction="#reset_input" prefHeight="28.0" prefWidth="286.0" style="-fx-background-color: #3d8072;" text="Reset " textFill="WHITE" />
+      <Button layoutX="469.0" layoutY="446.0" mnemonicParsing="false" onAction="#modify_user" prefHeight="28.0" prefWidth="238.0" style="-fx-background-color: #3d8072;" text="Modifier" textFill="WHITE" />
       <Text fx:id="error" fill="RED" layoutX="479.0" layoutY="634.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text layoutX="615.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #BBDB6E;" text="Update User">
+      <Text layoutX="615.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-background-color: #BBDB6E;" text="Modifier ">
          <font>
             <Font name="Bell MT" size="36.0" />
          </font>
