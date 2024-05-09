@@ -15,7 +15,6 @@ public class user {
     public user(int userId, String userEmail, String userNom, String userPrenom, String userDateDeNaissance, String userrole, String userGenre, String userAdresse, String userNumDeTelephone) {
         this.id = id;
         this.email = email;
-
         this.password = password;
         this.nom = nom;
         this.prenom = prenom;
