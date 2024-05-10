@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="633.0" prefWidth="1012.0" stylesheets="@CSS/mainFormDesign.css" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.AjouterActiviteControler">
+   <children>
+      <Label layoutX="445.0" layoutY="37.0" prefHeight="28.0" prefWidth="150.0" text="Gestion des Activités" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tType" layoutX="250.0" layoutY="133.0" />
+      <Label layoutX="128.0" layoutY="137.0" text="Type" />
+      <Label layoutX="128.0" layoutY="222.0" text="Nombre de calories" />
+      <Label layoutX="128.0" layoutY="176.0" text="Nom" />
+      <Label layoutX="128.0" layoutY="309.0" text="Image" />
+      <Label layoutX="128.0" layoutY="269.0" text="Description" />
+      <TextField fx:id="tDescription" layoutX="250.0" layoutY="265.0" />
+      <TextField fx:id="tNbrcal" layoutX="250.0" layoutY="218.0" />
+      <TextField fx:id="tNom" layoutX="250.0" layoutY="172.0" />
+      <Button fx:id="btnAjouterAct" layoutX="118.0" layoutY="409.0" mnemonicParsing="false" onAction="#ajouterActivite" prefHeight="26.0" prefWidth="84.0" styleClass="btn" stylesheets="@CSS/mainFormDesign.css" text="Ajouter" />
+      <TableView fx:id="tableActivite" layoutX="426.0" layoutY="135.0" prefHeight="230.0" prefWidth="496.0">
+        <columns>
+          <TableColumn fx:id="colType" prefWidth="75.0" text="Type" />
+          <TableColumn fx:id="colNom" prefWidth="107.19992065429688" text="Nom" />
+            <TableColumn fx:id="colNbrCal" prefWidth="95.20001220703125" text="Nbr Cal" />
+            <TableColumn fx:id="colDescription" prefWidth="217.60003662109375" text="Description" />
+        </columns>
+      </TableView>
+      <Button fx:id="btnModifier" layoutX="217.0" layoutY="409.0" mnemonicParsing="false" onAction="#modifierActivite" prefHeight="26.0" prefWidth="84.0" styleClass="btn" text="Modifier" />
+      <Button fx:id="btnSupprimer" layoutX="313.0" layoutY="409.0" mnemonicParsing="false" onAction="#supprimerActivite" prefHeight="26.0" prefWidth="84.0" styleClass="btn" text="Supprimer" />
+      <Button fx:id="btnSearch" layoutX="667.0" layoutY="92.0" mnemonicParsing="false" onAction="#searchActivite" prefHeight="26.0" prefWidth="84.0" styleClass="btn" text="Search" />
+      <TextField fx:id="tSearch" layoutX="500.0" layoutY="92.0" />
+      <Button fx:id="UploadBotton" layoutX="293.0" layoutY="308.0" mnemonicParsing="false" onAction="#UploadPhoto" styleClass="btn" text="Upload" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="textArea" fill="RED" layoutX="48.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="236.79998779296875" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="main_form" prefHeight="645.0" prefWidth="1300.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.IngredientController">
+
+    <children>
+        <AnchorPane layoutX="296.0" layoutY="380.0" prefHeight="243.0" prefWidth="990.0" stylesheets="@stylSheets/mainFormDesign.css" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0">
+            <styleClass>
+                <String fx:value="white-bg" />
+                <String fx:value="radius" />
+                <String fx:value="shadow" />
+            </styleClass>
+            <children>
+                <Label layoutX="176.0" layoutY="46.0" text="Nom :" wrapText="true">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label fx:id="categorie" layoutX="145.0" layoutY="107.0" text="Categorie :">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <Label layoutX="510.0" layoutY="41.0" text="Image :">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="nomIng" layoutX="288.0" layoutY="44.0" />
+                <ComboBox fx:id="categorieIng" layoutX="288.0" layoutY="105.0" prefWidth="150.0" promptText="Choisir Categorie ..." />
+                <Button fx:id="importerIng" layoutX="730.0" layoutY="37.0" mnemonicParsing="false" onAction="#upload" prefHeight="29.0" prefWidth="81.0" styleClass="btn" stylesheets="@stylSheets/mainFormDesign.css" text="Importer" />
+                <Button fx:id="ajouterIng" layoutX="486.0" layoutY="174.0" mnemonicParsing="false" onAction="#AjouterIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@stylSheets/mainFormDesign.css" text="Ajouter" />
+                <Button layoutX="617.0" layoutY="174.0" mnemonicParsing="false" onAction="#modifierIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@stylSheets/mainFormDesign.css" text="Modifier" />
+                <Button fx:id="viderIng" layoutX="745.0" layoutY="174.0" mnemonicParsing="false" onAction="#viderIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@stylSheets/mainFormDesign.css" text="Vider" />
+                <TextField fx:id="imageIng" layoutX="568.0" layoutY="39.0" />
+            <ImageView fx:id="imgIngredientInput" fitHeight="72.0" fitWidth="149.0" layoutX="569.0" layoutY="76.0" pickOnBounds="true" preserveRatio="true" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="300.0" layoutY="29.0" prefHeight="343.0" prefWidth="990.0" stylesheets="@stylSheets/mainFormDesign.css" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="10.0">
+            <styleClass>
+                <String fx:value="white-bg" />
+                <String fx:value="radius" />
+                <String fx:value="shadow" />
+            </styleClass>
+            <children>
+                <TableView fx:id="listing" layoutX="148.0" layoutY="56.0" prefHeight="278.0" prefWidth="796.0" stylesheets="@stylSheets/mainFormDesign.css">
+                    <columns>
+                        <TableColumn fx:id="ingredientNom" prefWidth="175.99996948242188" text="Nom" />
+                        <TableColumn fx:id="IngredientCategorie" prefWidth="196.0" text="Categorie" />
+                        <TableColumn fx:id="IngredientImage" prefWidth="224.00002034505212" text="Image" />
+                        <TableColumn fx:id="actions" prefWidth="196.0" text="Actions" />
+                    </columns>
+                </TableView>
+            <Button fx:id="rafraichiring" layoutX="23.0" layoutY="14.0" mnemonicParsing="false" onAction="#rafraichirIngredient" prefHeight="37.0" prefWidth="103.0" styleClass="btn" stylesheets="@stylSheets/mainFormDesign.css" text="Rafraichir" />
+            <TextField fx:id="searchbar_id" layoutX="230.0" layoutY="17.0" prefHeight="25.0" prefWidth="262.0" style="-fx-background-color: transparent; -fx-border-color: black;" stylesheets="@stylSheets/mainFormDesign.css">
+               <styleClass>
+                  <String fx:value="radius" />
+                  <String fx:value="column-header" />
+                  <String fx:value="filter" />
+               </styleClass>
+            </TextField>
+            <Text layoutX="162.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chercher:">
+               <font>
+                  <Font name="Dubai Regular" size="15.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnPDF" layoutX="39.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#genererPDF" prefHeight="37.0" prefWidth="72.0" styleClass="btn" stylesheets="@stylSheets/mainFormDesign.css" text="PDF" />
+            <ComboBox fx:id="trierIng" layoutX="672.0" layoutY="18.0" onAction="#TriChoice" prefWidth="150.0" promptText="Trier" />
+            </children>
+        </AnchorPane>
+      <Pane layoutX="2.0" prefHeight="660.0" prefWidth="294.0" style="-fx-background-color: #3d8072; -fx-border-radius: 10; -fx-border-color: #3d8072; -fx-background-radius: 10;">
+         <children>
+            <Button alignment="BASELINE_CENTER" layoutX="46.0" layoutY="155.0" mnemonicParsing="false" onAction="#openViewUser" prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Gestion Utilisateur">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@images/Icons/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_CENTER" layoutX="47.0" layoutY="337.0" mnemonicParsing="false" onAction="#openViewActitvite" prefHeight="35.0" prefWidth="204.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Activitées">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@images/Icons/blog.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_CENTER" layoutX="61.0" layoutY="431.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color: #DFE0E2; -fx-border-color: #DFE0E2; -fx-border-radius: 100; -fx-border-width: 2; -fx-background-radius: 100;" text="Modifier Votre Profile">
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@images/Icons/pencil.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_CENTER" layoutX="60.0" layoutY="482.0" mnemonicParsing="false" onAction="#back_to_login" prefHeight="35.0" prefWidth="179.0" style="-fx-background-color:#DFE0E2;-fx-border-color:#DFE0E2;-fx-border-radius:100;-fx-border-width:2;-fx-background-radius:100;" text="Logout" />
+            <ImageView fx:id="picture" fitHeight="85.0" fitWidth="77.0" layoutX="17.0" layoutY="550.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0,😎, 10, 0, 0, 0)); -fx-padding: 10;" />
+            <Separator layoutY="534.0" prefHeight="11.0" prefWidth="275.0" />
+            <Label fx:id="role" layoutX="200.0" layoutY="596.0" text="Label" />
+            <Label fx:id="Nom" layoutX="200.0" layoutY="572.0" text="Label" />
+            <Label layoutX="124.0" layoutY="572.0" text="Votre Nom:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Separator layoutY="395.0" prefHeight="11.0" prefWidth="275.0" />
+            <Label layoutX="124.0" layoutY="596.0" text="Role:">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="99.0" fitWidth="145.0" layoutX="76.0" layoutY="20.0">
+               <image>
+                  <Image url="@images/logo.png" />
+               </image>
+            </ImageView>
+            <MenuButton layoutX="47.0" layoutY="201.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="204.0" style="-fx-background-radius: 100;" text="Gestion Repas" textAlignment="CENTER">
+               <items>
+                  <MenuItem fx:id="gesIng" mnemonicParsing="false" onAction="#openViewIngredient" text="Ingredients">
+                     <styleClass>
+                        <String fx:value="menu-item:hover" />
+                        <String fx:value="menu-item" />
+                     </styleClass>
+                  </MenuItem>
+                  <MenuItem fx:id="getRec" mnemonicParsing="false" onAction="#openViewRecette" style="-fx-background-radius: 100;" text="Recettes">
+                     <styleClass>
+                        <String fx:value="menu-item:hover" />
+                        <String fx:value="menu-item" />
+                     </styleClass>
+                  </MenuItem>
+               </items>
+               <styleClass>
+                  <String fx:value="shadow menu-button" />
+                  <String fx:value="menu-button" />
+               </styleClass>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@images/Icons/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
+            <MenuButton layoutX="47.0" layoutY="248.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="204.0" style="-fx-background-radius: 100;" text="Gestion Boutiques" textAlignment="CENTER">
+               <items>
+                  <MenuItem fx:id="gesIng1" mnemonicParsing="false" onAction="#openViewProduit" text="Produits">
+                     <styleClass>
+                        <String fx:value="menu-item:hover" />
+                        <String fx:value="menu-item" />
+                     </styleClass>
+                  </MenuItem>
+                  <MenuItem fx:id="getRec1" mnemonicParsing="false" onAction="#openViewCommande" style="-fx-background-radius: 100;" text="Commandes">
+                     <styleClass>
+                        <String fx:value="menu-item:hover" />
+                        <String fx:value="menu-item" />
+                     </styleClass>
+                  </MenuItem>
+               </items>
+               <styleClass>
+                  <String fx:value="shadow menu-button" />
+                  <String fx:value="menu-button" />
+               </styleClass>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@images/Icons/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
+            <MenuButton layoutX="46.0" layoutY="292.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="204.0" style="-fx-background-radius: 100;" text="Gestion Objectives" textAlignment="CENTER">
+               <items>
+                  <MenuItem fx:id="gesIng11" mnemonicParsing="false" onAction="#openViewObjectif" text="Objectives">
+                     <styleClass>
+                        <String fx:value="menu-item:hover" />
+                        <String fx:value="menu-item" />
+                     </styleClass>
+                  </MenuItem>
+                  <MenuItem fx:id="getRec11" mnemonicParsing="false" onAction="#openViewSuiviObj" style="-fx-background-radius: 100;" text="Suivi Onjetives">
+                     <styleClass>
+                        <String fx:value="menu-item:hover" />
+                        <String fx:value="menu-item" />
+                     </styleClass>
+                  </MenuItem>
+               </items>
+               <styleClass>
+                  <String fx:value="shadow menu-button" />
+                  <String fx:value="menu-button" />
+               </styleClass>
+               <graphic>
+                  <ImageView>
+                     <image>
+                        <Image url="@images/Icons/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
+         </children>
+      </Pane>
+    </children>
+
+</AnchorPane>

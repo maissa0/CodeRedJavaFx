@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="700" prefWidth="1200" style="-fx-background-color: #FFDBC4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.registerUser">
+    <children>
+        <TextField fx:id="email_input" layoutX="99.0" layoutY="260.0" prefHeight="27.0" prefWidth="174.0" />
+        <Text fill="#281803" layoutX="99.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E-mail:" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <TextField fx:id="nom_input" layoutX="101.0" layoutY="176.0" prefHeight="27.0" prefWidth="174.0" />
+        <Text fill="#281803" layoutX="99.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nom:" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <TextField fx:id="adresse_input" layoutX="101.0" layoutY="489.0" prefHeight="27.0" prefWidth="174.0" />
+        <Text fill="#281803" layoutX="101.0" layoutY="479.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Adresse:" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <TextField fx:id="prenom_input" layoutX="328.0" layoutY="176.0" prefHeight="27.0" prefWidth="174.0" />
+        <Text fill="#281803" layoutX="355.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Prénom:" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <PasswordField fx:id="mdp_input" layoutX="328.0" layoutY="261.0" prefHeight="25.0" prefWidth="174.0" styleClass="button" />
+        <PasswordField fx:id="passwordconfirmation_input" layoutX="99.0" layoutY="337.0" prefHeight="25.0" prefWidth="174.0" styleClass="button" />
+        <ComboBox fx:id="gender_combobox" layoutX="101.0" layoutY="420.0" prefHeight="25.0" prefWidth="174.0" styleClass="button" />
+        <DatePicker fx:id="birthday_input" layoutX="328.0" layoutY="420.0" />
+        <Text fill="#281803" layoutX="335.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mot de Passe:" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <Text fill="#281803" layoutX="99.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Confirmation Mdp" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <Text fill="#281803" layoutX="99.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Genre:" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <Text fill="#281803" layoutX="340.0" layoutY="400.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date de Naissance :" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+        <Button layoutX="90.0" layoutY="546.0" mnemonicParsing="false" onAction="#submit_user" prefHeight="45.0" prefWidth="174.0" style="-fx-background-radius: 12px; -fx-background-color: #3d8072;" text="Submit" textFill="WHITE">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+        <Button layoutX="328.0" layoutY="546.0" mnemonicParsing="false" onAction="#reset_inputs" prefHeight="45.0" prefWidth="174.0" style="-fx-background-color: #3d8072; -fx-background-radius: 12px;" text="Reset" textFill="WHITE">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+
+        <Text fill="#3d8072" layoutX="110.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S'isncrire !">
+            <font>
+                <Font name="Dubai Regular" size="50.0" />
+            </font>
+        </Text>
+        <Button layoutX="90.0" layoutY="604.0" mnemonicParsing="false" onAction="#back_to_login" prefHeight="27.0" prefWidth="131.0" style="-fx-border-color: orange; -fx-border-radius: 0; -fx-background-color: orange;" text="&lt; Se Connecter " textFill="WHITE">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+
+        <TextField fx:id="numtel_input" layoutX="328.0" layoutY="490.0" prefHeight="25.0" prefWidth="174.0" styleClass="button" />
+        <Text fill="#281803" layoutX="335.0" layoutY="480.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Numéro de téléphone :" wrappingWidth="195.2989501953125">
+            <font>
+                <Font name="Montserrat Bold" size="18.0" />
+            </font>
+        </Text>
+      <Text fill="#281803" layoutX="340.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Role:" wrappingWidth="195.2989501953125">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="role_combobox" layoutX="328.0" layoutY="334.0" prefHeight="31.0" prefWidth="174.0" />
+        <ImageView fitHeight="551.0" fitWidth="478.0" layoutX="664.0" layoutY="68.0">
+            <image>
+                <Image url="@images/logobg.png" />
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>

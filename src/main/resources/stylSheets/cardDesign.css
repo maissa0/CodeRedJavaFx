@@ -1,0 +1,52 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 03 12, 23, 1:43:05 PM
+    Author     : WINDOWS 10
+*/
+
+.card{
+    -fx-background-color: #fff;
+    -fx-background-radius: 5px;
+}
+.shadow{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.5), 5,0,0,0);
+}
+.btn{
+    -fx-background-color: linear-gradient(to bottom right, #098c53, #246861);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+}
+.btn:hover{
+    -fx-background-color: linear-gradient(to bottom right, #0fb565, #399a8f);
+}
+
+.btn1{
+    -fx-background-color: linear-gradient(to bottom right, #ecc248, #e18218);
+    -fx-cursor: hand;
+    -fx-text-fill: #fff;
+    -fx-font-size: 10px;
+}
+
+.table-view1{
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-border-color: linear-gradient(to bottom right, #ecc248, #e18218);
+    -fx-border-radius: 5px;
+    -fx-border-width: 1.5px;
+}
+.table-view1 .column-header-background{
+    -fx-background-color: linear-gradient(to bottom right, #ecc248, #e18218);
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-background-insets: 0 0 0 0;
+}
+.table-view1 .column-header, .filter{
+    -fx-background-color: transparent;
+    -fx-size: 40px;
+}
+.table-view1 .column-header .label{
+    -fx-text-fill: #fff;
+}

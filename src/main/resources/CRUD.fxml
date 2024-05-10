@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="671.0" prefWidth="1218.0"  stylesheets="@stylSheets/backobj.css" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.CrudController">
+    <children>
+        <VBox layoutX="111.0" layoutY="120.0" prefHeight="381.0" prefWidth="180.0">
+            <children>
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
+                <TextField fx:id="tID" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sexe" />
+                <ComboBox fx:id="tSexe" prefHeight="26.0" prefWidth="254.0" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Age" />
+                <TextField fx:id="tAge" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Height" />
+                <TextField fx:id="tHeight" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="weight" />
+                <TextField fx:id="tWeight" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="activity level" />
+                <ComboBox fx:id="tActivity_level" prefHeight="26.0" prefWidth="250.0" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="objectif" />
+                <ComboBox fx:id="tObjectif" prefHeight="26.0" prefWidth="255.0" />
+                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Calorie" />
+                <TextField fx:id="tCalorie" />
+
+            </children>
+        </VBox>
+        <TableView fx:id="tableview" layoutX="324.0" layoutY="294.0" prefHeight="96.0" prefWidth="656.0">
+            <columns>
+                <TableColumn fx:id="ColID" prefWidth="62.0" text="ID" />
+                <TableColumn fx:id="ColSexe" prefWidth="93.0" text="Sexe" />
+                <TableColumn fx:id="ColAge" prefWidth="62.0" text="Age" />
+                <TableColumn fx:id="ColHeight" prefWidth="68.0" text="Height" />
+                <TableColumn fx:id="ColWeight" prefWidth="74.0" text="weight" />
+                <TableColumn fx:id="ColActivity_level" prefWidth="101.0" text="activity level" />
+                <TableColumn fx:id="ColObjectif" prefWidth="115.0" text="objectif" />
+                <TableColumn fx:id="ColCalorie" prefWidth="57.0" text="Calorie" />
+            </columns>
+        </TableView>
+        <ButtonBar layoutX="42.0" layoutY="525.0" prefHeight="40.0" prefWidth="200.0" />
+        <Label layoutX="444.0" layoutY="14.0" />
+          <Button fx:id="btnSupprimer" layoutX="184.0" layoutY="483.0" mnemonicParsing="false" onAction="#Supprimer" text="Supprimer" />
+          <Button fx:id="btnModifier" layoutX="111.0" layoutY="483.0" mnemonicParsing="false" onAction="#Modifier" text="Modifier" />
+      <TextField fx:id="searchField" layoutX="740.0" layoutY="210.0" promptText="recherche" style="-fx-background-color: #fff;" />
+      <Pagination fx:id="pagination" layoutX="361.0" layoutY="294.0" prefHeight="275.0" prefWidth="598.0" />
+      <PieChart fx:id="pieChart" layoutX="575.0" layoutY="120.0" prefHeight="172.0" prefWidth="351.0" />
+      <Button layoutX="802.0" layoutY="99.0" mnemonicParsing="false" onAction="#afficherStatistiques" text="afficher statistique" />
+    </children>
+</AnchorPane>

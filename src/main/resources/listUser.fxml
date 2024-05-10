@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="searchbar" prefHeight="649.0" prefWidth="1356.0" style="-fx-background-color: #E1DADA;" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.ListUser">
+    <children>
+
+        <TableView fx:id="list_user" layoutX="66.0" layoutY="123.0" prefHeight="438.0" prefWidth="1151.0">
+            <columns>
+                <TableColumn fx:id="user_id" prefWidth="84.66665649414062" text="ID" />
+                <TableColumn fx:id="user_nom" prefWidth="88.0" text="Nom" />
+                <TableColumn fx:id="user_prenom" prefWidth="84.66671752929688" text="Prénom" />
+                <TableColumn fx:id="user_datedenaissance" minWidth="0.0" prefWidth="127.33331298828125" text="Date de naissance" />
+                <TableColumn fx:id="user_genre" prefWidth="78.0" text="Genre" />
+                <TableColumn fx:id="user_numtel" prefWidth="91.0" text="Téléphone" />
+                <TableColumn fx:id="user_adresse" prefWidth="124.0" text="Adresse" />
+                <TableColumn fx:id="user_email" prefWidth="124.666748046875" text="E-mail" />
+                <TableColumn fx:id="user_mdp" prefWidth="112.6666259765625" text="Mot de passe" />
+                <TableColumn fx:id="user_Role" prefWidth="91.333251953125" text="Role" />
+            <TableColumn fx:id="actions1" prefWidth="139.0" text="Actions" />
+            </columns>
+        </TableView>
+        <Button layoutX="966.0" layoutY="585.0" mnemonicParsing="false" onAction="#add_user" prefHeight="36.0" prefWidth="199.0" style="-fx-border-width: 2; -fx-background-color: white; -fx-background-color: orange;" text="Add User" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="20.0" />
+            </font></Button>
+        <Text fill="#e87e06" layoutX="95.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Liste des utilisateurs">
+            <font>
+                <Font name="Bell MT" size="36.0" />
+            </font>
+        </Text>
+        <Text fill="#00d0e8" layoutX="395.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <TextField fx:id="searchbar_id" layoutX="903.0" layoutY="79.0" prefHeight="25.0" prefWidth="169.0" style="-fx-background-color: white;" />
+        <Text layoutX="823.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rechercher:">
+            <font>
+                <Font name="Dubai Regular" size="15.0" />
+            </font>
+        </Text>
+      <ComboBox fx:id="trilist" layoutX="648.0" layoutY="79.0" onAction="#triList" prefWidth="150.0" />
+      <Text layoutX="587.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Filtrer" wrappingWidth="46.185546875">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Text>
+      <Button layoutX="1124.0" layoutY="78.0" mnemonicParsing="false" onAction="#genererPDF" text="pdf" />
+    </children>
+</AnchorPane>

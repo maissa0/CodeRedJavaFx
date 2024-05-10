@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="1247.0" stylesheets="@stylSheets/backobj.css" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.CRUDSUIVI">
+   <children>
+
+
+      <TableView fx:id="tableView" layoutX="353.0" layoutY="185.0" prefHeight="166.0" prefWidth="428.0">
+        <columns>
+          <TableColumn fx:id="cID" prefWidth="42.0" text="id" />
+          <TableColumn fx:id="Cancien" prefWidth="129.0" text="ancien poids" />
+            <TableColumn fx:id="Cdate" prefWidth="126.0" text="date suivi" />
+            <TableColumn fx:id="Cnouveau" prefWidth="134.0" text="nouveau poids" />
+        </columns>
+      </TableView>
+      <Button layoutX="168.0" layoutY="381.0" mnemonicParsing="false" onAction="#Modifier" text="modifier" />
+      <Button layoutX="79.0" layoutY="381.0" mnemonicParsing="false" onAction="#Supprimer" text="supprimer" />
+      <VBox layoutX="98.0" layoutY="145.0" prefHeight="181.0" prefWidth="150.0">
+         <children>
+            <Label text="id" />
+            <TextField fx:id="idsuivi" />
+            <Label text="ancien poids" />
+            <ComboBox fx:id="weightComboBox" prefWidth="150.0" />
+            <Label text="date suivi" />
+            <DatePicker fx:id="date" />
+            <Label text="nouveau poids" />
+            <TextField fx:id="nouvPoid" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

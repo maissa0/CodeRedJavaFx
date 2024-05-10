@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="26.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.itemRecetteController">
+   <children>
+      <Label fx:id="nomRec" layoutX="52.0" layoutY="13.0" text="Nom">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="categRec" layoutX="259.0" layoutY="10.0" text="Categorie" />
+      <ImageView fx:id="imgRec" fitHeight="43.0" fitWidth="61.0" layoutX="490.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+   <stylesheets>
+      <URL value="@stylSheets/mainFormDesign.css" />
+      <URL value="@stylSheets/cardDesign.css" />
+   </stylesheets>
+   <styleClass>
+      <String fx:value="card" />
+      <String fx:value="radius" />
+      <String fx:value="shadow" />
+      <String fx:value="white-bg" />
+   </styleClass>
+</AnchorPane>

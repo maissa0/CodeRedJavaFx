@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="703.0" prefWidth="1100.0" style="-fx-background-color: #f9f7f1;" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.ListFrontRecetteController">
+
+   <ScrollPane prefHeight="744.0" prefWidth="1100.0">
+     <content>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1103.0">
+            <children>
+            
+                
+               <AnchorPane layoutX="23.0" layoutY="351.0" prefHeight="417.0" prefWidth="1029.0" stylesheets="@stylSheets/mainFormDesign.css">
+                  <styleClass>
+                     <String fx:value="white-bg" />
+                     <String fx:value="shadow" />
+                     <String fx:value="radius" />
+                  </styleClass>
+                  <children>
+                     <GridPane fx:id="Recette_gridPane" layoutX="14.0" layoutY="32.0" prefHeight="16.0" prefWidth="100.0">
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        </rowConstraints>
+                     </GridPane>
+                     <Pagination fx:id="pag" layoutX="-2.0" prefHeight="417.0" prefWidth="967.0" stylesheets="@stylSheets/cardDesign.css">
+                        <styleClass>
+                           <String fx:value="card" />
+                           <String fx:value="shadow" />
+                           <String fx:value="white-bg" />
+                        </styleClass>
+                     </Pagination>
+                  </children>
+               </AnchorPane>
+               <Label layoutX="23.0" layoutY="322.0" text="Recettes">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Label>
+               <AnchorPane layoutX="22.0" layoutY="122.0" prefHeight="164.0" prefWidth="1032.0" stylesheets="@stylSheets/mainFormDesign.css">
+                  <styleClass>
+                     <String fx:value="white-bg" />
+                     <String fx:value="shadow" />
+                     <String fx:value="radius" />
+                  </styleClass>
+                  <children>
+                     <GridPane fx:id="Recette_gridPaneSuggest" layoutX="14.0" layoutY="14.0" prefHeight="16.0" prefWidth="100.0">
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                        </rowConstraints>
+                     </GridPane>
+                     <Pagination fx:id="pagSug" layoutX="8.0" layoutY="30.0" prefHeight="164.0" prefWidth="965.0" />
+                  </children>
+               </AnchorPane>
+               <Pane prefHeight="81.0" prefWidth="1092.0" stylesheets="@stylSheets/front.css">
+                  <children>
+                     <ImageView fitHeight="61.0" fitWidth="72.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@images/logof.png" />
+                        </image>
+                     </ImageView>
+                     <Button layoutX="68.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewSuivAct" prefHeight="32.0" prefWidth="123.0" text="suivi activite" />
+                     <Button layoutX="187.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewJournal" prefHeight="32.0" prefWidth="123.0" text="journal" />
+                     <Button layoutX="309.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewRecettes" prefHeight="32.0" prefWidth="123.0" text="recette" />
+                     <Button layoutX="431.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewProduct" prefHeight="32.0" prefWidth="123.0" text="produits" />
+                     <Button layoutX="553.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewCommand" prefHeight="32.0" prefWidth="123.0" text="commande" />
+                     <Button layoutX="676.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewPanier" prefHeight="32.0" prefWidth="123.0" text="panier" />
+                     <Button layoutX="799.0" layoutY="28.0" mnemonicParsing="false" onAction="#objectiffront" prefHeight="32.0" prefWidth="123.0" text="objectif" />
+                     <Button layoutX="922.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewSuivObj" prefHeight="32.0" prefWidth="123.0" text="suivi objectif" />
+                     <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="1048.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@images/user.png" />
+                        </image>
+                     </ImageView>
+                  </children>
+               </Pane>
+            </children>
+         </AnchorPane>
+     </content>
+   </ScrollPane>
+
+</AnchorPane>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="641.0" prefWidth="1145.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.FrontHeaderController">
+        <AnchorPane prefHeight="641.0" prefWidth="1092.0" stylesheets="@stylSheets/mainFormDesign.css">
+            <styleClass>
+                <String fx:value="white-bg" />
+                <String fx:value="shadow" />
+                <String fx:value="radius" />
+            </styleClass>
+            <children>
+         <Pane prefHeight="81.0" prefWidth="1092.0" stylesheets="@stylSheets/front.css">
+            <children>
+               <ImageView fitHeight="61.0" fitWidth="72.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/logof.png" />
+                  </image>
+               </ImageView>
+               <Button layoutX="68.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewSuivAct" prefHeight="32.0" prefWidth="123.0" text="suivi activite" />
+               <Button layoutX="187.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewJournal" prefHeight="32.0" prefWidth="123.0" text="journal" />
+               <Button layoutX="309.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewRecettes" prefHeight="32.0" prefWidth="123.0" text="recette" />
+               <Button layoutX="431.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewProduct" prefHeight="32.0" prefWidth="123.0" text="produits" />
+               <Button layoutX="553.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewCommand" prefHeight="32.0" prefWidth="123.0" text="commande" />
+               <Button layoutX="676.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewPanier" prefHeight="32.0" prefWidth="123.0" text="panier" />
+               <Button layoutX="799.0" layoutY="28.0" mnemonicParsing="false" onAction="#objectiffront" prefHeight="32.0" prefWidth="123.0" text="objectif" />
+               <Button layoutX="922.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewSuivObj" prefHeight="32.0" prefWidth="123.0" text="suivi objectif" />
+               <ImageView fitHeight="32.0" fitWidth="40.0" layoutX="1048.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@images/user.png" />
+                  </image>
+               </ImageView>
+            </children>
+         </Pane>
+         <AnchorPane id="recpane" fx:id="recpane" layoutX="14.0" layoutY="104.0" prefHeight="475.0" prefWidth="1075.0" />
+            </children>
+        </AnchorPane>
+
+</AnchorPane>

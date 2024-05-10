@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="card_form" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="213.0" prefWidth="230.0" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.CardDesignRecetteController">
+    <children>
+      <Label fx:id="nameRec" layoutX="6.0" layoutY="7.0" prefHeight="49.0" prefWidth="118.0" style="-fx-alignment: Center;" text="Cherry">
+         <font>
+            <Font name="Cambria" size="24.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="prod_imageView" fitHeight="120.0" fitWidth="183.0" layoutX="24.0" layoutY="47.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="95.0" layoutY="179.0" mnemonicParsing="false" onAction="#ajouterRecToJournal" prefHeight="30.0" prefWidth="48.0" styleClass="btn" stylesheets="@stylSheets/cardDesign.css" text="Add" />
+      <Label fx:id="calgRec" layoutX="152.0" layoutY="7.0" prefHeight="49.0" prefWidth="59.0" style="-fx-alignment: Center;" text="100">
+         <font>
+            <Font name="Cambria" size="24.0" />
+         </font>
+      </Label>
+    </children>
+    <styleClass>
+        <String fx:value="shadow" />
+        <String fx:value="radius" />
+      <String fx:value="card" />
+    </styleClass>
+   <stylesheets>
+      <URL value="@stylSheets/cardDesign.css" />
+      <URL value="@stylSheets/mainFormDesign.css" />
+   </stylesheets>
+</AnchorPane>
