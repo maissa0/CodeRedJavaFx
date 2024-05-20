@@ -1,15 +1,19 @@
 package edu.CodeRed.Controllers;
 
+ import edu.CodeRed.entities.Commande;
  import edu.CodeRed.entities.Objectif;
+ import edu.CodeRed.entities.user;
  import edu.CodeRed.services.ServiceObjectif;
  import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+ import javafx.scene.Node;
+ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+ import javafx.scene.layout.VBox;
+ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +31,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+ import java.util.prefs.Preferences;
 
 public class CrudController {
 
@@ -96,8 +101,17 @@ public class CrudController {
     @FXML
     private Pagination pagination;
     @FXML
-    private PieChart pieChart;
+    private PieChart pieChart1;
 
+
+
+    private ProduitController produitController;
+    private CommandeController commandeController;
+    TableView<Commande> tableView = new TableView<>();
+    @FXML
+    private VBox produitsView;
+    @FXML
+    private Stage stage;
 
     private ObservableList<Objectif> allData;
 
@@ -258,7 +272,20 @@ public class CrudController {
 
         // Appeler la méthode de recherche une seule fois au démarrage de l'application
         search();
+
+
+        produitsView = new VBox();
+        try {
+            produitController = new ProduitController();
+            commandeController = new CommandeController();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        stage =new Stage();
     }
+
+
 
 
     // Méthode pour configurer un TextField pour accepter uniquement des valeurs numériques
@@ -338,23 +365,8 @@ public class CrudController {
             alert.showAndWait();
         }
     }
-    @FXML
-    void suiviback(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/CRUDSUIVI.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Erreur lors de l'ouverture de la fenêtre");
-            alert.setContentText("Une erreur s'est produite lors de l'ouverture de la fenêtre. Veuillez réessayer.");
-            alert.showAndWait();
-        }
-    }
+
+
     private void search() {
         FilteredList<Objectif> filteredData = new FilteredList<>(allData, p -> true);
 
@@ -399,16 +411,210 @@ public class CrudController {
             choixOccurrences.put(choix, choixOccurrences.get(choix) + 1);
         }
 
-        pieChart.getData().clear();
+        pieChart1.getData().clear();
         for (String choix : choixList) {
             int occurrences = choixOccurrences.get(choix);
             PieChart.Data data = new PieChart.Data(choix, occurrences);
-            pieChart.getData().add(data);
+            pieChart1.getData().add(data);
         }
 
-        pieChart.setTitle("Répartition des choix");
+        pieChart1.setTitle("Répartition des choix");
     }
 
 
+    Preferences p = Preferences.userNodeForPackage(getClass());
+    edu.CodeRed.entities.user user= new user();
+    @FXML
+    void back_to_login(ActionEvent event) throws IOException {
+
+        p.getInt("userId", 0);
+        AnchorPane pane = FXMLLoader.load(getClass().getResource("/login.fxml"));
+        //searchbar.getChildren().setAll(pane);
+        System.out.println(p.getInt("userId hedhi logout", user.getId()));
+
+    }
+
+
+
+    @FXML
+    void openViewActitvite(ActionEvent event) throws IOException {
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterActivite.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewCommande(ActionEvent event) {
+
+
+
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
+
+        // Load the new FXML file
+        commandeController.afficherCommandes(tableView);
+        Scene scene = new Scene(tableView);
+        tableView.setPrefSize(1023, 612);
+        stage.setScene(scene);
+
+        // Close the current stage
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewIngredient(ActionEvent event) throws IOException {
+
+        // Get the MenuItem that was clicked
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ingredient.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewObjectif(ActionEvent event) throws IOException {
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CRUD.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewProduit(ActionEvent event) {
+
+
+
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
+
+        // Load the new FXML file
+        produitController.afficherProduits(produitsView);
+        Scene scene = new Scene(produitsView);
+        produitsView.setPrefSize(1023, 612);
+        stage.setScene(scene);
+
+
+        // Close the current stage
+
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewRecette(ActionEvent event) throws IOException {
+
+        // Get the MenuItem that was clicked
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewRecette.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewSuiviObj(ActionEvent event) throws IOException {
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CRUDSUIVI.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewUser(ActionEvent event) {
+
+    }
 
 }

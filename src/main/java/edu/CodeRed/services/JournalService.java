@@ -179,11 +179,12 @@ public class JournalService implements JService<Journal, Recette> {
     }
 
 
-    public List<Journal> getJournalEntriesForDate(ZonedDateTime date) {
+    public List<Journal> getJournalEntriesForDate(ZonedDateTime date,int id) {
         List<Journal> journalEntries = new ArrayList<>();
-        String query = "SELECT * FROM journal WHERE DATE(date) = ?";
+        String query = "SELECT * FROM journal WHERE DATE(date) = ? AND id_user_id = ?";
         try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
             ps.setDate(1, java.sql.Date.valueOf(date.toLocalDate()));
+            ps.setInt(2, id);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Journal journal = new Journal();
@@ -202,7 +203,7 @@ public class JournalService implements JService<Journal, Recette> {
     }
 
 
-    public int getCaloriesForToday() {
+    public int getCaloriesForToday(int id) {
         // Obtenir la date actuelle sous forme de ZonedDateTime
         ZonedDateTime currentDateTime = ZonedDateTime.now();
 
@@ -213,7 +214,7 @@ public class JournalService implements JService<Journal, Recette> {
         Date date = Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         // Récupérer les entrées de journal pour la date actuelle
-        List<Journal> journalEntries = getJournalEntriesForDate(currentDateTime);
+        List<Journal> journalEntries = getJournalEntriesForDate(currentDateTime,id);
 
         // Calculer la somme des calories pour aujourd'hui
         int totalCalories = journalEntries.stream()

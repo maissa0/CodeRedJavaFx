@@ -100,8 +100,8 @@ public class PanierController {
 
         // Table columns
         TableColumn<PanierProduit, String> nomColumn = new TableColumn<>("Nom du produit");
-        TableColumn<PanierProduit, Double> prixColumn = new TableColumn<>("Prix");
-        TableColumn<PanierProduit, Integer> quantiteColumn = new TableColumn<>("Quantité");
+        TableColumn<PanierProduit, Double> prixColumn = new TableColumn<>("Quantité");
+        TableColumn<PanierProduit, Integer> quantiteColumn = new TableColumn<>("Prix");
         TableColumn<PanierProduit, Double> totalColumn = new TableColumn<>("Total");
         TableColumn<PanierProduit, Void> payerColumn = new TableColumn<>("");
         TableColumn<PanierProduit, Void> SupprimerColumn = new TableColumn<>("");
@@ -137,8 +137,8 @@ public class PanierController {
 
         // Set cell value factories
         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nomProduit"));
-        prixColumn.setCellValueFactory(new PropertyValueFactory<>("prixUnitaire"));
-        quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+        prixColumn.setCellValueFactory(new PropertyValueFactory<>("quantite"));
+        quantiteColumn.setCellValueFactory(new PropertyValueFactory<>("prixUnitaire"));
 
         // Calculate total for each product
         totalColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(calculerTotal(cellData.getValue())).asObject());
@@ -146,7 +146,7 @@ public class PanierController {
         // Payer button cell factory (same as before)
 
         // Add columns to the table
-        tableView.getColumns().addAll(nomColumn, prixColumn, quantiteColumn, totalColumn, payerColumn);
+        tableView.getColumns().addAll(nomColumn, quantiteColumn, prixColumn , totalColumn, payerColumn);
 
         // Add products to the table (filtered initially)
         tableView.getItems().setAll(produitsDuPanier);
@@ -200,15 +200,15 @@ public class PanierController {
 
         try (Connection connection = DataBase.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT nom, prix, quantite , date_ajout FROM panier")) {
+             ResultSet resultSet = statement.executeQuery("SELECT nom, quantite, prix , date_ajout FROM panier")) {
 
             while (resultSet.next()) {
                 String Nom = resultSet.getString("nom");
-                int Prix = resultSet.getInt("prix");
-                double quantit = resultSet.getDouble("quantite");
+                int quantite = resultSet.getInt("quantite");
+                double prix = resultSet.getDouble("prix");
                 Date date_ajout = resultSet.getDate("date_ajout");
 
-                PanierProduit produit = new PanierProduit(Nom, Prix, quantit);
+                PanierProduit produit = new PanierProduit(Nom, quantite, prix);
                 produitsDuPanier.add(produit);
             }
         } catch (SQLException e) {

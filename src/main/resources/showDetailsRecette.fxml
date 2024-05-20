@@ -20,9 +20,9 @@
    <children>
       <AnchorPane layoutX="343.0" layoutY="14.0" prefHeight="642.0" prefWidth="624.0" stylesheets="@stylSheets/mainFormDesign.css">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d8f2e4" height="35.0" layoutX="219.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d8f2e4" height="35.0" layoutX="274.0" layoutY="59.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
             <ImageView fx:id="labelImgRecette" fitHeight="307.0" fitWidth="306.0" layoutX="277.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="labelNomRecette" layoutX="89.0" layoutY="53.0" text="Churros" textFill="#cc7812">
+            <Label fx:id="labelNomRecette" layoutX="46.0" layoutY="54.0" text="Churros" textFill="#cc7812">
                <font>
                   <Font size="31.0" />
                </font>
@@ -33,7 +33,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="labelCalorieRecette" layoutX="224.0" layoutY="61.0" text="200">
+            <Label fx:id="labelCalorieRecette" layoutX="278.0" layoutY="61.0" text="200">
                <font>
                   <Font name="Playbill" size="29.0" />
                </font>

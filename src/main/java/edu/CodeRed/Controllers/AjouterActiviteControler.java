@@ -9,10 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,6 +32,7 @@ public class AjouterActiviteControler implements Initializable {
     Activite a = new Activite();
 
 
+    private ObservableList<Activite> list;
     @FXML
     private ImageView ImageView;
     @FXML
@@ -86,6 +84,8 @@ public class AjouterActiviteControler implements Initializable {
 
     private Integer IdElement = 0;
     private String fileName ="";
+    @FXML
+    private Pagination pagination;
 
 
     @FXML
@@ -136,7 +136,7 @@ public class AjouterActiviteControler implements Initializable {
 
 
             // Define the target file path in the project directory
-            Path targetPath = Paths.get("src/main/resources/UploadedImages", fileName);
+            Path targetPath = Paths.get("C:","tools","pidev-code-red_test","public","img", fileName);
 
             try {
                 // Copy the selected file to the project directory
@@ -205,13 +205,13 @@ public class AjouterActiviteControler implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ObservableList<Activite> list = FXCollections.observableList(as.afficherAllActivite());
+        list = FXCollections.observableList(as.afficherAllActivite());
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colNbrCal.setCellValueFactory(new PropertyValueFactory<>("nbr_cal"));
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         tableActivite.getColumns().addAll(colType, colNom, colNbrCal,colDescription);
-        tableActivite.setItems(list);
+
 
         tableActivite.setOnMouseClicked((MouseEvent event) -> {
             // Check if a row is clicked
@@ -232,6 +232,20 @@ public class AjouterActiviteControler implements Initializable {
                 }
             }
         });
+        int pageCount = (int) Math.ceil((double) list.size() / 5);
+        pagination.setPageCount(pageCount);
+        pagination.setCurrentPageIndex(0);
+
+        pagination.setPageFactory(pageIndex -> {
+            list = FXCollections.observableList(as.afficherAllActivite());
+            int fromIndex = pageIndex * 5;
+            int toIndex = Math.min(fromIndex + 5, list.size());
+            tableActivite.setItems(FXCollections.observableArrayList(list.subList(fromIndex, toIndex)));
+            return tableActivite;
+        });
+
+
+        // Configurez le contrôleur de pagination pour gérer la pagination
 
 
     }

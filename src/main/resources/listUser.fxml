@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="searchbar" prefHeight="649.0" prefWidth="1356.0" style="-fx-background-color: #E1DADA;" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.ListUser">
+<AnchorPane fx:id="searchbar" prefHeight="628.0" prefWidth="1557.0" style="-fx-background-color: #E1DADA;" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.ListUser">
     <children>
 
         <TableView fx:id="list_user" layoutX="66.0" layoutY="123.0" prefHeight="438.0" prefWidth="1151.0">

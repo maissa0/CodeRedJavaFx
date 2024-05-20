@@ -342,7 +342,7 @@ public class viewJournalController implements Initializable {
         stage.setScene(new Scene(root));
 
         // Close the current stage
-        currentStage.close();
+        //currentStage.close();
 
         // Show the new stage
         stage.show();

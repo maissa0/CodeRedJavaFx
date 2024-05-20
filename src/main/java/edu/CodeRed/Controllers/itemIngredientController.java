@@ -32,6 +32,6 @@ public class itemIngredientController implements Initializable {
         nomIng.setText(ingredient.getNom());
         categIng.setText(ingredient.getCategorieing());
         System.out.println(ingredient.getImage());
-        imgIng.setImage(new Image("file:///C:/tools/optihealth/src/main/java/edu/CodeRed/uploads/"+ingredient.getImage()));
+        imgIng.setImage(new Image("file:///C:/tools/pidev-code-red_test/public/img/"+ingredient.getImage()));
     }
 }

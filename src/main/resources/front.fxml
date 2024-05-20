@@ -14,9 +14,9 @@
    <children>
       <BorderPane layoutX="-3.0" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="1103.0">
          <center>
-            <Pane prefHeight="372.0" prefWidth="1037.0" style="-fx-background-color: #ef7d5b;" stylesheets="@stylSheets/front.css" BorderPane.alignment="CENTER">
+            <Pane prefHeight="372.0" prefWidth="947.0"  stylesheets="@stylSheets/front.css" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="378.0" fitWidth="982.0" layoutX="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="374.0" fitWidth="1084.0" layoutX="18.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@stylSheets/nutrition.jpg" />
                      </image>
@@ -50,11 +50,10 @@
                         <Image url="@images/logof.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="68.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewSuivAct" prefHeight="32.0" prefWidth="123.0" text="suivi activite" />
-                  <Button layoutX="187.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewJournal" prefHeight="32.0" prefWidth="123.0" text="journal" />
-                  <Button layoutX="309.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewRecettes" prefHeight="32.0" prefWidth="123.0" text="recette" />
-                  <Button layoutX="431.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewProduct" prefHeight="32.0" prefWidth="123.0" text="produits" />
-                  <Button layoutX="553.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewCommand" prefHeight="32.0" prefWidth="123.0" text="commande" />
+                  <Button layoutX="183.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewSuivAct" prefHeight="32.0" prefWidth="123.0" text="suivi activite" />
+                  <Button layoutX="306.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewJournal" prefHeight="32.0" prefWidth="123.0" text="journal" />
+                  <Button layoutX="429.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewRecettes" prefHeight="32.0" prefWidth="123.0" text="recette" />
+                  <Button layoutX="552.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewProduct" prefHeight="32.0" prefWidth="123.0" text="produits" />
                   <Button layoutX="676.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewPanier" prefHeight="32.0" prefWidth="123.0" text="panier" />
                   <Button layoutX="799.0" layoutY="28.0" mnemonicParsing="false" onAction="#objectiffront" prefHeight="32.0" prefWidth="123.0" text="objectif" />
                   <Button layoutX="922.0" layoutY="28.0" mnemonicParsing="false" onAction="#openViewSuivObj" prefHeight="32.0" prefWidth="123.0" text="suivi objectif" />

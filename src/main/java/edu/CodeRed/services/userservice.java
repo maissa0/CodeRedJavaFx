@@ -5,6 +5,7 @@ import edu.CodeRed.interfaces.IService;
 import edu.CodeRed.tools.MyConnexion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+ import org.mindrot.jbcrypt.BCrypt;
 
  import java.security.MessageDigest;
 
@@ -16,19 +17,44 @@ import java.util.stream.Collectors;
 public class userservice implements IService<user>{
     //Add user
     private Connection cnx;
+
+    private static final int ITERATIONS = 5000;
     public userservice(){ cnx= MyConnexion.getInstance().getCnx();
+    }
+
+
+    private static String hash(String plainPassword) {
+        try {
+            String algorithm = "SHA-512"; // The digest algorithm to use
+            MessageDigest digest = MessageDigest.getInstance(algorithm);
+
+            // Merge password and salt (null in this case)
+            String merged = plainPassword;
+
+            // Stretch hash
+            for (int i = 0; i < ITERATIONS; i++) {
+                byte[] mergedBytes = merged.getBytes();
+                byte[] digestBytes = digest.digest(mergedBytes);
+                merged = Base64.getEncoder().encodeToString(digestBytes);
+            }
+
+            return merged;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace(); // Handle exception appropriately
+            return null;
+        }
     }
     @Override
     public void addUser(user user) {
         // 1. Prepare the SQL statement using a placeholder for each value
-        String sql = "INSERT INTO `user` (`email`, `password`,`nom`, `prenom`, `date_de_naissance`, `role`,`genre`, `adresse`, `num_de_telephone`,`status`) VALUES (?,  ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String sql = "INSERT INTO `user` (`email`, `password`,`nom`, `prenom`, `date_de_naissance`, `roles`,`genre`, `adresse`, `num_de_telephone`,`status`,`npassword`) VALUES (?,  ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 
-        String encryptpass = encrypt(user.getPassword());
+        String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         try (PreparedStatement pstm = cnx.prepareStatement(sql)) {
             // 2. Set parameter values using appropriate user getters
             pstm.setString(1, user.getEmail());
 
-            pstm.setString(2, encryptpass);
+            pstm.setString(2, hashedPassword);
             pstm.setString(3, user.getNom());
             pstm.setString(4, user.getPrenom());
             pstm.setString(5, user.getDate_de_naissance());
@@ -37,6 +63,7 @@ public class userservice implements IService<user>{
             pstm.setString(8, user.getAdresse());
             pstm.setString(9, user.getNum_de_telephone());
             pstm.setString(10, "Active");
+            pstm.setString(11, user.getPassword());
 
 
             // 3. Execute the update
@@ -48,7 +75,7 @@ public class userservice implements IService<user>{
 
     @Override
     public void UpdatUser(user user) {
-        String query = "UPDATE user SET email=?, nom=?, prenom=?, date_de_naissance=?,genre=?,Adresse=?,num_de_telephone=?,role=? WHERE id=?";
+        String query = "UPDATE user SET email=?, nom=?, prenom=?, date_de_naissance=?,genre=?,Adresse=?,num_de_telephone=?,roles=? WHERE id=?";
 
         try {
             // Create a prepared statement
@@ -132,7 +159,7 @@ public class userservice implements IService<user>{
                 User.setNom(rs.getString("nom"));
                 User.setPrenom(rs.getString("prenom"));
                 User.setDate_de_naissance(rs.getString("date_de_naissance"));
-                User.setRole(rs.getString("role"));
+                User.setRole(rs.getString("roles"));
                 User.setGenre(rs.getString("genre"));
                 User.setAdresse(rs.getString("adresse"));
                 User.setNum_de_telephone(rs.getString("num_de_telephone"));
@@ -146,7 +173,7 @@ public class userservice implements IService<user>{
         }
         return list;
     }
-    public static String encrypt(String input) {
+   /* public static String encrypt(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] messageDigest = md.digest(input.getBytes());
@@ -160,7 +187,7 @@ public class userservice implements IService<user>{
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
-    }
+    }*/
 
 
     public void DeleteUserr(user user) {
@@ -191,14 +218,15 @@ public class userservice implements IService<user>{
 
     //Methode to login
     public user loginUser(String Email, String password) throws SQLException {
-        String query = "SELECT * FROM user WHERE email = ? AND password = ?";
-        String encryptedPassword = encrypt(password); // Assuming encrypt is a secure hashing function
+        String query = "SELECT * FROM user WHERE email = ? AND npassword = ?";
+         // Assuming encrypt is a secure hashing function
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
          System.out.println(query);
 
 
         try (PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
             preparedStatement.setString(1, Email);
-            preparedStatement.setString(2, encryptedPassword);
+            preparedStatement.setString(2, password);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
@@ -210,7 +238,7 @@ public class userservice implements IService<user>{
                     String userNom = resultSet.getString("nom");
                     String userPrenom = resultSet.getString("prenom");
                     String userDateDeNaissance = resultSet.getString("date_de_naissance");
-                    String userRole = resultSet.getString("role");
+                    String userRole = resultSet.getString("roles");
                     String userGenre = resultSet.getString("genre");
                     String userAdresse = resultSet.getString("adresse");
                     String userNumDeTelephone = resultSet.getString("num_de_telephone");
@@ -226,13 +254,13 @@ public class userservice implements IService<user>{
 
 
     public void updateforgottenpassword(String Email, String Password) {
-        String passwordencrypted = encrypt(Password);
+        String hashedPassword = BCrypt.hashpw(Password, BCrypt.gensalt());
 
         String query = "UPDATE user " +
-                "SET password = ? WHERE email = ?";
+                "SET npassword = ? WHERE email = ?";
         try {
             PreparedStatement preparedStatement = MyConnexion.getInstance().getCnx().prepareStatement(query);
-            preparedStatement.setString(1, passwordencrypted);
+            preparedStatement.setString(1, Password);
             preparedStatement.setString(2, Email);
             preparedStatement.executeUpdate();
             System.out.println("Password updated!");
@@ -273,6 +301,11 @@ public class userservice implements IService<user>{
         return list1;
 
     }
+
+
+
+
+
 
 
 }

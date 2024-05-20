@@ -13,9 +13,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import edu.CodeRed.services.userservice;
+import javafx.stage.Stage;
 
 public class registerUser {
     @FXML
@@ -95,10 +99,16 @@ public class registerUser {
             );
             userservice userservice = new userservice(); // Crée une nouvelle instance de la classe UserService
             userservice.addUser(user);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
         }
-    }
+        }
+
     private boolean validateForm() {
-        if (nom_input.getText().isEmpty() || email_input.getText().isEmpty() || mdp_input.getText().isEmpty() ||
+        /*if (nom_input.getText().isEmpty() || email_input.getText().isEmpty() || mdp_input.getText().isEmpty() ||
                 prenom_input.getText().isEmpty() || adresse_input.getText().isEmpty() ||
                 birthday_input.getValue() == null || role_combobox.getValue() == null ||gender_combobox.getValue() == null ) {
             error.setText("All fields must be filled");
@@ -117,7 +127,7 @@ public class registerUser {
             error.setText("Password must contain at least one uppercase letter, one number, and one special character");
             error.setVisible(true);
             return false;
-        }
+        }*/
 
 
         return true;

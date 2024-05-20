@@ -17,6 +17,10 @@ import javafx.scene.text.Font;
 
 import javafx.stage.FileChooser;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -382,6 +386,8 @@ public class ProduitController {
     public void ajouterProduit(String nom, String description, double prix, String imagePath ) {
         Produit produit = new Produit(nom, description, prix, imagePath);
         try {
+
+
             String query = "INSERT INTO produit (nom_produit, description, prix , image ) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, nom);
@@ -389,6 +395,7 @@ public class ProduitController {
             statement.setDouble(3, prix);
             statement.setString(4,imagePath);
             statement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

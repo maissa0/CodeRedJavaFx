@@ -7,10 +7,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="white-bg" stylesheets="@CSS/mainFormDesign.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.ListeSuiviControler">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" styleClass="white-bg" stylesheets="@CSS/mainFormDesign.css" xmlns="http://javafx.com/javafx/20.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.CodeRed.Controllers.ListeSuiviControler">
    <children>
-      <TableView layoutX="14.0" layoutY="75.0" prefHeight="200.0" prefWidth="374.0">
+      <TableView fx:id="TableSuivi" layoutX="14.0" layoutY="75.0" prefHeight="200.0" prefWidth="374.0">
         <columns>
           <TableColumn fx:id="colIDActi" prefWidth="177.60003662109375" text="Activité" />
           <TableColumn fx:id="colDate" prefWidth="89.5999755859375" text="Date" />

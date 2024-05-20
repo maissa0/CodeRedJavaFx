@@ -94,7 +94,7 @@ public class Suivi_ActiviteService implements ISuivi_Activite {
     public List<Suivi_Activite> afficherAllSuivi()  {
         List<Suivi_Activite> list = new ArrayList<>();
         try {
-            String requette = "Select * from suivi_avtivite";
+            String requette = "Select * from suivi_activite";
             PreparedStatement pst = MyConnexion.getInstance().getCnx().prepareStatement(requette);
 
 

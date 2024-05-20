@@ -4,6 +4,7 @@ import edu.CodeRed.entities.Commande;
 import edu.CodeRed.entities.Recette;
 import edu.CodeRed.entities.user;
 import edu.CodeRed.services.RecetteService;
+import edu.CodeRed.services.ServiceObjectif;
 import edu.CodeRed.services.userservice;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
@@ -35,6 +37,11 @@ public class DashboardController implements Initializable {
     private PieChart genderPieChart1;
     private RecetteService rs = new RecetteService();
     private userservice us = new userservice();
+
+    private ServiceObjectif os =new ServiceObjectif();
+
+    @FXML
+    private PieChart pieChart;
     private ProduitController produitController;
     private CommandeController commandeController;
     TableView<Commande> tableView = new TableView<>();
@@ -47,6 +54,16 @@ public class DashboardController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updatePieChart();
         updatePieChartgender();
+        updatePieChartchoix();
+        produitsView = new VBox();
+        try {
+            produitController = new ProduitController();
+            commandeController = new CommandeController();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        stage =new Stage();
 
     }
 
@@ -69,6 +86,15 @@ public class DashboardController implements Initializable {
             for (String genre : genderCounts.keySet()) {
                 PieChart.Data slice = new PieChart.Data(genre, genderCounts.get(genre));
                 genderPieChart1.getData().add(slice);
+            }
+        }
+    }private void updatePieChartchoix() {
+        if (pieChart != null) {
+            pieChart.getData().clear();
+            Map<String, Integer> genderCounts = os.getobjCounts();
+            for (String choix : genderCounts.keySet()) {
+                PieChart.Data slice = new PieChart.Data(choix, genderCounts.get(choix));
+                pieChart.getData().add(slice);
             }
         }
     }
@@ -102,7 +128,7 @@ public class DashboardController implements Initializable {
         stage.setScene(new Scene(root));
 
         // Close the current stage
-        currentStage.close();
+        //currentStage.close();
 
         // Show the new stage
         stage.show();
@@ -111,17 +137,23 @@ public class DashboardController implements Initializable {
     @FXML
     void openViewCommande(ActionEvent event) {
 
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
 
         // Load the new FXML file
         commandeController.afficherCommandes(tableView);
         Scene scene = new Scene(tableView);
-        tableView.setPrefSize(800, 600);
+        tableView.setPrefSize(1023, 612);
         stage.setScene(scene);
 
-
         // Close the current stage
-        currentStage.close();
 
         // Show the new stage
         stage.show();
@@ -156,11 +188,16 @@ public class DashboardController implements Initializable {
 
     @FXML
     void openViewObjectif(ActionEvent event) throws IOException {
+        MenuItem menuItem = (MenuItem) event.getSource();
 
-        /*Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
 
         // Load the new FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ADDCRUD.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CRUD.fxml"));
         Parent root = loader.load();
 
         // Create a new stage for the new FXML file
@@ -171,33 +208,31 @@ public class DashboardController implements Initializable {
         currentStage.close();
 
         // Show the new stage
-        stage.show();*/
+        stage.show();
     }
 
     @FXML
     void openViewProduit(ActionEvent event) {
 
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
 
         // Load the new FXML file
-
-
-        // Load the new FXML file
-        commandeController.afficherCommandes(tableView);
-        Scene scene = new Scene(tableView);
-        tableView.setPrefSize(800, 600);
+        produitController.afficherProduits(produitsView);
+        Scene scene = new Scene(produitsView);
+        produitsView.setPrefSize(1023, 612);
         stage.setScene(scene);
 
 
         // Close the current stage
-        currentStage.close();
 
-        // Show the new stage
-        stage.show();
-
-
-        // Close the current stage
-        currentStage.close();
 
         // Show the new stage
         stage.show();
@@ -232,10 +267,17 @@ public class DashboardController implements Initializable {
 
     @FXML
     void openViewSuiviObj(ActionEvent event) throws IOException {
-        /*Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        MenuItem menuItem = (MenuItem) event.getSource();
+
+        // Get the ContextMenu of the MenuItem
+        ContextMenu menu = menuItem.getParentPopup();
+
+        // Get the Stage of the ContextMenu
+        Stage currentStage = (Stage) menu.getOwnerWindow();
 
         // Load the new FXML file
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ADDCRUD.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/CRUDSUIVI.fxml"));
         Parent root = loader.load();
 
         // Create a new stage for the new FXML file
@@ -246,11 +288,27 @@ public class DashboardController implements Initializable {
         currentStage.close();
 
         // Show the new stage
-        stage.show();*/
+        stage.show();
     }
 
     @FXML
-    void openViewUser(ActionEvent event) {
+    void openViewUser(ActionEvent event) throws IOException {
 
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/listUser.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        // Close the current stage
+        //currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
+
 }

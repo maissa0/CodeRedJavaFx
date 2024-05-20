@@ -100,7 +100,14 @@ public class AddRecetteController implements Initializable {
             imageName = uniqueID + extension;
 
             Path destination = Paths.get(System.getProperty("user.dir"), "src","main","java","edu","CodeRed", "uploads", imageName);
+            Path destinationPath = Paths.get("C:","tools","pidev-code-red_test","public","img", imageName);
+
+
+
+
+
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(selectedImageFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
 
         }
     }

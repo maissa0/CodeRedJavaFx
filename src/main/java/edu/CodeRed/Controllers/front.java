@@ -2,11 +2,16 @@ package edu.CodeRed.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class front {
@@ -62,44 +67,176 @@ public class front {
 
 
     @FXML
-    void objectiffront(ActionEvent event) {
+    void objectiffront(ActionEvent event) throws IOException {
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ADDCRUD.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
 
     @FXML
-    void openViewCommand(ActionEvent event) {
+    void openViewCommand(ActionEvent event) throws IOException {
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListFrontRecette.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
 
     @FXML
-    void openViewJournal(ActionEvent event) {
+    void openViewJournal(ActionEvent event) throws IOException {
 
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewJournal.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+
+ // On garde une référence à la scène du panier
+    @FXML
+    void openViewPanier(ActionEvent event) throws IOException {
+
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        panierController.afficherProduitsDuPanier();
+        Scene scene = new Scene(panierView);
+
+        panierView.setPrefSize(800, 600);
+
+        stage.setScene(panierScene);
+
+
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
 
     @FXML
-    void openViewPanier(ActionEvent event) {
+    void openViewProduct(ActionEvent event) throws IOException {
 
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        produitController.afficherProduitsFront(produitsViewFront);
+        Scene scene = new Scene(produitsViewFront);
+        produitsViewFront.setPrefSize(1095, 487);
+        stage.setScene(scene);
+
+
+        // Close the current stage
+        //currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
 
     @FXML
-    void openViewProduct(ActionEvent event) {
+    void openViewRecettes(ActionEvent event) throws IOException {
 
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListFrontRecette.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
 
     @FXML
-    void openViewRecettes(ActionEvent event) {
+    void openViewSuivAct(ActionEvent event) throws IOException {
 
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterSuivi.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        //currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
 
     @FXML
-    void openViewSuivAct(ActionEvent event) {
+    void openViewSuivObj(ActionEvent event) throws IOException {
 
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SUIVIOBJ.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
     }
 
-    @FXML
-    void openViewSuivObj(ActionEvent event) {
-
-    }
 
 }
 

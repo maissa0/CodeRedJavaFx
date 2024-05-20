@@ -1,6 +1,7 @@
 package edu.CodeRed.Controllers;
 
 import edu.CodeRed.entities.Journal;
+import edu.CodeRed.entities.user;
 import edu.CodeRed.services.JournalService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,6 +27,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class CalendarController implements Initializable {
 
@@ -54,6 +56,9 @@ public class CalendarController implements Initializable {
     public int getSelectedJournalId() {
         return this.selectedJournalId;
     }
+
+    Preferences p = Preferences.userNodeForPackage(getClass());
+    edu.CodeRed.entities.user user= new user();
 
 
 
@@ -95,7 +100,7 @@ public class CalendarController implements Initializable {
 
     private int getJournalIdFromDate(ZonedDateTime date, int dayOfMonth) {
         // Fetch journal entries for the current date from the database
-        List<Journal> journalEntries = journalService.getJournalEntriesForDate(date.withDayOfMonth(dayOfMonth));
+        List<Journal> journalEntries = journalService.getJournalEntriesForDate(date.withDayOfMonth(dayOfMonth),p.getInt("userId", user.getId()));
         // If there are journal entries, return the ID of the first entry (assuming one entry per day)
         if (!journalEntries.isEmpty()) {
             return journalEntries.get(0).getId();
@@ -151,7 +156,7 @@ public class CalendarController implements Initializable {
                         }
 
                         // Fetch journal entries for the current date from the database
-                        List<Journal> journalEntries = journalService.getJournalEntriesForDate(dateFocus.withDayOfMonth(currentDate));
+                        List<Journal> journalEntries = journalService.getJournalEntriesForDate(dateFocus.withDayOfMonth(currentDate),p.getInt("userId", user.getId()));
                         if (!journalEntries.isEmpty()) {
                             int totalCalories = journalEntries.stream().mapToInt(Journal::getCaloriesJournal).sum();
                             Text caloriesText = new Text("Calories: " + totalCalories);

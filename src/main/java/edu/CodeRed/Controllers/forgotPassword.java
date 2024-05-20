@@ -9,11 +9,16 @@ import com.twilio.rest.verify.v2.service.Verification;
 import com.twilio.Twilio;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import edu.CodeRed.services.userservice;
+import javafx.stage.Stage;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -106,11 +111,17 @@ public class forgotPassword {
     }
 
     @FXML
-    void submitpass_button(ActionEvent event) {
+    void submitpass_button(ActionEvent event) throws IOException {
         String newpassword = newpass_input.getText();
         String retype_newpassword = retypenewpass_input.getText();
         if(newpassword.equals(retype_newpassword))
             userService.updateforgottenpassword(email_input.getText(), newpassword);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public static void sendEmail(String to) {

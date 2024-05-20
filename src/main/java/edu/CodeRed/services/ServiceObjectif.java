@@ -7,7 +7,9 @@ import javafx.scene.control.ComboBox;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ServiceObjectif implements IService<Objectif> {
@@ -37,6 +39,22 @@ public class ServiceObjectif implements IService<Objectif> {
         java.sql.Date sqlDate = java.sql.Date.valueOf(currentDate);
         statement.setDate(9, sqlDate);
         statement.executeUpdate();
+    }
+
+    public Map<String, Integer> getobjCounts() {
+        Map<String, Integer> grCounts = new HashMap<>();
+        String query = "SELECT choix, COUNT(*) AS count FROM objectif GROUP BY choix";
+        try (PreparedStatement ps = MyConnexion.getInstance().getCnx().prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String choix = rs.getString("choix");
+                int count = rs.getInt("count");
+                grCounts.put(choix, count);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving categorie counts: " + e.getMessage());
+        }
+        return grCounts;
     }
 
     /*@Override

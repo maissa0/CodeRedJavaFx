@@ -82,7 +82,7 @@ public class MainClass {
         //System.out.println(recetteService.readRecette("Test Recipe"));
 
 
-        RecetteService recetteService = new RecetteService();
+        /*RecetteService recetteService = new RecetteService();
         JournalService journalService = new JournalService();
 
 // Fetch a list of recettes
@@ -106,12 +106,12 @@ public class MainClass {
 
 
         //journalService.addJournal(journal,recettesToJournal);
-
+*/
 
 
 
         // Call the deleteJournal method
-        //System.out.println(journalService.getTop5MostUsedRecettes());
+        //System.out.println("[\\\"ROLE_USER\\\"]");
 
 
 

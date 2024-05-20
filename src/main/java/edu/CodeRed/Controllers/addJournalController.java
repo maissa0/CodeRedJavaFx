@@ -368,7 +368,7 @@ public class addJournalController implements Initializable {
                 + "Nous sommes ravis de vous informer qu'un planning a été ajouté.\n "
                 + "Veuillez contactez l'administration pour plus de details.\n "
                 + "Merci de votre fidélité et à bientôt chez optihealth.\n"
-                + "Votre total calorie pour aujourd'hui est de "+ j.getCaloriesForToday()
+                + "Votre total calorie pour aujourd'hui est de "+ j.getCaloriesForToday(p.getInt("userId", user.getId()))
                 + "Cordialement,\n"
                 ;
 

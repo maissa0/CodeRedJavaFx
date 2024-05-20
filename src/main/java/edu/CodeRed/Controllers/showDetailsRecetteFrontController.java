@@ -104,7 +104,9 @@ public class showDetailsRecetteFrontController implements Initializable {
         //labelDescriptionRecette.setWrapText(true);
         labelNomRecette.setText(r.getNom());
        // labelCategRecette.setText(r.getCategorie());
-        labelImgRecette.setImage(new Image("file:C:/tools/optihealth/src/main/java/edu/CodeRed/uploads/" + r.getImage()));
+
+        String imagePath = "file:///C:/tools/pidev-code-red_test/public/img/" + r.getImage();
+        labelImgRecette.setImage(new Image(imagePath));
         labelDescriptionRecette.setText(r.getDescription());
         labelCalorieRecette.setText(String.valueOf(r.getCalorieRecette()));
 

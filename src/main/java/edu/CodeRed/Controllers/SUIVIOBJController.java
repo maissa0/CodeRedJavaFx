@@ -2,6 +2,7 @@ package edu.CodeRed.Controllers;
 
 import edu.CodeRed.entities.Objectif;
 import edu.CodeRed.entities.SuivieObjectif;
+import edu.CodeRed.entities.user;
 import edu.CodeRed.services.ServiceObjectif;
 import edu.CodeRed.services.ServiceSuiviObj;
 import edu.CodeRed.tools.MyConnexion;
@@ -10,9 +11,11 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,12 +24,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
+import java.util.prefs.Preferences;
 
 public class SUIVIOBJController {
     @FXML
@@ -34,6 +39,14 @@ public class SUIVIOBJController {
 
     @FXML
     private URL location;
+    @FXML
+    private Button panierButton;
+    @FXML
+    private VBox produitsView;
+    private VBox produitsViewFront;
+
+    private Stage stage;
+    private ProduitController produitController;
 
     @FXML
     private DatePicker date;
@@ -46,7 +59,37 @@ public class SUIVIOBJController {
     private List<Objectif> objectifs;
 
     @FXML
-    private Button afficherSuivi;
+    private VBox panierView;
+    private PanierController panierController;
+    private Scene panierScene;
+
+
+    @FXML
+    private TextField tAge;
+
+    @FXML
+    private TextField tCalorie;
+
+    @FXML
+    private TextField tHeight;
+
+    @FXML
+    private TextField tID;
+
+    @FXML
+    private Button calculateBtn;
+    @FXML
+    private Button calculateIMCBtn;
+    Preferences p = Preferences.userNodeForPackage(getClass());
+    edu.CodeRed.entities.user user= new user();
+
+
+
+    @FXML
+    private TextField tWeight;
+
+    LocalDate currentDate = LocalDate.now();
+    java.sql.Date sqlDate = java.sql.Date.valueOf(currentDate);
 
 
     @FXML
@@ -167,7 +210,7 @@ public class SUIVIOBJController {
         }
     }
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         ServiceObjectif o = new ServiceObjectif();
         o.chargerweight(weightComboBox);
 
@@ -183,24 +226,14 @@ public class SUIVIOBJController {
                 return change;
             }
         }));
+        produitsViewFront=new VBox();
+        produitController = new ProduitController();
+        stage=new Stage();
+        panierView = new VBox();
+        panierController=new PanierController();
+        panierScene = new Scene(panierView);
     }
-    @FXML
-    void objectiffront(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ADDCRUD.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Erreur lors de l'ouverture de la fenêtre");
-            alert.setContentText("Une erreur s'est produite lors de l'ouverture de la fenêtre. Veuillez réessayer.");
-            alert.showAndWait();
-        }
-    }
+
     @FXML
     void suiviobjfront(ActionEvent event) {
         try {
@@ -218,6 +251,181 @@ public class SUIVIOBJController {
             alert.showAndWait();
         }
     }
+
+
+    @FXML
+    void objectiffront(ActionEvent event) throws IOException {
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ADDCRUD.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewCommand(ActionEvent event) throws IOException {
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListFrontRecette.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        //currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewJournal(ActionEvent event) throws IOException {
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/viewJournal.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+
+    // On garde une référence à la scène du panier
+    @FXML
+    void openViewPanier(ActionEvent event) throws IOException {
+
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        panierController.afficherProduitsDuPanier();
+        Scene scene = new Scene(panierView);
+
+        panierView.setPrefSize(800, 600);
+
+        stage.setScene(panierScene);
+
+
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewProduct(ActionEvent event) throws IOException {
+
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        produitController.afficherProduitsFront(produitsViewFront);
+        Scene scene = new Scene(produitsViewFront);
+        produitsViewFront.setPrefSize(1095, 487);
+        stage.setScene(scene);
+
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewRecettes(ActionEvent event) throws IOException {
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ListFrontRecette.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewSuivAct(ActionEvent event) throws IOException {
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/AjouterSuivi.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+    @FXML
+    void openViewSuivObj(ActionEvent event) throws IOException {
+
+        // Get the current stage
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        // Load the new FXML file
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/SUIVIOBJ.fxml"));
+        Parent root = loader.load();
+
+        // Create a new stage for the new FXML file
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+
+        // Close the current stage
+        currentStage.close();
+
+        // Show the new stage
+        stage.show();
+    }
+
+
+
 
 }
 

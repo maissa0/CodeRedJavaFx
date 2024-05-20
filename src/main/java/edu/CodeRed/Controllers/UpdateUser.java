@@ -4,11 +4,15 @@ import edu.CodeRed.entities.user;
 import edu.CodeRed.services.userservice;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -89,7 +93,7 @@ public class UpdateUser {
     }
 
     @FXML
-    void modify_user(ActionEvent event) {
+    void modify_user(ActionEvent event) throws IOException {
         if (User == null) {
             // If the user object is null, show an error message
             showErrorAlert("User not set", "User object is null.");
@@ -136,7 +140,13 @@ public class UpdateUser {
             // If userService is not available, display an error message
             showErrorAlert("Error", "Failed to update user details. User service is not available.");
         }
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/listUser.fxml"));
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
+
 
     public void setListUserController(ListUser listUserController) {
         this.listUserController = listUserController;

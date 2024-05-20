@@ -33,6 +33,6 @@ public class itemRecetteController implements Initializable {
         this.recette=rec;
         nomRec.setText(recette.getNom());
         categRec.setText(recette.getCategorie());
-        imgRec.setImage(new Image("file:///C:/tools/optihealth/src/main/java/edu/CodeRed/uploads/"+recette.getImage()));
+        imgRec.setImage(new Image("file:///C:/tools/pidev-code-red_test/public/img/"+recette.getImage()));
     }
 }

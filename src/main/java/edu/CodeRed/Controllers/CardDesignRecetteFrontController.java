@@ -93,7 +93,9 @@ public class CardDesignRecetteFrontController {
             progbar.setStyle("-fx-accent: red;");
 
         }
-        image = new Image("C:\\tools\\optihealth\\src\\main\\java\\edu\\CodeRed\\uploads\\" + rec.getImage());
+        String imagePath = "file:///C:/tools/pidev-code-red_test/public/img/" + rec.getImage();
+        image = new Image(imagePath);
+
         prod_imageView.setImage(image);
 
 

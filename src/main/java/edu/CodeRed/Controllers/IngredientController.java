@@ -230,7 +230,9 @@ public class IngredientController {
 
             IngredientService ingServices1 = new IngredientService();
             ingServices1.addEntity(Ing);
-            Path destinationPath = Paths.get("src/main/resources/images/IngredientsImages", fileName);
+            Path destinationPath = Paths.get("C:","tools","pidev-code-red_test","public","img", fileName);
+
+
             try {
                 Files.copy(path, destinationPath, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {
@@ -270,7 +272,7 @@ public class IngredientController {
             // Set the text value of imageIng to the generated file name
             imageIng.setText(imageName);
 
-            Path destination = Paths.get(System.getProperty("user.dir"), "src","main","java","edu","CodeRed", "uploads", imageName);
+            Path destination = Paths.get("C:","tools","pidev-code-red_test","public","img", imageName);
             Files.copy(selectedImageFile.toPath(), destination, StandardCopyOption.REPLACE_EXISTING);
         }
     }
@@ -445,7 +447,7 @@ public class IngredientController {
             ingredientService.updateEntity(ingredient);
 
 
-            Path destinationPath = Paths.get("src/main/resources/images/IngredientsImages", fileName);
+            Path destinationPath = Paths.get("C:","tools","pidev-code-red_test","public","img", fileName);
             try {
                 Files.copy(path, destinationPath, StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException e) {

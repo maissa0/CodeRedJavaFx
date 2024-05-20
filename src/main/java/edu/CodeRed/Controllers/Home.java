@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 
 public class Home extends Application {
     private static Stage primaryStage;
@@ -18,12 +20,20 @@ public class Home extends Application {
     @Override
     public void start(Stage primaryStage) {
         Home.primaryStage = primaryStage; // Initialize the primaryStage field
+
+
+
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
+
+
+
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

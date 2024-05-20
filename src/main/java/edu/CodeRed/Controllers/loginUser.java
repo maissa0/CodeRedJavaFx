@@ -64,7 +64,7 @@ public class loginUser {
 
             System.out.println(p.getInt("userId taa login", user.getId()));
 
-            if (Objects.equals(user.getRole(), "admin")) {
+            if (Objects.equals(user.getRole(), "admin" )||Objects.equals(user.getRole(), "[\"ROLE_ADMIN\"]" )) {
                 try {
 
                      Parent root = FXMLLoader.load(getClass().getResource("/dashboard.fxml"));
@@ -75,10 +75,10 @@ public class loginUser {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (Objects.equals(user.getRole(), "user")) {
+            } else if (Objects.equals(user.getRole(), "user")|| Objects.equals(user.getRole(), "[\"ROLE_USER\"]" )) {
                 try {
 
-                     Parent root = FXMLLoader.load(getClass().getResource("/FrontHeader.fxml"));
+                     Parent root = FXMLLoader.load(getClass().getResource("/front.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     stage.setScene(scene);
